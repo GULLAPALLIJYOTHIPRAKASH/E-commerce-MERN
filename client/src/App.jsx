@@ -15,19 +15,54 @@ import Account from "./pages/Shopping-View/Account";
 import Checkout from "./pages/Shopping-View/Checkout";
 import UnAuthorize from "./pages/UnAuthorize/UnAuthorize";
 import NotFound from "./pages/Not-Found/NotFound";
+import CheckAuth from "./components/common/CheckAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { CheckAuthUser } from "./redux/auth-slice";
 function App(){
 
+ const dispatch = useDispatch();
+ const {isAuthenticated , isLoading , user} = useSelector((state) => state.auth);
+
+ useEffect(() => {
+
+    const checkuser = async() => {
+
+      try {
+        
+        await dispatch(CheckAuthUser()).unwrap();
+      } catch (error) {
+        
+        console.log(error);
+        
+      }
+    }
+
+    checkuser();
+
+ },[dispatch]);
+
+
+ if(isLoading){
+
+  return(<h1 className="text-3xl font-medium">Loading...</h1>)
+ }
+
+ 
   return(<>
   <Routes>
 
+
+    <Route path="/" element={<CheckAuth isAuthenticated={isAuthenticated}  user={user}></CheckAuth>} />
+
     {/* Auth routes */}
-    <Route path="/auth" element={<AuthLayout/>}>
+    <Route path="/auth" element={<CheckAuth isAuthenticated={isAuthenticated}  user={user}><AuthLayout/></CheckAuth>}>
     <Route path="login" element={<Login/>}/>
     <Route path="register" element={<Register/>}/>
     </Route>
 
     {/* Admin routes */}
-    <Route path="/admin" element={<AdminLayout/>}>
+    <Route path="/admin" element={<CheckAuth isAuthenticated={isAuthenticated}  user={user}><AdminLayout/> </CheckAuth>}>
     <Route path="dashboard" element={<Dashboard/>}/>
     <Route path="products" element={<Products/>}/>
     <Route path="orders" element={<Orders/>}/>
@@ -36,7 +71,7 @@ function App(){
 
 
     {/* Shopping routes */}
-    <Route path="/shop" element={<ShopLayout/>}>
+    <Route path="/shop" element={<CheckAuth isAuthenticated={isAuthenticated}  user={user}><ShopLayout/> </CheckAuth>}>
     <Route path="home" element={<Home/>}/>
     <Route path="products" element={<ProductListing/>}/>
     <Route path="account" element={<Account/>}/>

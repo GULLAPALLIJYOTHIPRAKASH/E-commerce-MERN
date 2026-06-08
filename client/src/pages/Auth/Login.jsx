@@ -1,20 +1,59 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { LoginUser } from "../../redux/auth-slice";
+import {useDispatch} from "react-redux";
+import { toast } from "react-toastify";
+
 
 function Login(){
     const [email , setEmail] = useState("");
-    const [password , setPassword] = useState("");
+    const [password , setPassword] = useState("123456789");
+    const dispatch = useDispatch();
 
     // handle login submit
-    const HandleLoginSubmit = (e) => {
+    const HandleLoginSubmit = async (e) => {
         e.preventDefault();
-
-        console.log({
-             email , password
-
-        });
         
-    }
+        
+        if( email.trim().length > 0 && password.trim().length > 0){
+            
+            try {
+                   
+       
+       
+                   const response = await dispatch(LoginUser({email , password})).unwrap();
+       
+       
+                   if(response?.success){
+       
+                       // rest all inputs
+                       setEmail("");
+                       setPassword("");
+       
+                       toast("User Login Successfully" , {
+                           toastId:"user login"
+                       });  
+       
+               }
+               
+            
+            } catch (error) {
+       
+                   console.log(error.message);
+
+       
+                       toast(`${error.message}` , {
+                           toastId:"user_login_failed"
+                       }); 
+                   
+                   
+               }
+       
+              }
+               
+           }
+        
+    
 
     return(<>
     <div className="login-container w-[100%] ">

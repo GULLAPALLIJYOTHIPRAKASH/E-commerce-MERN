@@ -4,6 +4,7 @@ const app = express();
 const ConnectToDB = require("./database/db");
 const cookieparser = require("cookie-parser");
 const cors = require("cors");
+const AuthRouter = require("./routes/Auth/auth-route");
 
 // PORT
 const PORT = process.env.PORT || 5000;
@@ -39,6 +40,10 @@ app.use(cookieparser());
 app.use(express.json());
 
 
+// All routes
+
+// Auth route
+app.use("/api/auth" , AuthRouter);
 
 
 

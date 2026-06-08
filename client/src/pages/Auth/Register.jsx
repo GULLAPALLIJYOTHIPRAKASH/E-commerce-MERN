@@ -1,20 +1,53 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {useDispatch} from "react-redux"
+import { RegisterUser } from "../../redux/auth-slice";
+import {toast} from "react-toastify"
 
 function Register(){
 
     const [username , setUsername] = useState("");
     const [email , setEmail] = useState("");
-    const [password , setPassword] = useState("");
+    const [password , setPassword] = useState("123456789");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     // handle register submit
-    const HandleRegisterSubmit = (e) => {
+    const HandleRegisterSubmit =  async (e) => {
         e.preventDefault();
 
-        console.log({
-            username , email , password
+       if(username.trim().length > 0 && email.trim().length > 0 && password.trim().length > 0){
 
-        });
+        try {
+            
+
+
+            const response = await dispatch(RegisterUser({username , email , password})).unwrap();
+
+
+            if(response.success){
+
+                // rest all inputs
+                setEmail("");
+                setPassword("");
+                setUsername("");
+
+                toast("User Registered Successfully" , {
+                    toastId:"user register"
+                });
+
+                // move to 
+                navigate("/auth/login");
+            }
+
+        } catch (error) {
+
+            console.log(error);
+            
+            
+        }
+
+       }
         
     }
 
