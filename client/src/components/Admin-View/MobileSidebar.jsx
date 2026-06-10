@@ -33,8 +33,8 @@ function MobileSidebar({showSidebar , HandleSidebar}){
 
                     return(
 
-                        <li onClick={HandleSidebar} className="nav-link text-gray-600 mb-8" key={item?.id + "_mobile"}>
-                            <Link to={`/admin/${item.id}`} className="text-lg font-normal">{AdminSideBarIcon[idx].icon} { item?.label}</Link>
+                        <li  className="nav-link text-gray-600 mb-8" key={item?.id + "_mobile"}>
+                            <Link  onClick={HandleSidebar} to={`/admin/${item.id}`} className="text-lg font-normal">{AdminSideBarIcon[idx].icon} { item?.label}</Link>
                         </li>
                     )
                 })

@@ -26,7 +26,7 @@ function DesktopSidebar(){
                     return(
 
                         <li  className="nav-link text-gray-600 mb-8 group transition-all linear duration-500" key={item?.id + "_mobile"}>
-                            <Link to={`/admin/${item.id}`} className="block w-[100%] text-lg font-normal p-2 group-hover:bg-gray-50 group-hover:rounded-lg ">{AdminSideBarIcon[idx].icon} { item?.label}</Link>
+                            <Link to={`/admin/${item.id}`} className="block w-[100%] text-lg font-normal p-2 group-hover:bg-gray-50 group-hover:rounded-lg outline-none">{AdminSideBarIcon[idx].icon} { item?.label}</Link>
                         </li>
                     )
                 })
