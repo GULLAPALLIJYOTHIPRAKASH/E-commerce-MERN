@@ -5,6 +5,7 @@ const ConnectToDB = require("./database/db");
 const cookieparser = require("cookie-parser");
 const cors = require("cors");
 const AuthRouter = require("./routes/Auth/auth-route");
+const AdminProductsRouter = require("./routes/Admin/product-route");
 
 // PORT
 const PORT = process.env.PORT || 5000;
@@ -45,6 +46,9 @@ app.use(express.json());
 // Auth route
 app.use("/api/auth" , AuthRouter);
 
+// Admin Products route
+app.use("/api/admin/product" , AdminProductsRouter);
+
 
 
 
@@ -56,6 +60,6 @@ app.use("/api/auth" , AuthRouter);
 // listen port
 app.listen(PORT , () => {
 
-    console.log(`Server is running on ${PORT} port`);
+    console.log(`Server is running on  http://localhost:${PORT}/ port`);
     
 })
