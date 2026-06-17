@@ -2,7 +2,7 @@
 const UploadToCloudinary = require("../../helper/cloudinary");
 const fs = require("fs");
 const ProductModel = require("../../models/Product");
-const { title } = require("process");
+const cloudinary = require("../../config/cloudinary");
 
 
 
@@ -251,6 +251,8 @@ const DeleteProduct = async (request , response ) => {
     try {
 
         const productId = request.params.productId;
+        const {id} = request?.user;
+                
 
         // check product it is available to delete
         const checkproduct  = await ProductModel.findById(productId);
@@ -277,7 +279,12 @@ const DeleteProduct = async (request , response ) => {
         )
         }
 
-        const del_product = await ProductModel.findByIdAndDelete(productId);
+
+        // Delete in cloudinary
+        await cloudinary.uploader.destroy(checkproduct?.image.publicId);
+
+        // delete in DB
+        const del_product = await ProductModel.findByIdAndDelete(checkproduct?._id);
 
 
         if(del_product){
