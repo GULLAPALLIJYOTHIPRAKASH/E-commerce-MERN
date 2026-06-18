@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const {Check_User , CheckAdmin_User} = require("../../middleware/Auth/auth-middleware");
-const multerMiddleware = require("../../middleware/Auth/Admin/multer-middleware");
-const { UploadImg, AddProduct, UpdateProduct, DeleteProduct, GetAllProducts } = require("../../controllers/Admin/product-controller");
+const {Check_User , CheckAdmin_User} = require("../../../middleware/Auth/auth-middleware");
+const multerMiddleware = require("../../../middleware/Auth/Admin/multer-middleware");
+const { UploadImg, AddProduct, UpdateProduct, DeleteProduct, GetAllProducts } = require("../../../controllers/Admin/Product/product-controller");
 
 // All routes related to Admin Products
 router.post("/uploadImg" , Check_User , CheckAdmin_User ,multerMiddleware.single('image') ,UploadImg);

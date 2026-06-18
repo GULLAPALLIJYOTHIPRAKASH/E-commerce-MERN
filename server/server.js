@@ -5,7 +5,8 @@ const ConnectToDB = require("./database/db");
 const cookieparser = require("cookie-parser");
 const cors = require("cors");
 const AuthRouter = require("./routes/Auth/auth-route");
-const AdminProductsRouter = require("./routes/Admin/product-route");
+const AdminProductsRouter = require("./routes/Admin/Product/product-route");
+const AdminDashboardRouter = require("./routes/Admin/Dashboard/dashboard-route");
 
 // PORT
 const PORT = process.env.PORT || 5000;
@@ -48,6 +49,9 @@ app.use("/api/auth" , AuthRouter);
 
 // Admin Products route
 app.use("/api/admin/product" , AdminProductsRouter);
+
+// Admin Dashboard route
+app.use('/api/admin/dashboard' , AdminDashboardRouter)
 
 
 

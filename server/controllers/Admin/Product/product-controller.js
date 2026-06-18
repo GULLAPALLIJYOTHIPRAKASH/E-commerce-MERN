@@ -1,8 +1,8 @@
 
-const UploadToCloudinary = require("../../helper/cloudinary");
+const UploadToCloudinary = require("../../../helper/cloudinary");
 const fs = require("fs");
-const ProductModel = require("../../models/Product");
-const cloudinary = require("../../config/cloudinary");
+const ProductModel = require("../../../models/Product");
+const cloudinary = require("../../../config/cloudinary");
 
 
 
