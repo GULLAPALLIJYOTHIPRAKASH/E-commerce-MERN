@@ -37,7 +37,7 @@ function AddProductsSidebar({SubmitEditProduct , editStatus , previewImg, Handle
                         <div className="preview-img flex p-4     bg-gray-50 rounded-lg shadow-sm flex justify-between items-center" >
                             <img className="w-[50px] h-[50px] rounded-full object-center object-cover " src={previewImg?.url} alt="preview product    " />
                             <h1 className="text-base font-medium">Size : {(previewImg?.size / (1024 * 1024)).toFixed(2) } MB</h1>
-                            <i onClick={HandlePreviewImg} className="text-lg font-medium fa-solid fa-xmark cursor-pointer"></i>
+                            <i onClick={() => HandlePreviewImg(addProductsform?.image?.publicId)} className="text-lg font-medium fa-solid fa-xmark cursor-pointer"></i>
                         </div>
 
                         }

@@ -73,21 +73,71 @@ function Products(){
     }
 
     // reset preview img
-    const HandlePreviewImg = () => {
+    // const HandlePreviewImg = () => {
 
-        console.log("preview reset");
+    //     console.log("preview reset");
         
-        setAddProductsForm({
-            ...addProductsform,
-            image:null
-        });
-        setPreviewImg(null);
+    //     setAddProductsForm({
+    //         ...addProductsform,
+    //         image:null
+    //     });
+    //     setPreviewImg(null);
 
-        // reset the Image file
-        if(ImageRef.current){
+    //     // reset the Image file
+    //     if(ImageRef.current){
 
-            ImageRef.current.value="";
+    //         ImageRef.current.value="";
+    //     }
+    // }
+
+
+    // reset preview & delete Image from cloudinary 
+    const HandlePreviewImg = async (publicId) => {
+
+
+        
+        let id = publicId.split("/")[1];
+
+        setLoading(true);
+
+        try {
+            
+           const response = await axios.delete(`http://localhost:5000/api/admin/dashboard/delete-cloudinary/${id}`, {
+                withCredentials : true
+            });
+
+
+            if(response.data.success){
+
+
+                setAddProductsForm({
+                ...addProductsform,
+                image:null
+                });
+                setPreviewImg(null);
+
+                // reset the Image file
+                if(ImageRef.current){
+
+                ImageRef.current.value="";
+                }
+
+
+                toast("Banner Delete from cloudinary");
+
+
+            }
+            
+        } catch (error) {
+            
+            console.log(error.message);
+            
         }
+        finally{
+            setLoading(false);
+        }
+
+        
     }
 
 

@@ -197,9 +197,8 @@ const DeleteBanner = async (request , response )=> {
 const DeleteBannerCloudinary = async (request , response )=> {
 
     try {
-console.log(request.params);
 
-        const publicId = request.params.publicId;
+        const {publicId} = request.params;
 
 
         console.log(publicId);
@@ -208,7 +207,7 @@ console.log(request.params);
 
 
         // delete cloudinary
-        const del_Banner  = await cloudinary.uploader.destroy(publicId);
+        const del_Banner  = await cloudinary.uploader.destroy("E-Commerces/"+publicId);
 
 
 
@@ -218,7 +217,7 @@ console.log(request.params);
               
             response.status(200).json({
                 success:true,
-                message:"Banner deleted  Successfuly from cloudinary"
+                message:"Image deleted  Successfuly from cloudinary"
             })
         
             )

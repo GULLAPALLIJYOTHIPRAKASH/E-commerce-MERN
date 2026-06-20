@@ -88,30 +88,46 @@ function Dashboard(){
     // close preview
     const HandlePreview = async (publicId) => {
 
-        console.log(publicId);
+
         
+        let id = publicId.split("/")[1];
+
+        setLoading(true);
 
         try {
             
-           const response = await axios.delete(`http://localhost:5000/api/admin/dashboard/delete-cloudinary/${publicId}` , {
+           const response = await axios.delete(`http://localhost:5000/api/admin/dashboard/delete-cloudinary/${id}`, {
                 withCredentials : true
             });
 
-            console.log(response);
 
+            if(response.data.success){
+
+
+                // reset 
+                setImage(initialObj);
+
+                // reset 
+                if(ImageRef.current){
+                ImageRef.current.value="";
+                }
+
+
+                toast("Image Delete from cloudinary");
+
+
+            }
             
         } catch (error) {
             
             console.log(error.message);
             
         }
-
-        setImage(initialObj);
-
-        // reset 
-        if(ImageRef.current){
-            ImageRef.current.value="";
+        finally{
+            setLoading(false);
         }
+
+        
     }
 
     // Submit Upload Image
