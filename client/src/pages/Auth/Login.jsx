@@ -30,7 +30,7 @@ function Login(){
                        setEmail("");
                        setPassword("");
        
-                       toast("User Login Successfully" , {
+                       toast.success("User Login Successfully" , {
                            toastId:"user login"
                        });  
        

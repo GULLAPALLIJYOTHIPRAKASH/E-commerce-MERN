@@ -29,3 +29,14 @@ export const Brand = [
 { id: "samsung", label: "Samsung" },
 { id: "titan", label: "Titan" },
 ]
+
+
+export const ShopNavLinks = [
+
+     {   id:"home" , label:"Home" , url:"/shop/home"},
+     {   id:"men" , label:"Men" , url:"/shop/products"},
+     {   id:"women" , label:"Women", url:"/shop/products"},
+     {   id:"kids" , label:"Kids", url:"/shop/products"},
+     {   id:"accessories" , label:"Accessories", url:"/shop/products"},
+     {   id:"footwear" , label:"Footwear", url:"/shop/products"},
+]

@@ -1,12 +1,16 @@
 import { Outlet } from "react-router-dom";
+import ShopHeader from "./ShopHeader";
 
 function ShopLayout(){
 
     return(<>
-    
-    <h1>Shop Layout</h1>
+    <div className="shop-container">
+    <div className="shop-center">
+        <ShopHeader/>
+        <Outlet/>
+    </div>
+    </div>
 
-    <Outlet/>
     </>)
 }
 
