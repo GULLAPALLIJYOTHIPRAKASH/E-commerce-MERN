@@ -4,11 +4,13 @@ import {useDispatch, useSelector} from "react-redux";
 import { useState } from "react";
 import { LogoutUser } from "../../redux/auth-slice";
 import {toast } from "react-toastify";
+import ShopMobileSidebar from "./ShopMobileSidebar";
 
 function ShopHeader(){
 
 
     const[showProfile , setShowProfile]=useState(false);
+    const[showSidebar , setShowSidebar]=useState(false);
     // user redux
     const {user} = useSelector((state) => state.auth);
     const dispatch = useDispatch();
@@ -42,10 +44,18 @@ function ShopHeader(){
     }
 
 
+    // Show/hide sidebar
+    const HandleShowSidebar = ()=> {
+
+        setShowSidebar(!showSidebar);
+    }
+
+
     
     
 
     return(<>
+    {/* Navbar start */}
      <nav className="navbar-container w-[100%] min-h-[50px]  bg-white border-b-1 border-gray-300 shadow-sm sticky top-0 left-0 z-50">
             <div className="navbar-center relative w-[100%] h-[100%] p-4 flex justify-between items-center ">
                 <div className="logo-section">
@@ -56,7 +66,7 @@ function ShopHeader(){
                 </div>
 
                 {/* Hambergur */}
-                <div className=" lg:hidden hamburger border-2 border-gray-300 py-2 px-3">
+                <div onClick={HandleShowSidebar} className="lg:hidden hamburger border-2 border-gray-300 py-2 px-3">
                     <i className="text-2xl font-bold fa-solid fa-bars"></i>
                 </div>
 
@@ -102,7 +112,10 @@ function ShopHeader(){
 
 
             </div>
-        </nav>
+    </nav>
+    {/* Navbar end */}
+
+    <ShopMobileSidebar HandleUserLogout={HandleUserLogout} HandleShowSidebar={HandleShowSidebar} showSidebar={showSidebar}/>
     </>)
 }
 
