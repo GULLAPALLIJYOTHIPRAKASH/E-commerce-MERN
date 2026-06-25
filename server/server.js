@@ -7,6 +7,7 @@ const cors = require("cors");
 const AuthRouter = require("./routes/Auth/auth-route");
 const AdminProductsRouter = require("./routes/Admin/Product/product-route");
 const AdminDashboardRouter = require("./routes/Admin/Dashboard/dashboard-route");
+const ShopProductsRouter = require("./routes/Shop/Product/product-route");
 
 // PORT
 const PORT = process.env.PORT || 5000;
@@ -51,7 +52,10 @@ app.use("/api/auth" , AuthRouter);
 app.use("/api/admin/product" , AdminProductsRouter);
 
 // Admin Dashboard route
-app.use('/api/admin/dashboard' , AdminDashboardRouter)
+app.use('/api/admin/dashboard' , AdminDashboardRouter);
+
+// Shop Product route
+app.use("/api/shop/products" , ShopProductsRouter);
 
 
 

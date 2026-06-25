@@ -17,8 +17,8 @@ function DesktopFilter(){
                     return(
 
                         <div key={chkOption.id + "desktop"} className="field flex justify-start items-center gap-2 ">
-                            <input className="w-[17px] h-[17px] accent-teal-300 outline-none cursor-pointer hover:opacity-80 transition-all linear duration-200" type="checkbox" name={chkOption.id} id={chkOption.id} />
-                            <label className="text-lg font-normal cursor-pointer tracking-[1px]" htmlFor={chkOption.id}>{chkOption?.label}</label>
+                            <input className="w-[17px] h-[17px]  accent-teal-300 outline-none cursor-pointer hover:opacity-80 transition-all linear duration-200" type="checkbox" name={chkOption.id} id={chkOption.id} />
+                            <label className="text-lg font-normal select-none cursor-pointer tracking-[1px]" htmlFor={chkOption.id}>{chkOption?.label}</label>
                         </div>
                         
                     )

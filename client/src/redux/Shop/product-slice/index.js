@@ -1,0 +1,64 @@
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import axios from "axios";
+const initialObj = {
+
+    isLoading:false,
+    productsList:[],
+}
+
+export const ShopAllProducts = createAsyncThunk('/api/shop/products/allproducts' , async(_ , {rejectWithValue}) => {
+
+    try {
+
+        const response = await axios.get("http://localhost:5000/api/shop/products/allproducts" , {withCredentials:true});
+
+        return response.data;
+        
+    } catch (error) {
+        
+        return(rejectWithValue(error?.response.data))
+    }
+});
+
+export const ShopSingleProduct = createAsyncThunk('/api/shop/products/productId' , async(productId , {rejectWithValue}) => {
+
+    try {
+
+        const response = await axios.get(`http://localhost:5000/api/shop/products/${productId}`, {withCredentials:true});
+
+        return response.data;
+        
+    } catch (error) {
+        
+        return(rejectWithValue(error?.response.data))
+    }
+});
+
+
+const ShopProductSlice = createSlice({
+    name:"ShopProductList",
+    initialState:initialObj,
+    reducers:{},
+    extraReducers:(builder) => {
+
+        builder.addCase(ShopAllProducts.pending , (state) => {
+
+            state.isLoading=true
+        }).addCase(ShopAllProducts.fulfilled , (state,action) => {
+
+            console.log(action.payload);
+            
+
+            state.isLoading=false,
+            state.productsList=action.payload.success ? action.payload.data : [];
+        }).addCase(ShopAllProducts.rejected , (state,action) => {            
+
+            state.isLoading=false,
+            state.productsList=[]
+        })
+        
+        
+    }
+});
+
+export default ShopProductSlice.reducer;
