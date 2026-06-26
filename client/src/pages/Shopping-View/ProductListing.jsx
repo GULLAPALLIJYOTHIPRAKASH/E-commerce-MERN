@@ -5,14 +5,15 @@ import { useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { ShopAllProducts, ShopSingleProduct } from "../../redux/Shop/product-slice";
 import ShopProductCard from "../../components/Shopping-View/ShopProductCard";
+import ShopProductDetails from "../../components/Shopping-View/ShopProductDetails";
 
 function ProductListing(){
 
     const [showSort , setShowSort] = useState(false);
     const[sort,setSort] =useState("LH");
     const dispatch  = useDispatch();
-    const[showSingleProduct , setShowSingleProduct]= useState("");
     const[singleProduct , setSingleProduct]= useState(null);
+
 
     // shop product redux
     const {productsList} = useSelector((state) => state.ShopProduct)
@@ -34,14 +35,13 @@ function ProductListing(){
 
 
     // Get Single products
-    const HandleShowSingleProduct = async (productId) => {
+    const HandleSingleProduct = async (productId) => {
         console.log("Single Product : ",productId);
 
-        if(productId.length > 0){
+        if(productId){
 
             
 
-            setShowSingleProduct(productId);
 
             
             try{
@@ -64,7 +64,7 @@ function ProductListing(){
         }
         else{
 
-            setShowSingleProduct("");
+            setSingleProduct(null);
         }
 
     }
@@ -82,7 +82,7 @@ function ProductListing(){
     
     
     return(<>
-    <div className="shop-products-container w-[100%] h-screen  p-4  border-1">
+    <div className="shop-products-container w-[100%] min-h-screen  p-4  border-1">
         <div className="shop-products-center w-[100%] h-[100%]  flex">
             {/* filters  category/brand */}
             <div className="filter-container hidden lg:block lg:w-[20%] xl:w-[15%]">
@@ -121,11 +121,14 @@ function ProductListing(){
 
                 {/* products list */}
                 <div className="list">
-               <ShopProductCard HandleShowSingleProduct={HandleShowSingleProduct} productsList={productsList}/>
+               <ShopProductCard HandleSingleProduct={HandleSingleProduct} productsList={productsList}/>
                 </div>
             </div>
         </div>
     </div>
+
+    {/* product details */}
+    <ShopProductDetails HandleSingleProduct={HandleSingleProduct} singleProduct={singleProduct} />
     </>)
 }
 export default ProductListing;
