@@ -6,6 +6,34 @@ import {useDispatch, useSelector} from "react-redux";
 import { ShopAllProducts, ShopSingleProduct } from "../../redux/Shop/product-slice";
 import ShopProductCard from "../../components/Shopping-View/ShopProductCard";
 import ShopProductDetails from "../../components/Shopping-View/ShopProductDetails";
+import {useSearchParams} from 'react-router-dom'
+
+// query search url
+const createSearchParamsHelper = (filters) => {
+
+    
+
+    const queryparams = [];
+
+   for(let [key , val] of Object.entries(filters)){
+
+    
+
+    if(Array.isArray(val) && val.length > 0){
+
+        // array into string
+        let queryStr = val.join(",");
+
+        
+
+        // push url 
+        queryparams.push(`${key}=${encodeURIComponent(queryStr)}`);
+    }
+   }
+   
+        // return join two url with &
+   return queryparams.join("&");
+}
 
 function ProductListing(){
 
@@ -13,6 +41,12 @@ function ProductListing(){
     const[sort,setSort] =useState("LH");
     const dispatch  = useDispatch();
     const[singleProduct , setSingleProduct]= useState(null);
+    const [filters , setFilters] = useState({});
+
+    // search params
+    const [searchParams , setSearchParams] = useSearchParams("");
+
+    const getCurrentCategoryNavOption = searchParams.get("category")
 
 
     // shop product redux
@@ -68,14 +102,107 @@ function ProductListing(){
         }
 
     }
+
+
+    // Handle Filter
+    const HandleFilter = async (filterType , filterOption) => {
+
+        console.log(filterType,filterOption);
+        // copy of filter state
+        let copyFilter = {...filters};
+
+        // find the filter type
+        const findFilterType = Object.keys(copyFilter).indexOf(filterType);
+
+
+        // check  filter type not exist
+        if(findFilterType === -1){
+
+            copyFilter = {
+
+                ...copyFilter,
+                [filterType] : [filterOption]
+            }
+
+        }else{
+
+
+            // check filter option is exist or not
+
+            let findFilterOption = copyFilter[filterType].indexOf(filterOption );
+
+           if(findFilterOption === -1){
+
+            copyFilter[filterType].push(filterOption);
+            
+           }else{
+
+            // remove it from array 
+            copyFilter[filterType].splice(findFilterOption , 1)
+
+           }
+            
+
+        }
+
+        
+        setFilters(copyFilter);
+
+        localStorage.setItem("filters" , JSON.stringify(copyFilter))
+        
+        
+        
+    }
+
     
 
+    // Fetch all products
+    useEffect(() => {
+        if(filters != null && sort != null){
+
+            
+            dispatch(ShopAllProducts({filterparams:filters , sortparams:sort}));
+        }   
+
+        
+    },[dispatch,filters , sort]);
+
+    // inital value for sort & filter
     useEffect(() => {
 
 
-        dispatch(ShopAllProducts());
-        
-    },[dispatch]);
+        setSort("LH");
+        setFilters(JSON.parse(localStorage.getItem("filters")) || {});
+
+
+    },[getCurrentCategoryNavOption]);
+
+
+
+  
+
+
+    // generate  url  with filter
+    useEffect(() => {
+
+        if(filters && Object.keys(filters).length > 0){
+
+            const createQueryString = createSearchParamsHelper(filters);
+
+            // add url to search params
+            setSearchParams(new URLSearchParams(createQueryString));
+
+        }else{
+
+            // clear url when filter empty
+            setSearchParams("");
+        }
+
+
+    },[filters]);
+
+  
+    
 
     
 
@@ -90,7 +217,7 @@ function ProductListing(){
                     <h1 className="text-[20px] font-medium text-black tracking-[1px]"><i className="text-xl fa-solid fa-sliders"></i> Filter</h1>
                 </div>
                 {/* filters */}
-               <DesktopFilter/>
+               <DesktopFilter filters={filters} HandleFilter={HandleFilter}/>
             
             </div>
             {/* products  */}
@@ -99,10 +226,10 @@ function ProductListing(){
                 <div className="heading flex justify-between ">
                     <h1 className="text-base lg:text-lg font-semibold tracking-[1px]">All Products</h1>
                     <div className="flex gap-[10px] justify-center items-center">
-                        <h2 className="text-base font-normal   text-gray-600">10 Products</h2>
+                        <h2 className="text-base font-normal   text-gray-600">{productsList?.length} Products</h2>
                         <div className="sort-container relative" >
                            <h1 onClick={HandleShowSort} className="text-base font-medium text-black border-2 border-gray-300 select-none rounded-lg text-center py-1 px-2 cursor-pointer"><i className=" rotate-90  fa-solid fa-arrow-right-arrow-left"></i> <span className="ml-1 font-normal">Sort</span></h1> 
-                           <ul className={`sort-list bg-white rounded-lg shadow-sm py-2 px-5 w-[180px] ${showSort ? "block" : "hidden"}  absolute bottom-[-120px] right-0 transtion-all linear duration-300`}>
+                           <ul className={`sort-list bg-white rounded-lg shadow-sm py-2 px-5 w-[180px] ${showSort ? "block" : "hidden"}  absolute bottom-[-110px] right-0 transtion-all linear duration-300 z-30`}>
                             {
                                 Sort.map((item) =>{
 

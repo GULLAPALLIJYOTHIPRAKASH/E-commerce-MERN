@@ -44,7 +44,7 @@ export const ShopNavLinks = [
 
 export const ProductFilter = {
 
-        catergory:[
+        category:[
 
 { id: "men", label: "Men" },
 { id: "women", label: "Women" },

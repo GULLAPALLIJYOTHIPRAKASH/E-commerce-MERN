@@ -1,9 +1,15 @@
 import { ProductFilter } from "../config/config";
 
-function DesktopFilter(){
+function DesktopFilter({filters , HandleFilter}){
+
+    
+
+    
+    
 
     return(<>
      <section className="desktop-filter">
+         {/* category filter */}
                 {
                     Object.keys(ProductFilter).map((filterType) => {
 
@@ -17,7 +23,9 @@ function DesktopFilter(){
                     return(
 
                         <div key={chkOption.id + "desktop"} className="field flex justify-start items-center gap-2 ">
-                            <input className="w-[17px] h-[17px]  accent-teal-300 outline-none cursor-pointer hover:opacity-80 transition-all linear duration-200" type="checkbox" name={chkOption.id} id={chkOption.id} />
+                            <input   onChange={() => HandleFilter(filterType ,chkOption.id)} checked={
+                                filters && Object.keys(filters).length > 0 && filters[filterType] && filters[filterType].indexOf(chkOption.id) > -1 ? true : false} 
+                            className="w-[17px] h-[17px]  accent-teal-300 outline-none cursor-pointer hover:opacity-80 transition-all linear duration-200" type="checkbox" name={chkOption.id} id={chkOption.id} />
                             <label className="text-lg font-normal select-none cursor-pointer tracking-[1px]" htmlFor={chkOption.id}>{chkOption?.label}</label>
                         </div>
                         
@@ -26,7 +34,6 @@ function DesktopFilter(){
                 })}
                 </div>
 
-                    {/* category filter */}
                     
                     
                 </div>

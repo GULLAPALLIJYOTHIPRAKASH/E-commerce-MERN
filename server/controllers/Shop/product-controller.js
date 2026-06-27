@@ -1,12 +1,61 @@
 const ProductModel = require("../../models/Product");
 
 
-// All product with sort
+// All product with filter ,sort
 const AllProducts = async (request , response) =>{
 
     try {
 
-        const productsList = await ProductModel.find({});
+        // get query data
+        const {category=[] , brand=[] , sortBy="LH"} = request.query;
+        
+        
+        
+        
+        
+        const filter = {
+
+        }
+
+        if(category.length > 0){
+
+            // check in category
+            filter.category = {
+            $in : [...category?.split(",")]
+        }
+        }
+
+        if(brand.length > 0 ){
+
+            // check in brand
+            filter.brand = {
+            $in : [...brand?.split(",")]
+        }
+        }
+
+
+        const sort = {};
+        // sort by
+        switch(sortBy){
+
+            case "LH":
+               sort.price=1;
+               break;
+            case "HL":
+                sort.price= -1;
+                break;
+            case "AZ":
+                sort.title=1;
+                break;
+            case "ZA":
+                sort.title=-1;
+                break;
+            default:
+                sort.price=1;
+            
+        }
+
+        const productsList = await ProductModel.find(filter).sort(sort);
         
         if(productsList.length > 0){
 
