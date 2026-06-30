@@ -161,7 +161,7 @@ function ProductListing(){
         if(filters != null && sort != null){
 
             
-            dispatch(ShopAllProducts({filterparams:filters , sortparams:sort}));
+            dispatch(ShopAllProducts({filterparams:filters , sortBy:sort}));
         }   
 
         

@@ -1,12 +1,17 @@
-function ShopProductCard({HandleSingleProduct , productsList}){
+import { useLocation } from "react-router-dom";
 
+function ShopProductCard({HandleSingleProduct= () =>{} , productsList , HandleNavigateToProductsPage=() => {}}){
+
+    const location = useLocation();
+
+    
     return(<>
      <section className="product-list mt-5 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-5">
     {/*single product  */}
     {
         productsList && productsList.length > 0  && productsList.map((item) => {
 
-            return(<article onClick={() => HandleSingleProduct(item?._id)} key={item?._id} className="single-product  cursor-pointer bg-white shadow-md rounded-lg hover:scale-[1.025] hover:translate-y-[-4px] transition-all linear duration-500">
+            return(<article onClick={() => {HandleSingleProduct(item?._id) ; HandleNavigateToProductsPage()}} key={item?._id} className="single-product  cursor-pointer bg-white shadow-md rounded-lg hover:scale-[1.025] hover:translate-y-[-4px] transition-all linear duration-500">
                         <div className="img-container relative w-[100%] h-60 overflow-hidden object-contain object-center">
                             <img className="w-[100%] h-[100%] overflow-hidden object-center object-contain" src={item?.image?.url} alt="product Image" />
 
@@ -38,11 +43,12 @@ function ShopProductCard({HandleSingleProduct , productsList}){
                             </div>
                             {/* out of stock */}
                             
-                            {
+                           { !location.pathname.includes("/home") &&  (
                         item?.totalStock > 1 ? 
                         <button className="bg-black text-white w-[100%] p-2 cursor-pointer hover:opacity-70 rounded-lg transition-all linear duration-300">Add to cart</button>
                         :<button className="bg-black text-white w-[100%] p-2  opacity-80 rounded-lg cursor-not-allowed transition-all linear duration-300">Out of stock</button>
-                            }
+        )}
+    
                         </div>
                     </article>)
         })

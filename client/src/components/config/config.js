@@ -34,6 +34,7 @@ export const Brand = [
 export const ShopNavLinks = [
 
      {   id:"home" , label:"Home" , url:"/shop/home"},
+     {   id:"shop" , label:"Shop" , url:"/shop/products"},
      {   id:"men" , label:"Men" , url:"/shop/products"},
      {   id:"women" , label:"Women", url:"/shop/products"},
      {   id:"kids" , label:"Kids", url:"/shop/products"},

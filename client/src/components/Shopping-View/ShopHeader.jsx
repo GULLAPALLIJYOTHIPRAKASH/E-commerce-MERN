@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { ShopNavLinks } from "../config/config";
 import {useDispatch, useSelector} from "react-redux";
 import { useState } from "react";
@@ -15,7 +15,7 @@ function ShopHeader(){
     const {user} = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
-    console.log(user);
+
 
     // Show/Hide Profile
     const HandleShowProfile = ()=> {
@@ -47,8 +47,59 @@ function ShopHeader(){
     // Show/hide sidebar
     const HandleShowSidebar = ()=> {
 
+        
         setShowSidebar(!showSidebar);
     }
+
+
+
+    const[searchParams , setSearchParams] = useSearchParams();
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    // Handle Navigate filters 
+    const HandleNavigateFilters = (item) => {
+
+        console.log(item, "helllo---------");
+        
+        
+        
+        // clear storage
+        localStorage.removeItem("filters");
+
+
+        let filters = item.id != "home" && item.id !="search" && item.id != "shop" ? 
+        {
+            "category":[item.id]
+
+        }: null;
+
+        
+
+        localStorage.setItem("filters" , JSON.stringify(filters));
+
+
+
+        // check from location shop/products
+        // then generate url query
+        // then update to filter & search url
+
+        location.pathname.includes("/shop/products") && filters != null ? setSearchParams(new URLSearchParams(`?category=${filters?.category}`)): navigate(item?.url);
+
+        // scroll top
+        window.scrollTo(0,0);
+
+
+
+    }
+
+    const a = (id)=> {
+
+        console.log(id);
+        
+    }
+
+
 
 
     
@@ -78,7 +129,7 @@ function ShopHeader(){
 
                                 return(
 
-                                 <li className="font-medium text-base transition-all linear duration-100 hover:text-gray-500" key={item.id+"desktop"}><Link to={item.url}>{item.label}</Link></li>
+                                 <li onClick={() => HandleNavigateFilters(item)} className="font-medium text-base transition-all linear duration-100 hover:text-gray-500" key={item.id+"desktop"}><Link to={item.url}>{item.label}</Link></li>
                                 )
                             })
                         }
@@ -115,7 +166,7 @@ function ShopHeader(){
     </nav>
     {/* Navbar end */}
 
-    <ShopMobileSidebar HandleUserLogout={HandleUserLogout} HandleShowSidebar={HandleShowSidebar} showSidebar={showSidebar}/>
+    <ShopMobileSidebar HandleNavigateFilters={HandleNavigateFilters} HandleUserLogout={HandleUserLogout} HandleShowSidebar={HandleShowSidebar} showSidebar={showSidebar}/>
     </>)
 }
 

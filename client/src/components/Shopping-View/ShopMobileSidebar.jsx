@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ShopNavLinks } from "../config/config";
 
-function ShopMobileSidebar({HandleShowSidebar , showSidebar, HandleUserLogout}){
+function ShopMobileSidebar({HandleNavigateFilters , HandleShowSidebar , showSidebar, HandleUserLogout}){
     const navigate = useNavigate();
 
     return(<>
@@ -26,7 +26,7 @@ function ShopMobileSidebar({HandleShowSidebar , showSidebar, HandleUserLogout}){
                         ShopNavLinks?.map((item) => {
 
                             return(
-                                <li className="text-xl font-medium tracking-[1px] " onClick={HandleShowSidebar} key={item?.id +"sidebar"}><Link to={item?.url}>{item?.label}</Link></li>
+                                <li onClick={() =>{ HandleShowSidebar(); HandleNavigateFilters(item); } } className="text-xl font-medium tracking-[1px] "  key={item?.id +"sidebar"}><Link to={item?.url}>{item?.label}</Link></li>
                             )
                         })
                     }

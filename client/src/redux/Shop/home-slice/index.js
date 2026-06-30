@@ -23,6 +23,21 @@ export const ShopGetAllBanners = createAsyncThunk("/api/shop/home/allbanners" , 
     }
 })
 
+// Get all Products 
+export const ShopGetAllProducts = createAsyncThunk("/api/shop/home/products" , async(_, {rejectWithValue}) => {
+
+    try {
+
+        const response  = await axios.get("http://localhost:5000/api/shop/home/products" , {withCredentials:true});
+
+        return response.data;
+        
+    } catch (error) {
+        
+        return(rejectWithValue(error.response.data))
+    }
+})
+
 
 const ShopHomeSlice = createSlice({
     name:"ShopHome",
@@ -41,6 +56,17 @@ const ShopHomeSlice = createSlice({
 
             state.isLoading = false,
             state.bannersList=  []
+        }).addCase(ShopGetAllProducts.pending , (state) => {
+
+            state.isLoading = true
+        }).addCase(ShopGetAllProducts.fulfilled , (state, action) => {
+
+            state.isLoading = false,
+            state.productsList= action.payload.success ? action.payload.data : []
+        }).addCase(ShopGetAllProducts.rejected , (state, action) => {
+
+            state.isLoading = false,
+            state.productsList=  []
         })
     }
 });

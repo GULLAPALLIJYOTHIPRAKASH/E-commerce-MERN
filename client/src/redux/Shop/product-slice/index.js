@@ -6,11 +6,15 @@ const initialObj = {
     productsList:[],
 }
 
-export const ShopAllProducts = createAsyncThunk('/api/shop/products/allproducts' , async(_ , {rejectWithValue}) => {
+export const ShopAllProducts = createAsyncThunk('/api/shop/products/allproducts' , async({filterparams , sortBy} , {rejectWithValue}) => {
 
     try {
 
-        const response = await axios.get("http://localhost:5000/api/shop/products/allproducts" , {withCredentials:true});
+        const query = new URLSearchParams({
+            ...filterparams , sortBy:sortBy
+        })
+
+        const response = await axios.get(`http://localhost:5000/api/shop/products/allproducts?${query}` , {withCredentials:true});
 
         return response.data;
         
@@ -46,7 +50,7 @@ const ShopProductSlice = createSlice({
             state.isLoading=true
         }).addCase(ShopAllProducts.fulfilled , (state,action) => {
 
-            console.log(action.payload);
+            // console.log(action.payload);
             
 
             state.isLoading=false,
