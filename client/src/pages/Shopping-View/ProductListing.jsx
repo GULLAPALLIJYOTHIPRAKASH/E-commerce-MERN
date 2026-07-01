@@ -6,7 +6,9 @@ import {useDispatch, useSelector} from "react-redux";
 import { ShopAllProducts, ShopSingleProduct } from "../../redux/Shop/product-slice";
 import ShopProductCard from "../../components/Shopping-View/ShopProductCard";
 import ShopProductDetails from "../../components/Shopping-View/ShopProductDetails";
-import {useSearchParams} from 'react-router-dom'
+import {useSearchParams} from 'react-router-dom';
+import {toast} from "react-toastify";
+import { ShopAddToCart } from "../../redux/Shop/cart-slice";
 
 // query search url
 const createSearchParamsHelper = (filters) => {
@@ -50,7 +52,12 @@ function ProductListing(){
 
 
     // shop product redux
-    const {productsList} = useSelector((state) => state.ShopProduct)
+    const {productsList} = useSelector((state) => state.ShopProduct);
+
+    // user redux
+    const {user} = useSelector((state) => state.auth);
+
+    const {cartItems} = useSelector((state) => state.ShopCart);
 
 
     // show/hide sort
@@ -70,7 +77,7 @@ function ProductListing(){
 
     // Get Single products
     const HandleSingleProduct = async (productId) => {
-        console.log("Single Product : ",productId);
+        // console.log("Single Product : ",productId);
 
         if(productId){
 
@@ -82,7 +89,7 @@ function ProductListing(){
 
                 const response  = await dispatch(ShopSingleProduct(productId)).unwrap();
 
-                console.log(response);
+                // console.log(response);
 
                 if(response?.success){
 
@@ -107,7 +114,7 @@ function ProductListing(){
     // Handle Filter
     const HandleFilter = async (filterType , filterOption) => {
 
-        console.log(filterType,filterOption);
+        // console.log(filterType,filterOption);
         // copy of filter state
         let copyFilter = {...filters};
 
@@ -178,10 +185,6 @@ function ProductListing(){
     },[getCurrentCategoryNavOption]);
 
 
-
-  
-
-
     // generate  url  with filter
     useEffect(() => {
 
@@ -200,6 +203,60 @@ function ProductListing(){
 
 
     },[filters]);
+
+
+    // Handle  Add to cart
+    const HandleAddToCart = async (productId , stock) => {
+
+        const getCart = cartItems?.items || []; 
+
+        
+        if(getCart.length > 0 ){
+            
+            // find product Id index from cart
+            const cartProductIdIndex = getCart.findIndex((item) => item.productId.toString() === productId );
+
+            if(cartProductIdIndex > -1){
+
+                // get current product quantity from cart
+                const currentProductquantity = getCart[cartProductIdIndex].quantity;
+                
+
+                if(currentProductquantity + 1 > stock){
+
+                    toast.warn(`only ${currentProductquantity} items can be added to cart`, {
+
+                        toastId:"stockCart"
+                    });
+
+                    return ;
+                }
+            
+        }
+        }
+        
+
+        try {
+
+            const response = await dispatch(ShopAddToCart({userId:user?.id , productId , quantity:1})).unwrap();
+            console.log(response);
+
+            if(response?.success){
+
+                toast.success(`${response.message}` , {toastId:"AddToCart"})
+            }
+            
+        } catch (error) {
+
+
+            console.log(error);
+            
+            
+        }
+        
+        
+    }
+
 
   
     
@@ -248,7 +305,7 @@ function ProductListing(){
 
                 {/* products list */}
                 <div className="list">
-               <ShopProductCard HandleSingleProduct={HandleSingleProduct} productsList={productsList}/>
+               <ShopProductCard HandleAddToCart={HandleAddToCart} HandleSingleProduct={HandleSingleProduct} productsList={productsList}/>
                 </div>
             </div>
         </div>

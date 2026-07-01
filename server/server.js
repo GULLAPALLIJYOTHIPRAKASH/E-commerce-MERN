@@ -9,6 +9,7 @@ const AdminProductsRouter = require("./routes/Admin/Product/product-route");
 const AdminDashboardRouter = require("./routes/Admin/Dashboard/dashboard-route");
 const ShopProductsRouter = require("./routes/Shop/Product/product-route");
 const ShopHomeRouter = require("./routes/Shop/Home/home-route");
+const ShopCartRouter = require("./routes/Shop/Product/cart-route");
 
 // PORT
 const PORT = process.env.PORT || 5000;
@@ -59,9 +60,12 @@ app.use('/api/admin/dashboard' , AdminDashboardRouter);
 app.use("/api/shop/products" , ShopProductsRouter);
 
 
-// Shop Home rout
+// Shop Home route
 app.use("/api/shop/home" , ShopHomeRouter);
 
+
+// Shop Cart route
+app.use("/api/shop/cart" , ShopCartRouter);
 
 
 
