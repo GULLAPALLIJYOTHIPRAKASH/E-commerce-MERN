@@ -116,6 +116,89 @@ const AddToCart = async (request , response) => {
 const GetAllCartItems =  async (request , response) => {
 
     try {
+
+        const userId = request.params.userId;
+
+
+        if(!userId){
+
+            return(
+                response.status(400).json({
+                    success:false,
+                    message:"UserId is missing."
+                })
+            )
+        }
+
+
+        // check cart with userId
+        const checkCart = await CartModel.findOne({userId}).populate({
+            path:"items.productId",
+            select:"title  image  price  salePrice "
+        });
+
+
+        if(!checkCart){
+
+            return(
+                response.status(404).json({
+
+                    success:false,
+                    message:"Cart is Empty,please add items"
+                })
+            )
+        }
+
+
+        // check actuall product  from cart
+        const validCart = checkCart.items.filter((item) => item.productId);
+
+        // console.log(validCart);
+
+        // if any item in cart is delete from products db
+        if(checkCart.length > validCart.length){
+
+            checkCart.items = validCart;
+
+            // save to cart DB
+            await checkCart.save();
+        }
+
+
+
+
+        const populatedCart = validCart?.map((item) => {
+
+            return{
+
+                productId:item?.productId?._id,
+                image:item?.productId?.image,
+                title:item?.productId?.title,
+                price:item?.productId?.price,
+                salePrice:item?.productId?.salePrice,
+                quantity:item?.quantity
+
+            }
+        })
+
+       ;
+        
+
+
+        return(
+            response.status(200).json({
+            success:true,
+            message:"Cart is Available",
+            data:{
+
+            ...checkCart._doc,
+            items:populatedCart
+        }
+        }))
+
+
+        
+
         
     } catch (error) {
         

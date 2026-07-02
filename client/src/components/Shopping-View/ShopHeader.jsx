@@ -60,7 +60,6 @@ function ShopHeader(){
     // Handle Navigate filters 
     const HandleNavigateFilters = (item) => {
 
-        console.log(item, "helllo---------");
         
         
         
@@ -93,11 +92,7 @@ function ShopHeader(){
 
     }
 
-    const a = (id)=> {
-
-        console.log(id);
-        
-    }
+  
 
 
 

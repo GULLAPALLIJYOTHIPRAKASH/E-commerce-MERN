@@ -1,4 +1,4 @@
-function ShopProductDetails({HandleSingleProduct , singleProduct}){
+function ShopProductDetails({HandleAddToCart , HandleSingleProduct , singleProduct}){
 
     return(<>
     <div className={`product-details-container w-[100%] min-h-[100vh] ${singleProduct?._id?.length ? "block" :"hidden" }  fixed top-0 left-0 bg-black/30 z-100 border-1 transition-all ease-in-out duration-500 flex justify-center items-center`}>
@@ -51,7 +51,7 @@ function ShopProductDetails({HandleSingleProduct , singleProduct}){
                 {/* out of stock */}
                 {
             singleProduct?.totalStock > 1 ? 
-            <button className="bg-black text-white w-[100%] p-2 cursor-pointer hover:opacity-70 rounded-lg transition-all linear duration-300">Add to cart</button>
+            <button onClick={() => HandleAddToCart(singleProduct?._id.toString() , singleProduct?.totalStock)} className="bg-black text-white w-[100%] p-2 cursor-pointer hover:opacity-70 rounded-lg transition-all linear duration-300">Add to cart</button>
             :<button className="bg-black text-white w-[100%] p-2  opacity-80 rounded-lg cursor-not-allowed transition-all linear duration-300">Out of stock</button>
                 }
 

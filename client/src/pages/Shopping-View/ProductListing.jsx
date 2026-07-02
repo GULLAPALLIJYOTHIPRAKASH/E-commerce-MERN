@@ -8,7 +8,7 @@ import ShopProductCard from "../../components/Shopping-View/ShopProductCard";
 import ShopProductDetails from "../../components/Shopping-View/ShopProductDetails";
 import {useSearchParams} from 'react-router-dom';
 import {toast} from "react-toastify";
-import { ShopAddToCart } from "../../redux/Shop/cart-slice";
+import { ShopAddToCart, ShopGetAllCartItems } from "../../redux/Shop/cart-slice";
 
 // query search url
 const createSearchParamsHelper = (filters) => {
@@ -219,7 +219,7 @@ function ProductListing(){
             if(cartProductIdIndex > -1){
 
                 // get current product quantity from cart
-                const currentProductquantity = getCart[cartProductIdIndex].quantity;
+                const currentProductquantity = getCart[cartProductIdIndex].quantity;                
                 
 
                 if(currentProductquantity + 1 > stock){
@@ -242,7 +242,9 @@ function ProductListing(){
             console.log(response);
 
             if(response?.success){
-
+                // refetch again for updated cart
+                dispatch(ShopGetAllCartItems(user?.id));
+                
                 toast.success(`${response.message}` , {toastId:"AddToCart"})
             }
             
@@ -258,6 +260,13 @@ function ProductListing(){
     }
 
 
+
+
+    useEffect(() => {
+
+        dispatch(ShopGetAllCartItems(user?.id))
+
+    },[dispatch])
   
     
 
@@ -312,7 +321,7 @@ function ProductListing(){
     </div>
 
     {/* product details */}
-    <ShopProductDetails HandleSingleProduct={HandleSingleProduct} singleProduct={singleProduct} />
+    <ShopProductDetails HandleAddToCart={HandleAddToCart} HandleSingleProduct={HandleSingleProduct} singleProduct={singleProduct} />
     </>)
 }
 export default ProductListing;
