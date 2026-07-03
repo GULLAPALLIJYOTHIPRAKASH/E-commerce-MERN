@@ -1,10 +1,12 @@
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { ShopNavLinks } from "../config/config";
 import {useDispatch, useSelector} from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LogoutUser } from "../../redux/auth-slice";
 import {toast } from "react-toastify";
 import ShopMobileSidebar from "./ShopMobileSidebar";
+import CartSidebar from "./CartSidebar";
+import { ShopGetAllCartItems } from "../../redux/Shop/cart-slice";
 
 function ShopHeader(){
 
@@ -14,6 +16,12 @@ function ShopHeader(){
     // user redux
     const {user} = useSelector((state) => state.auth);
     const dispatch = useDispatch();
+
+    const[showCart , setShowCart] =useState(false);
+
+    // cart redux
+    const{cartItems} = useSelector((state) => state.ShopCart);
+
 
 
 
@@ -44,7 +52,7 @@ function ShopHeader(){
     }
 
 
-    // Show/hide sidebar
+    // Show/hide  mobile sidebar
     const HandleShowSidebar = ()=> {
 
         
@@ -92,6 +100,27 @@ function ShopHeader(){
 
     }
 
+
+
+    // show/hide cart Sidebar
+    const HandleCartSidebar=() => {
+
+        
+        setShowCart(!showCart);
+
+        
+    }
+
+
+    // fetch all cart items 
+    useEffect(() => {
+
+        if(showCart){
+            
+            dispatch(ShopGetAllCartItems(user?.id))
+        }
+    },[dispatch,showCart])
+
   
 
 
@@ -134,7 +163,7 @@ function ShopHeader(){
 
                 {/* desktop cart-profile */}
                 <div className="cart-profile hidden  lg:block lg:flex lg:gap-6 lg:justify-between lg:items-center ">
-                    <div className="cart-icon border-2 border-gray-200 rounded-lg text-center py-1 px-2 cursor-pointer">
+                    <div onClick={HandleCartSidebar} className="cart-icon border-2 border-gray-200 rounded-lg text-center py-1 px-2 cursor-pointer">
                         <i className="text-base fa-solid fa-cart-shopping"></i>
                     </div>
                     <div onClick={HandleShowProfile} className="profile cursor-pointer">
@@ -161,7 +190,11 @@ function ShopHeader(){
     </nav>
     {/* Navbar end */}
 
-    <ShopMobileSidebar HandleNavigateFilters={HandleNavigateFilters} HandleUserLogout={HandleUserLogout} HandleShowSidebar={HandleShowSidebar} showSidebar={showSidebar}/>
+    {/* Mobile sidebar  */}
+    <ShopMobileSidebar HandleCartSidebar={HandleCartSidebar} HandleNavigateFilters={HandleNavigateFilters} HandleUserLogout={HandleUserLogout} HandleShowSidebar={HandleShowSidebar} showSidebar={showSidebar}/>
+   
+   {/* CartSidebar */}
+   <CartSidebar cartItems={cartItems.items} showCart={showCart} HandleCartSidebar={HandleCartSidebar}/>
     </>)
 }
 

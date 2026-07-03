@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ShopNavLinks } from "../config/config";
 
-function ShopMobileSidebar({HandleNavigateFilters , HandleShowSidebar , showSidebar, HandleUserLogout}){
+function ShopMobileSidebar({HandleCartSidebar , HandleNavigateFilters , HandleShowSidebar , showSidebar, HandleUserLogout}){
     const navigate = useNavigate();
 
     return(<>
@@ -36,7 +36,7 @@ function ShopMobileSidebar({HandleNavigateFilters , HandleShowSidebar , showSide
             {/* cart-acount-logout */}
             <div className="cart-account-logout mt-[10px] flex justify-center items-center gap-10">
                 {/* cart */}
-                <div onClick={HandleShowSidebar} className="icon border-2 border-gray-300 px-3 py-2 rounded-lg">
+                <div onClick={() => {HandleShowSidebar(); HandleCartSidebar()}} className="icon border-2 border-gray-300 px-3 py-2 rounded-lg">
                     <i className="text-2xl font-semibold fa-solid fa-cart-shopping"></i>
                 </div>
                 {/* account */}

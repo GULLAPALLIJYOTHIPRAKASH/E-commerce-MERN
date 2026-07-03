@@ -220,6 +220,50 @@ const UpdateCart =   async (request , response) => {
 
     try {
         
+        const {userId , productId , quantity} = request.params;
+
+        if(!userId && !productId && !quantity){
+
+            return(
+                response.status(400).json({
+                    success:false,
+                    message:"Invalid data"
+                })
+            )
+        }
+
+        // check cart
+        const checkCart = await CartModel.findOne({userId});
+
+
+        if(!checkCart){
+
+            return(
+                response.status(404).json({
+                    success:false,
+                    message:"No Cart Available"
+                })
+            )
+        }
+
+
+        // find product for update quantity
+        const findProductIndex =checkCart?.items.findIndex((item) => { item?.productId.toString() === productId} );
+
+        if(findProductIndex === -1){
+
+             return(
+                response.status(404).json({
+                    success:false,
+                    message:"product not found in the cart"
+                })
+            )
+        }
+
+        
+        console.log(findProductIndex);
+        
+
     } catch (error) {
         
 
