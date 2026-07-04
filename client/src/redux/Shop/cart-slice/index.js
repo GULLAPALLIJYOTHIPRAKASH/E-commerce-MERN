@@ -69,15 +69,13 @@ export const ShopUpdateCart = createAsyncThunk('/api/shop/cart/update-cart' , as
 export const ShopDeleteCart = createAsyncThunk('/api/shop/cart/delete-cart/userId/productId' , async({userId, productId}, {rejectWithValue}) => {
 
     try {
-        
-        const response = await axios.put(`http://localhost:5000/api/shop/cart/delete-cart/${userId}/${productId}`  ,
-            {
-                withCredentials:true,
-               
-            }
-         );
 
-      return  response.data
+        console.log({userId, productId});
+        
+        const response = await axios.delete(`http://localhost:5000/api/shop/cart/delete-cart/${userId}/${productId}`,{withCredentials:true,});
+
+      return  response.data;
+
     } catch (error) {
         
         return(rejectWithValue(error.response.data))
@@ -119,10 +117,10 @@ const ShopCartSlice = createSlice({
         }).addCase(ShopUpdateCart.pending , (state) => {
 
             state.isLoading=true
-        }).addCase(ShopUpdateCart.fulfilled , (state) => {
+        }).addCase(ShopUpdateCart.fulfilled , (state,action) => {
 
             state.isLoading=false
-            state.cartItems={}
+            state.cartItems=action.payload.success ? action.payload.data : {}
         }).addCase(ShopUpdateCart.rejected , (state) => {
 
             state.isLoading=false
@@ -130,10 +128,10 @@ const ShopCartSlice = createSlice({
         }).addCase(ShopDeleteCart.pending , (state) => {
 
             state.isLoading=true
-        }).addCase(ShopDeleteCart.fulfilled , (state) => {
+        }).addCase(ShopDeleteCart.fulfilled , (state,action) => {
 
             state.isLoading=false
-            state.cartItems={}
+            state.cartItems=action.payload.success ? action.payload.data : {}
         }).addCase(ShopDeleteCart.rejected , (state) => {
 
             state.isLoading=false

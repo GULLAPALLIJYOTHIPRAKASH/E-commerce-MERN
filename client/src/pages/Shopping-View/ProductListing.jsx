@@ -224,7 +224,7 @@ function ProductListing(){
 
                 if(currentProductquantity + 1 > stock){
 
-                    toast.warn(`only ${currentProductquantity} items can be added to cart`, {
+                    toast.warn(`Only ${currentProductquantity} items can be added to cart`, {
 
                         toastId:"stockCart"
                     });
