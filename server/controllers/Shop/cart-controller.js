@@ -376,6 +376,7 @@ const DeleteCart =  async (request , response) => {
         // save in DB
         await cart.save();
 
+        // populate
         await cart.populate({
             path:"items.productId",
             select:"title image price salePrice"
