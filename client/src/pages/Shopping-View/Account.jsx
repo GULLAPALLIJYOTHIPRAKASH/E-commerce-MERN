@@ -4,6 +4,7 @@ import ShopAddress from "../../components/Shopping-View/ShopAddress";
 import {useDispatch, useSelector} from "react-redux"
 import { ShopAddAddress, ShopDeleteAddress, ShopEditAddress, ShopGetAllAddress } from "../../redux/Shop/address-slice";
 import {toast} from "react-toastify";
+import ShopOrders from "../../components/Shopping-View/ShopOrders";
 
 const address_Form = {
         address:"",
@@ -213,6 +214,11 @@ function Account(){
                     <h1 onClick={() => HandleTabSwitch("orders")} className={`text-base   ${tab === "orders" ?  "bg-white font-medium" : "font-normal"}  hover:font-medium transition-all linear duration-300 text-black px-2 py-1 rounded-lg cursor-pointer `}>Orders</h1>
                     <h1 onClick={() => HandleTabSwitch("address")} className={`text-base  ${tab === "address" ? "bg-white font-medium" : "font-normal"}  hover:font-medium transition-all linear duration-300 text-black px-2 py-1 rounded-lg cursor-pointer `}>Address</h1>
                 </div>
+
+                {/* Shop Orders */}
+                {
+                    tab === "orders" && <ShopOrders/>
+                }
 
                 {/* Address Section */}
                 {
