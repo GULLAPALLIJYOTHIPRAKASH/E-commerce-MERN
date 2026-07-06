@@ -12,7 +12,7 @@ function CartItemsCard({cartItems , HandleUpdateProductQuantity, HandleDeletePro
                                 <div className="img-container w-20 h-20  object-center object-contain overflow-hidden">
                                     <img className="w-[100%] h-[100%] object-center object-contain overflow-hidden" src={item?.image.url} alt="cart product Image" />
                                 </div>
-                                <div className="item-info w-[80%]  flex justify-between items-start">
+                                <div className={`item-info  w-[100%]  flex justify-between items-start`}>
                                     <div className="title w-[100%]">
                                         <h1 className="text-[15px] font-medium line-clamp-1">{item?.title}</h1>
                                         
@@ -26,10 +26,10 @@ function CartItemsCard({cartItems , HandleUpdateProductQuantity, HandleDeletePro
                                     </div>
 
                                     {/* price-delete */}
-                                     <div className="price-delete flex flex-col justify-end items-end">
+                                     <div className=" price-delete flex flex-col justify-end items-end">
                                             <h1 className="text-base font-medium">${item?.salePrice != null && item?.salePrice > 0 ? (item?.salePrice) * item?.quantity : (item?.price) * item?.quantity   }</h1>
                                             <span onClick={() => HandleDeleteProductQty(item?.productId.toString())} className="text-base mt-1 text-right font-medium text-red-600 cursor-pointer"><i className="fa-regular fa-trash-can"></i></span>
-                                        </div>
+                                    </div>
                                 </div>
 
                             </article>
