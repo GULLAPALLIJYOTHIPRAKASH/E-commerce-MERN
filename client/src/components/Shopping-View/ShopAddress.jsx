@@ -9,7 +9,7 @@ function ShopAddress({SubmitEditAddress , editAddress , HandleEdit, DeleteAddres
         {/* address card */}
         <AddressCard HandleEdit={HandleEdit} DeleteAddress={DeleteAddress} addressList={addressList}/>
         <form  onSubmit={ (e) => {editAddress?.status ? SubmitEditAddress(e) : SubmitAddress(e) }} className="address-form mt-4 border-1 border-gray-300 rounded-md p-4">
-            <h1 className="text-base font-bold mb-2">Add New Address</h1>
+            <h1 className="text-base font-bold mb-2">{editAddress.status   ? "Edit a Address"  : "Add New Address"}</h1>
             {/* address */}
             <div className="field mt-1">
                 <label htmlFor="address" className="text-[15px]  font-normal">Address</label>

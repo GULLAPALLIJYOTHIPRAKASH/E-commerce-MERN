@@ -1,17 +1,19 @@
-import Cart from "../../../../server/models/Cart";
+import { useNavigate } from "react-router-dom";
 import CartItemsCard from "./CartItemsCard";
 
 function CartSidebar({HandleDeleteProductQty , HandleUpdateProductQuantity , cartItems ,showCart , HandleCartSidebar}){
 
     const totalCart = cartItems && cartItems.length > 0 && cartItems.reduce((acc , item) => {
 
-        console.log( item );
         
         return(
 
          acc += (item?.salePrice != null && item?.salePrice > 0 ? item.salePrice :  item.price)* item.quantity
         )
     },0) 
+
+
+    const navigate = useNavigate();
 
     
     
@@ -39,7 +41,7 @@ function CartSidebar({HandleDeleteProductQty , HandleUpdateProductQuantity , car
                     <h1 className="text-base font-bold ">Total</h1>
                     <h1 className="text-base font-bold ">${totalCart || 0}</h1>
                 </div>
-                <div className="button w-[100%] bg-black text-white text-center py-2 rounded-lg mt-3 cursor-pointer hover:opacity-70 transition-all linear duration-300">Check out</div>
+                <button disabled={ cartItems?.length == 0 ? true : false}  onClick={() => {navigate('/shop/checkout'); HandleCartSidebar(); }} className="button w-[100%] bg-black text-white text-center py-2 rounded-lg mt-3 cursor-pointer hover:opacity-70 transition-all linear duration-300">Check out</button>
             </div>
             
         </div>
