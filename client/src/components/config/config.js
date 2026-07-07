@@ -77,3 +77,14 @@ export const Sort =[
         {id:"AZ", label:"Title: A to Z"},
         {id:"ZA", label:"Title: Z to A"},
 ]
+
+
+export const OrderStatus = [
+
+    {id:"confirmed" , label:"Confirmed"},
+    {id:"pending" , label:"Pending"},
+    {id:"inProcess" , label:"In Process"},
+    {id:"inShipped" , label:"In Shipped"},
+    {id:"delivered" , label:"Delivered"},
+    {id:"rejected" , label:"Rejected"},
+]

@@ -22,12 +22,12 @@
   }
 };
 
-function ShopOrders({HanldeOrderDetails}){
+function AdminOrders({HanldeOrderDetails}){
 
    
     return(<>
-    <div className="orders-section border-1 border-gray-300 p-4 mt-3 rounded-sm">
-        <h1 className="text-base font-medium mb-3">Orders History</h1>
+    <div className="orders-section p-4 mt-3 rounded-sm">
+        {/* <h1 className="text-base font-medium mb-3">Orders History</h1> */}
         {/* order table */}
         <section className="overflow-x-auto">
             <table className="w-[100%] border-collapse">
@@ -62,4 +62,4 @@ function ShopOrders({HanldeOrderDetails}){
     </div>
     </>)
 }
-export default ShopOrders;
+export default AdminOrders;

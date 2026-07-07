@@ -1,8 +1,31 @@
+import { useState } from "react";
+import AdminOrders from "../../components/Admin-View/AdminOrders";
+import OrderDetailView from "../../components/Shopping-View/OrderDetailView";
+
 function Orders(){
 
-    return(<>
+        const [showOrderDetail , setShowOrderDetail] =useState(false);
     
-    <h1>Admin Orders Page</h1>
+    // show/hide order detail
+    const HanldeOrderDetails = () =>{
+
+        console.log(showOrderDetail);
+        
+
+        setShowOrderDetail(!showOrderDetail);
+    }
+
+    return(<>
+    <div className="admin-orders-container">
+        <div className="admin-orders-center">
+            <h1 className="text-base lg:text-lg font-medium">Orders List</h1>
+
+            <AdminOrders HanldeOrderDetails={HanldeOrderDetails}/>
+        </div>
+    </div>
+
+    {/* Order detail view */}
+    <OrderDetailView showOrderDetail={showOrderDetail} HanldeOrderDetails={HanldeOrderDetails}/>
     </>)
 }
 

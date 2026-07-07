@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux"
 import { ShopAddAddress, ShopDeleteAddress, ShopEditAddress, ShopGetAllAddress } from "../../redux/Shop/address-slice";
 import {toast} from "react-toastify";
 import ShopOrders from "../../components/Shopping-View/ShopOrders";
+import OrderDetailView from "../../components/Shopping-View/OrderDetailView";
 
 const address_Form = {
         address:"",
@@ -31,6 +32,8 @@ function Account(){
     const dispatch = useDispatch();
     // user redux
     const {user}  = useSelector((state) => state.auth);
+
+    const [showOrderDetail , setShowOrderDetail] =useState(false);
 
 
     // Handle orders/address
@@ -199,6 +202,17 @@ function Account(){
         dispatch(ShopGetAllAddress({userId:user?.id}))
     },[dispatch])
 
+
+    // show/hide order detail
+    const HanldeOrderDetails = () =>{
+
+        console.log(showOrderDetail);
+        
+
+        setShowOrderDetail(!showOrderDetail);
+    }
+
+
     return(<>
     <div className="account-container">
         <div className="account-center">
@@ -217,7 +231,7 @@ function Account(){
 
                 {/* Shop Orders */}
                 {
-                    tab === "orders" && <ShopOrders/>
+                    tab === "orders" && <ShopOrders  HanldeOrderDetails={HanldeOrderDetails}/>
                 }
 
                 {/* Address Section */}
@@ -230,6 +244,9 @@ function Account(){
         </div>
     </div>
     
+
+    {/* Order detail view */}
+    <OrderDetailView showOrderDetail={showOrderDetail} HanldeOrderDetails={HanldeOrderDetails}/>
     </>)
 }
 
