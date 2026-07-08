@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AdminOrders from "../../components/Admin-View/AdminOrders";
-import OrderDetailView from "../../components/Shopping-View/OrderDetailView";
+import OrderDetailView from "../../components/Admin-View/OrderDetailView";
 
 function Orders(){
 

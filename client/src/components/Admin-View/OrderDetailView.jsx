@@ -1,8 +1,10 @@
+import { OrderStatus } from "../config/config";
+
 function OrderDetailView({showOrderDetail, HanldeOrderDetails}){
 
 
     return(<>
-    <div className={`order-details-view-container w-[100%] h-[100%] fixed top-0 left-0 ${showOrderDetail ? 'left-[0]' : 'left-[100%]'} bg-gray-500/10 z-100 transition-all linear duration-300 flex justify-center items-center`}>
+    <div className={`order-details-view-container w-[100%] h-[100%] fixed top-0 left-0 ${showOrderDetail ? 'left-[0]' : 'left-[100%]'} bg-black/30 z-100 transition-all linear duration-300 flex justify-center items-center`}>
         <div className="details-center w-[100%] p-3 max-w-[650px] max-h-[350px] mx-[20px] scrollbar-thin overflow-y-auto bg-white rounded-lg">
             <div onClick={HanldeOrderDetails} className="close-btn text-right mb-3">
                 <i className="text-lg cursor-pointer fa-solid fa-xmark"></i>
@@ -84,6 +86,19 @@ function OrderDetailView({showOrderDetail, HanldeOrderDetails}){
                 
 
             </div>
+            <div className="field">
+                <label className="block text-base  font-medium mb-1">Order Status:</label>
+                <select className="w-[100%] outline-none border-2 border-gray-200 rounded-md py-2">
+                    {OrderStatus.map((item) => {
+
+                        return(
+                            <option key={item.label} value={item.id}>{item.label}</option>
+                        )
+                    })}
+                </select>
+            </div>
+
+            <button className="w-[100%] p-2 bg-black text-white text-center rounded-lg mt-2 cursor-pointer">Update Status</button>
         </div>
     </div>
     </>)

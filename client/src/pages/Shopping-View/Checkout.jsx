@@ -23,7 +23,10 @@ function Checkout(){
     const{cartItems} = useSelector((state) => state.ShopCart);
 
     // product redux 
-    const {productsList} = useSelector((state) => state.ShopProduct)
+    const {productsList} = useSelector((state) => state.ShopProduct);
+
+
+    const [ispayment , setIsPayment] = useState(false);
 
 
 
@@ -36,7 +39,11 @@ function Checkout(){
         console.log(id , getaddress);
         
 
-        setDeliveryAddress(getaddress)
+        setDeliveryAddress({
+
+            ...getaddress,
+            addressId:getaddress._id
+        })
 
     }
 
@@ -153,7 +160,7 @@ function Checkout(){
 
 
     // total Cart
-     const totalCart = cartItems && cartItems?.items?.length > 0 && cartItems?.items?.reduce((acc , item) => {
+     const totalAmount = cartItems && cartItems?.items?.length > 0 && cartItems?.items?.reduce((acc , item) => {
 
         
         return(
@@ -161,6 +168,67 @@ function Checkout(){
          acc += (item?.salePrice != null && item?.salePrice > 0 ? item.salePrice :  item.price)* item.quantity
         )
     },0) 
+
+
+    // checkout the paypal
+    const HandleCreateOrder =  async() => {
+
+        try {
+
+            if(deliveryAddress){
+
+                console.log(deliveryAddress , cartItems , totalAmount);
+
+                const formData = {
+
+                    userId:user?.id,
+                    cartId:cartItems?._id,
+                    cartItems: cartItems.items.map((item) => {
+
+                        return({
+                            productId:item?.productId,
+                            title:item?.title,
+                            image:item?.image,
+                            quantity:item?.quantity, 
+                            price: !item.salePrice  && item.salePrice > 0 ? (item.salePrice) *item?.quantity : (item?.price)* item?.quantity
+                        })
+                    }),
+                    addressInfo:{
+
+                        addressId:deliveryAddress._id,
+                        address:deliveryAddress.address,
+                        city:deliveryAddress.city,
+                        pincode:deliveryAddress?.pincode,
+                        phone:deliveryAddress?.phone,
+                        notes:deliveryAddress?.notes
+
+                    },
+                    totalAmount:totalAmount,
+                    orderDate: new Date(),
+                    orderUpdateDate: new Date(),
+                    orderStatus:"pending",
+                    payerId:"",
+                    payment:"",
+                    paymentStatus:"pending",
+                    paymentMethod:"paypal"
+
+                }
+
+                console.log(formData);
+                
+                
+            }
+            else{
+
+                toast.info("Delivery Address is required");
+            }
+            
+        } catch (error) {
+            
+            console.log(error);
+            
+        }
+    }
 
 
 
@@ -196,9 +264,9 @@ function Checkout(){
 
                 <div className="cart-total flex justify-between items-center">
                     <h1 className="text-base font-bold ">Total</h1>
-                    <h1 className="text-base font-bold ">${totalCart || 0}</h1>
+                    <h1 className="text-base font-bold ">${totalAmount || 0}</h1>
                 </div>
-                <button disabled={cartItems?.items?.length  == 0 ? true :false}  className="button w-[100%] bg-black text-white text-center py-2 rounded-lg mt-3 cursor-pointer hover:opacity-70 transition-all linear duration-300">Checkout with PayPal</button>
+                <button onClick={HandleCreateOrder} disabled={cartItems?.items?.length  == 0 ? true :false}  className="button w-[100%] bg-black text-white text-center py-2 rounded-lg mt-3 cursor-pointer hover:opacity-70 transition-all linear duration-300">Checkout with PayPal</button>
             </div>
 
 

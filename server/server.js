@@ -11,6 +11,7 @@ const ShopProductsRouter = require("./routes/Shop/Product/product-route");
 const ShopHomeRouter = require("./routes/Shop/Home/home-route");
 const ShopCartRouter = require("./routes/Shop/Product/cart-route");
 const ShopAddressRouter = require("./routes/Shop/Account/address-route");
+const ShopOrderRouter = require("./routes/Shop/Checkout/order-route");
 
 // PORT
 const PORT = process.env.PORT || 5000;
@@ -71,6 +72,10 @@ app.use("/api/shop/cart" , ShopCartRouter);
 
 // Shop Address route
 app.use("/api/shop/account/address" , ShopAddressRouter);
+
+
+// Shop Order route
+app.use("/api/shop/order" , ShopOrderRouter);
 
 
 

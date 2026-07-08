@@ -19,6 +19,8 @@ import CheckAuth from "./components/common/CheckAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { CheckAuthUser } from "./redux/auth-slice";
+import Paypal_cancel from "./pages/Shopping-View/paypal_cancel";
+import Paypal_return from "./pages/Shopping-View/paypal_return";
 function App(){
 
  const dispatch = useDispatch();
@@ -76,6 +78,8 @@ function App(){
     <Route path="products" element={<ProductListing/>}/>
     <Route path="account" element={<Account/>}/>
     <Route path="checkout" element={<Checkout/>}/>
+    <Route path="paypal_cancel" element={<Paypal_cancel/>}/>
+    <Route path="paypal_return" element={<Paypal_return/>}/>
     </Route>
 
     {/* unAuthorize route */}
