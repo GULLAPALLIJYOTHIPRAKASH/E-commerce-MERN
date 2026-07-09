@@ -1,4 +1,4 @@
-function Paypal_cancel(){
+function Paypal_Cancel(){
 
     return(<>
     
@@ -6,4 +6,4 @@ function Paypal_cancel(){
     </>)
 }
 
-export default Paypal_cancel;
+export default Paypal_Cancel;

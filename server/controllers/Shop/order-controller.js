@@ -1,6 +1,8 @@
 const { image } = require("../../config/cloudinary");
 const paypalConfig = require("../../config/paypal");
 const OrderModel = require("../../models/Order");
+const ProductModel = require("../../models/Product");
+const CartModel = require("../../models/Cart");
 
 const CreateOrder = async (request , response) => {
 
@@ -8,12 +10,13 @@ const CreateOrder = async (request , response) => {
         
         const {
             userId,
+            cartId,
             cartItems,
             addressInfo,
             totalAmount,
             orderDate,
-            OrderUpdateDate,
-            OrderStatus,
+            orderUpdateDate,
+            orderStatus,
             payerId,
             paymentId,
             paymentMethod,
@@ -21,7 +24,7 @@ const CreateOrder = async (request , response) => {
 
         } = request.body;
 
-        if( !userId && !cartItems && !addressInfo && !totalAmount && !orderDate && !OrderUpdateDate && !OrderStatus && !payerId && !paymentId && !paymentMethod && !paymentStatus){
+        if( !userId ||!cartItems || !cartId || !addressInfo ||!totalAmount ||!orderDate ||!orderUpdateDate ||!orderStatus ||!paymentMethod ||!paymentStatus){
 
             return(
                 response.status(400).json({
@@ -37,7 +40,7 @@ const CreateOrder = async (request , response) => {
             "intent":"sale",
             "payer":{
 
-                "payment_menthod":"paypal"
+                "payment_method":"paypal"
             },
             "redirect_urls":{
 
@@ -46,11 +49,11 @@ const CreateOrder = async (request , response) => {
 
             },
 
-            "transcations":[{
+            "transactions":[{
 
-                items_list: {
+                item_list: {
 
-                    item: cartItems.map((item) => {
+                    items: cartItems.map((item) => {
 
                         return({
                             "sku":item?.productId.toString(),
@@ -61,26 +64,26 @@ const CreateOrder = async (request , response) => {
                           
                         })
                     })
-                }
-            }],
-
-            amount: {
+                }, 
+                amount: {
 
                 total:Number(totalAmount).toFixed(2),
                 currency:"USD"
 
             },
             description: "E-commerce orders"
+            }],
+
+          
         }
 
 
-        await paypalConfig.payment.create(create_paypap_json , (error , paymentInfo) => {
-
+        await paypalConfig.payment.create(create_paypap_json , async (error , paymentInfo) => {
 
             if(error){
 
                 return(
-                    response.status(400).json({
+                    response.status(500).json({
 
                         success:false,
                         message: error.message || "payment failed"
@@ -90,26 +93,28 @@ const CreateOrder = async (request , response) => {
 
 
             // create order
-            const newOrder = new  OrderModel({
+            const newcreateOrder = new  OrderModel({
 
 
             userId,
+            cartId,
             cartItems,
             addressInfo,
             totalAmount,
             orderDate,
-            OrderUpdateDate,
-            OrderStatus,
+            orderUpdateDate,
+            orderStatus,
             payerId,
             paymentId,
             paymentMethod,
             paymentStatus
 
             })
-        })
 
-        // save order
-        await newOrder.save();
+               // save order
+        await newcreateOrder.save();
+
+        
 
         // get paypal  approval url 
         const approval_url  = paymentInfo?.links?.find((link) => link.rel == "approval_url").href;
@@ -120,10 +125,13 @@ const CreateOrder = async (request , response) => {
                 success:true,
                 message:"Order Placed Successfully",
                 approval_url,
-                orderId:newOrder?._id
+                orderId:newcreateOrder?._id
 
             })
         )
+        })
+
+     
 
     } catch (error) {
         
@@ -140,6 +148,77 @@ const CreateOrder = async (request , response) => {
 const CaptureOrder = async (request , response) => {
 
     try {
+
+        const {orderId , payerId ,paymentId} = request.body;
+
+        if(!orderId || !payerId || !paymentId){
+
+            return(
+                response.status(400).json({
+                    success:false,
+                    message:"Invalid Data"
+                })
+            )
+        }
+
+        // 1st check order is create or not
+        const checkOrder = await OrderModel.findOne({_id:orderId});
+
+
+        if(!checkOrder){
+
+            return(
+                response.status(404).json({
+                    success:false,
+                    message:"Order not found"
+                })
+            )
+        }
+
+        // update order 
+        checkOrder.payerId=payerId;
+        checkOrder.paymentId=paymentId;
+        checkOrder.paymentStatus="paid";
+        checkOrder.orderStatus="confirmed";
+
+        // reduce stock
+        for(let item of checkOrder?.cartItems){
+
+            // find ordered product with product db
+            const product = await ProductModel.findById(item?.productId);
+
+            if(!product){
+
+                return(response.status(404).json({
+                    success:false,
+                    message:"Product not found to reduce quantity"
+                }))
+            }
+
+
+            // reduce 
+            product.totalStock -=item?.quantity;
+
+            // db in products
+            await product.save();
+
+        }
+
+
+        // delete cart from that user account
+        await CartModel.findByIdAndDelete(checkOrder?.cartId?.toString());
+
+        // save order
+        await checkOrder.save();
+
+        console.log(checkOrder);
+        
+
+        return(response.status(201).json({
+            success:true,
+            message:"Order Placed Successfully",
+            data:checkOrder
+        }))
         
     } catch (error) {
         

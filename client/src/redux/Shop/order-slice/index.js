@@ -10,7 +10,8 @@ const initialObj = {
     orderDetails:null
 }
 
-const ShopCreateOrder = createAsyncThunk("/api/shop/order/create" , async(formdata , {rejectedWithValue}) => {
+// Create Order
+export const ShopCreateOrder = createAsyncThunk("/api/shop/order/create" , async(formdata , {rejectWithValue}) => {
 
     try {
         
@@ -21,7 +22,24 @@ const ShopCreateOrder = createAsyncThunk("/api/shop/order/create" , async(formda
     } catch (error) {
         
 
-        return(rejectedWithValue(error.response.data))
+        return(rejectWithValue(error.response.data))
+    }
+})
+
+
+// capture order
+export const ShopCaptureOrder = createAsyncThunk("/api/shop/order/create" , async(formdata , {rejectWithValue}) => {
+
+    try {
+        
+        const response = await axios.post('http://localhost:5000/api/shop/order/capture-order' , formdata , {
+            withCredentials:true
+        })
+        return response.data;
+    } catch (error) {
+        
+
+        return(rejectWithValue(error.response.data))
     }
 })
 
@@ -40,6 +58,8 @@ const ShopOrderSlice = createSlice({
 
             state.approval_url = action.payload.approval_url,
             state.orderId= action.payload.orderId
+            // store orderId
+            sessionStorage.setItem("orderId" , JSON.stringify( action.payload.orderId));
         }).addCase(ShopCreateOrder.rejected , (state,action) => {
 
             state.isLoading=false,

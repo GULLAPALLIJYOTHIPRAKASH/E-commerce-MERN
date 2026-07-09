@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { ShopDeleteCart, ShopGetAllCartItems, ShopUpdateCart } from "../../redux/Shop/cart-slice";
 import CartItemsCard from "../../components/Shopping-View/CartItemsCard";
 import { toast } from "react-toastify";
+import { ShopCreateOrder } from "../../redux/Shop/order-slice";
 function Checkout(){
 
     const dispatch = useDispatch();
@@ -26,7 +27,10 @@ function Checkout(){
     const {productsList} = useSelector((state) => state.ShopProduct);
 
 
-    const [ispayment , setIsPayment] = useState(false);
+    const [isStartpayment , setIsStartPayment] = useState(false);
+
+    // order redux
+    const {approval_url} = useSelector((state) => state.ShopOrder)
 
 
 
@@ -175,9 +179,11 @@ function Checkout(){
 
         try {
 
+            console.log(cartItems?._id);
+            
+
             if(deliveryAddress){
 
-                console.log(deliveryAddress , cartItems , totalAmount);
 
                 const formData = {
 
@@ -190,7 +196,7 @@ function Checkout(){
                             title:item?.title,
                             image:item?.image,
                             quantity:item?.quantity, 
-                            price: !item.salePrice  && item.salePrice > 0 ? (item.salePrice) *item?.quantity : (item?.price)* item?.quantity
+                            price: item?.salePrice !=null  && item?.salePrice > 0 ? (item?.salePrice) : (item?.price)
                         })
                     }),
                     addressInfo:{
@@ -208,14 +214,24 @@ function Checkout(){
                     orderUpdateDate: new Date(),
                     orderStatus:"pending",
                     payerId:"",
-                    payment:"",
+                    paymentId:"",
                     paymentStatus:"pending",
                     paymentMethod:"paypal"
 
                 }
 
                 console.log(formData);
+
+                const response = await dispatch(ShopCreateOrder(formData)).unwrap();
                 
+
+                if(response.success){
+
+                    setIsStartPayment(true);
+                }else{
+
+                    setIsStartPayment(false)
+                }
                 
             }
             else{
@@ -228,6 +244,14 @@ function Checkout(){
             console.log(error);
             
         }
+    }
+
+
+    // get approval_url for paypal payment page
+    if(approval_url){
+
+        // move to payment page
+        window.location.href = approval_url
     }
 
 
@@ -266,7 +290,7 @@ function Checkout(){
                     <h1 className="text-base font-bold ">Total</h1>
                     <h1 className="text-base font-bold ">${totalAmount || 0}</h1>
                 </div>
-                <button onClick={HandleCreateOrder} disabled={cartItems?.items?.length  == 0 ? true :false}  className="button w-[100%] bg-black text-white text-center py-2 rounded-lg mt-3 cursor-pointer hover:opacity-70 transition-all linear duration-300">Checkout with PayPal</button>
+                <button onClick={HandleCreateOrder} disabled={cartItems?.items?.length  == 0 ? true :false}  className="button w-[100%] bg-black text-white text-center py-2 rounded-lg mt-3 cursor-pointer hover:opacity-70 transition-all linear duration-300">{isStartpayment  ? "please wait payment is processing" : "Checkout with PayPal"}</button>
             </div>
 
 
