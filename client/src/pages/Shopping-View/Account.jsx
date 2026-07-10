@@ -43,6 +43,9 @@ function Account(){
     // Handle orders/address
     const HandleTabSwitch = (type) => {
 
+        console.log(type);
+        
+
         setTab(type);
     }
 
@@ -203,8 +206,12 @@ function Account(){
     // fetch all address
     useEffect(() =>{
 
+        if(tab === "address"){
         dispatch(ShopGetAllAddress({userId:user?.id}))
-    },[dispatch])
+
+        }
+
+    },[tab , dispatch])
 
 
     // show/hide order detail
@@ -235,9 +242,12 @@ function Account(){
     // fetch all orders
     useEffect(() => {
 
-        dispatch(ShopOrdersList(user?.id))
+        if(tab === "orders"){
 
-    },[dispatch])
+            dispatch(ShopOrdersList(user?.id))
+        }
+
+    },[tab , dispatch])
 
 
 
