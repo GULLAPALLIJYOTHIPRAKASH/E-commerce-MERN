@@ -22,7 +22,7 @@
   }
 };
 
-function ShopOrders({HanldeOrderDetails}){
+function ShopOrders({ordersList , HanldeOrderDetails}){
 
    
     return(<>
@@ -41,14 +41,14 @@ function ShopOrders({HanldeOrderDetails}){
                     </tr>
                 </thead>
                 <tbody className="text-center w-full">
-                   { [...Array(5)].map((i) => {
+                   { ordersList && ordersList.length > 0 && ordersList?.map((item) => {
 
-                        return(<tr className=" group">
-                        <td className="text-[12px] md:text-base p-2 group-hover:bg-gray-100 trantion-all linear duration-300">6a170a3cf6c0392d69f92d8a</td>
-                        <td className="text-[12px] md:text-base p-2 group-hover:bg-gray-100 trantion-all linear duration-300">2026/05/27</td>
-                        <td className={`text-[12px] md:text-base p-2 group-hover:bg-gray-100 trantion-all linear duration-300 text-white`}><span className={`${BgStatus('inShipped')} py-1 px-2 rounded-lg`}>Delivered</span></td>
-                        <td className="text-[12px] md:text-base p-2 group-hover:bg-gray-100 trantion-all linear duration-300">$999</td>
-                        <td className="text-[12px] md:text-base p-2 group-hover:bg-gray-100 trantion-all linear duration-300"><button onClick={HanldeOrderDetails} className="px-2 py-1 bg-black text-white rounded-lg cursor-pointer hover:opacity-70 transition-all linear duration-300">view</button></td>
+                        return(<tr key={item?._id + "order"} className=" group">
+                        <td className="text-[12px] md:text-base p-2 group-hover:bg-gray-50 trantion-all linear duration-300">{item?._id}</td>
+                        <td className="text-[12px] md:text-base p-2 group-hover:bg-gray-50 trantion-all linear duration-300">{ new Date(item?.orderDate).toLocaleDateString()}</td>
+                        <td className={`text-[12px] md:text-base p-2 group-hover:bg-gray-50 trantion-all linear duration-300 text-white`}><span className={`${BgStatus(`${item.orderStatus}`)} py-1 px-2 rounded-lg capitalize`}>{item.orderStatus}</span></td>
+                        <td className="text-[12px] md:text-base p-2 group-hover:bg-gray-50 trantion-all linear duration-300">${item?.totalAmount}</td>
+                        <td className="text-[12px] md:text-base p-2 group-hover:bg-gray-50 trantion-all linear duration-300"><button onClick={() => {HanldeOrderDetails(item?._id.toString() ,item?.userId.toString());}} className="px-2 py-1 bg-black text-white rounded-lg cursor-pointer hover:opacity-70 transition-all linear duration-300">view</button></td>
                     </tr>)
                     })
                 }

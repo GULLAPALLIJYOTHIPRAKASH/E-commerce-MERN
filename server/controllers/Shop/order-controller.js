@@ -4,6 +4,7 @@ const OrderModel = require("../../models/Order");
 const ProductModel = require("../../models/Product");
 const CartModel = require("../../models/Cart");
 
+// create order
 const CreateOrder = async (request , response) => {
 
     try {
@@ -145,6 +146,7 @@ const CreateOrder = async (request , response) => {
 }
 
 
+// capture order
 const CaptureOrder = async (request , response) => {
 
     try {
@@ -232,9 +234,48 @@ const CaptureOrder = async (request , response) => {
 }
 
 
+// Get all orders
 const GetAllOrders = async (request , response) => {
 
     try {
+
+        const {userId} = request.params;
+
+
+        if(!userId){
+
+            return(
+                response.status(400).json({
+                    success:false,
+                    message:"userId is missing"
+                })
+            )
+        }
+
+        // check orders
+        const checkorders = await OrderModel.find({userId});
+
+
+     
+        if(checkorders.length <=0){
+
+            return(
+                response.status(400).json({
+                    success:false,
+                    message:"No Order is avalible"
+                })
+            )
+        }
+
+        return(
+            response.status(200).json({
+                success:true,
+                message:"Avalible Orders",
+                data:checkorders
+            })
+        )
+
+
         
     } catch (error) {
         
@@ -248,9 +289,46 @@ const GetAllOrders = async (request , response) => {
 }
 
 
+// get single order
 const GetSingleOrder = async (request , response) => {
 
     try {
+
+        const {userId , orderId} = request.params;
+
+
+        if(!userId || !orderId){
+
+            return(
+                response.status(400).json({
+                    success:false,
+                    message:"userId or orderId is missing"
+                })
+            )
+        }
+
+        // check orders
+        const checkorders = await OrderModel.findOne({_id:orderId,userId:userId,});
+
+
+     
+        if(!checkorders){
+
+            return(
+                response.status(404).json({
+                    success:false,
+                    message:"Order is not found"
+                })
+            )
+        }
+
+        return(
+            response.status(200).json({
+                success:true,
+                message:"Order Details",
+                data:checkorders
+            })
+        )
         
     } catch (error) {
         

@@ -6,6 +6,7 @@ import { ShopAddAddress, ShopDeleteAddress, ShopEditAddress, ShopGetAllAddress }
 import {toast} from "react-toastify";
 import ShopOrders from "../../components/Shopping-View/ShopOrders";
 import OrderDetailView from "../../components/Shopping-View/OrderDetailView";
+import { reset_order_details, ShopOrderDetails, ShopOrdersList } from "../../redux/Shop/order-slice";
 
 const address_Form = {
         address:"",
@@ -34,6 +35,9 @@ function Account(){
     const {user}  = useSelector((state) => state.auth);
 
     const [showOrderDetail , setShowOrderDetail] =useState(false);
+
+    // order redux
+    const {ordersList, orderDetails} = useSelector((state) => state.ShopOrder);
 
 
     // Handle orders/address
@@ -204,13 +208,37 @@ function Account(){
 
 
     // show/hide order detail
-    const HanldeOrderDetails = () =>{
+    const HanldeOrderDetails = async (orderId="",userId="") =>{
 
-        console.log(showOrderDetail);
+        // set T/F
+        setShowOrderDetail(!showOrderDetail);
+
+        if(!showOrderDetail){
+
+            const response = await dispatch(ShopOrderDetails({orderId, userId})).unwrap()
+
+            console.log(response);
+            
+
+            
+        }else{
+            
+            
+            // reset order detail state
+            dispatch(reset_order_details());
+
+        }
         
 
-        setShowOrderDetail(!showOrderDetail);
     }
+
+    // fetch all orders
+    useEffect(() => {
+
+        dispatch(ShopOrdersList(user?.id))
+
+    },[dispatch])
+
 
 
     return(<>
@@ -231,7 +259,7 @@ function Account(){
 
                 {/* Shop Orders */}
                 {
-                    tab === "orders" && <ShopOrders  HanldeOrderDetails={HanldeOrderDetails}/>
+                    tab === "orders" && <ShopOrders ordersList={ordersList}  HanldeOrderDetails={HanldeOrderDetails}/>
                 }
 
                 {/* Address Section */}
@@ -246,7 +274,7 @@ function Account(){
     
 
     {/* Order detail view */}
-    <OrderDetailView showOrderDetail={showOrderDetail} HanldeOrderDetails={HanldeOrderDetails}/>
+    <OrderDetailView orderDetails={orderDetails} showOrderDetail={showOrderDetail} HanldeOrderDetails={HanldeOrderDetails}/>
     </>)
 }
 
