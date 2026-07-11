@@ -1,4 +1,4 @@
-function ShopProductDetails({HandleAddToCart , HandleSingleProduct , singleProduct}){
+function ShopProductDetails({SubmitReview , HanldeReviewMsg , revmsg ,rating, HandleRating , HandleAddToCart , HandleSingleProduct , singleProduct}){
 
     return(<>
     <div className={`product-details-container w-[100%] min-h-[100vh] ${singleProduct?._id?.length ? "block" :"hidden" }  fixed top-0 left-0 bg-black/30 z-100 border-1 transition-all ease-in-out duration-500 flex justify-center items-center`}>
@@ -70,8 +70,11 @@ function ShopProductDetails({HandleAddToCart , HandleSingleProduct , singleProdu
                                 {
                                     [...Array(5)].map((_,indx) => {
 
+                                        const i = indx + 1;
+
+
                                     return(
-                                    <i key={"review-star" + indx } className="fa-solid text-[11px] text-yellow-600 fa-star"></i>
+                                    <i  key={"review-star" + indx } className={`fa-solid text-[11px] ${ i <= rating ? "text-yellow-600" : "text-black"} fa-star`}></i>
                                     )
                                 })}
                             </div>
@@ -88,14 +91,17 @@ function ShopProductDetails({HandleAddToCart , HandleSingleProduct , singleProdu
                     {
                         [...Array(5)].map((_,indx) => {
 
+                        const i = indx + 1;
+
+
                         return(
-                        <i key={"review-star" + indx } className="fa-solid text-base cursor-pointer text-yellow-600 fa-star"></i>
+                        <i onClick={() => HandleRating(i)} key={"review-star" + indx } className={`fa-solid text-[11px] ${ i <= rating ? "text-yellow-600" : "text-black"} fa-star`}></i>
                         )
                     })}
                 </div>
                 <div className="field mt-1 ">
-                    <input className="p-2  w-[90%] outline-none border-2 border-gray-300 rounded-lg" placeholder="provide review....." type="text" name="review-msg" id="review-msg" />
-                    <i className="fa-regular fa-paper-plane w-[10%] text-[30px] cursor-pointer"></i>
+                    <input value={revmsg} onChange={(e) => HanldeReviewMsg(e.target.value) } className="p-2  w-[90%] outline-none border-2 border-gray-300 rounded-lg" placeholder="provide review....." type="text" name="review-msg" id="review-msg" />
+                    <i onClick={() => SubmitReview(singleProduct?._id)} className="fa-regular fa-paper-plane w-[10%] text-[30px] cursor-pointer"></i>
                 </div>
             </div>
             </div>

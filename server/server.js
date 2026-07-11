@@ -13,6 +13,8 @@ const ShopCartRouter = require("./routes/Shop/Product/cart-route");
 const ShopAddressRouter = require("./routes/Shop/Account/address-route");
 const ShopOrderRouter = require("./routes/Shop/Orders/order-route");
 const AdminOrderRouter = require("./routes/Admin/Orders/order-route");
+const ShopSearchRouter = require("./routes/Shop/Product/search-route");
+const ShopReviewRouter = require("./routes/Shop/Product/review-route");
 
 // PORT
 const PORT = process.env.PORT || 5000;
@@ -81,6 +83,13 @@ app.use("/api/shop/order" , ShopOrderRouter);
 
 // Admin Order route
 app.use("/api/admin/order" , AdminOrderRouter);
+
+// Shop Search products
+app.use("/api/shop/search" , ShopSearchRouter);
+
+
+// Shop product review
+app.use("/api/shop/review" , ShopReviewRouter);
 
 
 

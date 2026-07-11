@@ -22,6 +22,7 @@ import { CheckAuthUser } from "./redux/auth-slice";
 import Paypal_Cancel from "./pages/Shopping-View/Paypal_Cancel";
 import Paypal_Return from "./pages/Shopping-View/Paypal_Return";
 import PaymentSuccess from "./pages/Shopping-View/PaymentSuccess";
+import Search from "./pages/Shopping-View/Search";
 function App(){
 
  const dispatch = useDispatch();
@@ -82,6 +83,7 @@ function App(){
     <Route path="paypal-cancel" element={<Paypal_Cancel/>}/>
     <Route path="paypal-return" element={<Paypal_Return/>}/>
     <Route path="payment-success" element={<PaymentSuccess/>}/>
+    <Route path="search" element={<Search/>}/>
     </Route>
 
     {/* unAuthorize route */}

@@ -40,6 +40,7 @@ export const ShopNavLinks = [
      {   id:"kids" , label:"Kids", url:"/shop/products"},
      {   id:"accessories" , label:"Accessories", url:"/shop/products"},
      {   id:"footwear" , label:"Footwear", url:"/shop/products"},
+     {   id:"search" , label:"Search", url:"/shop/search"},
 ]
 
 

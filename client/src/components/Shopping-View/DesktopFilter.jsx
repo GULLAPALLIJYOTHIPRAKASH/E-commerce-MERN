@@ -15,7 +15,7 @@ function DesktopFilter({filters , HandleFilter}){
 
                return( <div key={filterType + "desktop"} className="filters mt-5">
                     
-                    <h1 className="text-xl font-medium text-black mb-2">{filterType}</h1>
+                    <h1 className="text-xl font-medium text-black mb-2 capitalize">{filterType}</h1>
 
                     <div className="category-filter">
                     {ProductFilter[filterType]?.map((chkOption) => {

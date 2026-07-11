@@ -40,7 +40,7 @@ function Checkout(){
 
         const getaddress = addressList?.find((item)=> item?._id.toString() === id);
 
-        console.log(id , getaddress);
+        // console.log(id , getaddress);
         
 
         setDeliveryAddress({
@@ -86,14 +86,14 @@ function Checkout(){
         // get current product
         const findProductIndex  = getCart.findIndex((item) => item.productId.toString() === productId);
 
-        console.log(findProductIndex);
+        // console.log(findProductIndex);
         
 
         if(findProductIndex > -1){
 
             const currentProductQuantity = getCart[findProductIndex].quantity ;
 
-            console.log(currentProductQuantity);
+            // console.log(currentProductQuantity);
             
             const stock = productsList?.find((item) => item._id == productId)?.totalStock
             
@@ -142,7 +142,7 @@ function Checkout(){
 
         try {
 
-            console.log({userId:user?.id , productId});
+            // console.log({userId:user?.id , productId});
             
             
             const response = await dispatch(ShopDeleteCart({userId:user?.id , productId})).unwrap();
@@ -179,7 +179,7 @@ function Checkout(){
 
         try {
 
-            console.log(cartItems?._id);
+            // console.log(cartItems?._id);
             
 
             if(deliveryAddress){
@@ -220,7 +220,7 @@ function Checkout(){
 
                 }
 
-                console.log(formData);
+                // console.log(formData);
 
                 const response = await dispatch(ShopCreateOrder(formData)).unwrap();
                 

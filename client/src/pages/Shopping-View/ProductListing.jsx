@@ -9,6 +9,7 @@ import ShopProductDetails from "../../components/Shopping-View/ShopProductDetail
 import {useSearchParams} from 'react-router-dom';
 import {toast} from "react-toastify";
 import { ShopAddToCart, ShopGetAllCartItems } from "../../redux/Shop/cart-slice";
+import { reset_reviews, ShopAddReview, ShopGetAllReviews } from "../../redux/Shop/review-slice";
 
 // query search url
 const createSearchParamsHelper = (filters) => {
@@ -57,7 +58,11 @@ function ProductListing(){
     // user redux
     const {user} = useSelector((state) => state.auth);
 
+    // cart redux
     const {cartItems} = useSelector((state) => state.ShopCart);
+
+    // review redux
+    const {reviewsList } = useSelector((state) => state.ShopReview);
 
 
     // show/hide sort
@@ -93,7 +98,9 @@ function ProductListing(){
 
                 if(response?.success){
 
-                    setSingleProduct(response?.data)
+                    setSingleProduct(response?.data);
+
+                    dispatch(ShopGetAllReviews(productId));
                 }
                 
             }catch(error){
@@ -106,6 +113,9 @@ function ProductListing(){
         else{
 
             setSingleProduct(null);
+
+            // reset all reviews
+            dispatch(reset_reviews());
         }
 
     }
@@ -262,12 +272,67 @@ function ProductListing(){
 
 
 
+    // get fetch cart Items
     useEffect(() => {
 
         dispatch(ShopGetAllCartItems(user?.id))
 
     },[dispatch])
   
+
+    // review 
+    const [revmsg , setRevMsg] = useState("");
+    const [rating, setRating] = useState(0);
+
+
+    // handle rating
+    const HandleRating = (val) => {
+        
+        setRating(val)
+    }
+
+
+    const HanldeReviewMsg = (msg) => {
+
+        
+        setRevMsg(msg.trim());
+    }
+
+
+    // Submit review
+    const SubmitReview =async (productId) =>{
+
+        if(rating > 0 && revmsg != ""){
+
+            try {
+
+                const data = {
+
+                    productId,
+                    userId:user?.id,
+                    username:user?.username,
+                    reviewMessage:revmsg,
+                    reviewValue:rating
+                }
+
+                const response = await dispatch(ShopAddReview(data)).unwrap();
+
+                console.log(response);
+
+
+                if(response.success){
+
+                    toast.success("Review added Successfully");
+                }
+                
+                
+            } catch (error) {
+                
+                console.log(error);
+                
+            }
+        }
+    }
     
 
     
@@ -275,7 +340,7 @@ function ProductListing(){
     
     
     return(<>
-    <div className="shop-products-container w-[100%] min-h-screen  p-4  border-1">
+    <div className="shop-products-container w-[100%] min-h-screen  p-4">
         <div className="shop-products-center w-[100%] h-[100%]  flex">
             {/* filters  category/brand */}
             <div className="filter-container hidden lg:block lg:w-[20%] xl:w-[15%]">
@@ -321,7 +386,7 @@ function ProductListing(){
     </div>
 
     {/* product details */}
-    <ShopProductDetails HandleAddToCart={HandleAddToCart} HandleSingleProduct={HandleSingleProduct} singleProduct={singleProduct} />
+    <ShopProductDetails SubmitReview={SubmitReview} revmsg={revmsg} HanldeReviewMsg={HanldeReviewMsg} rating={rating} HandleRating={HandleRating} HandleAddToCart={HandleAddToCart} HandleSingleProduct={HandleSingleProduct} singleProduct={singleProduct} />
     </>)
 }
 export default ProductListing;

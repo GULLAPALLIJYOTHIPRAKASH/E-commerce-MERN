@@ -8,6 +8,8 @@ import ShopCartReducer from "./Shop/cart-slice/index";
 import ShopAdressReducer from "./Shop/address-slice/index";
 import ShopOrderReducer from "./Shop/order-slice/index";
 import AdminOrderReducer from "./Admin/order-slice/index";
+import ShopSearchReducer from "./Shop/search-slice/index";
+import ShopReviewReducer from "./Shop/review-slice/index";
 
 const store = configureStore({
     reducer: {
@@ -21,6 +23,8 @@ const store = configureStore({
         ShopAddress:ShopAdressReducer,
         ShopOrder:ShopOrderReducer,
         AdminOrder:AdminOrderReducer,
+        ShopSearch:ShopSearchReducer,
+        ShopReview:ShopReviewReducer,
 
     }
 });

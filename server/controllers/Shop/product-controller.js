@@ -71,7 +71,7 @@ const AllProducts = async (request , response) =>{
 
 
             return(
-                response.status(400).json({
+                response.status(404).json({
                     success:false,
                     message:"No products Available"
                 })
@@ -81,7 +81,7 @@ const AllProducts = async (request , response) =>{
     } catch (error) {
         
         return(
-            response.status(400).json({
+            response.status(500).json({
 
                 success:false,
                 message: error.message || "Shop All product failed."
@@ -121,6 +121,15 @@ const GetSingleProducts =  async(request , response) => {
         }
         
     } catch (error) {
+
+          return(
+            response.status(500).json({
+
+                success:false,
+                message: error.message || "Get Single product failed."
+            })
+        )
+        
         
     }
 }
