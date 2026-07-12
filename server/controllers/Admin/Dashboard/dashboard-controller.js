@@ -57,7 +57,7 @@ const AddBanner = async (request , response )=> {
         console.log(error);
 
         return(
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message:error.message || "Add Banner Failed"
             })
@@ -103,7 +103,7 @@ const GetAllBanners =  async (request , response )=> {
         console.log(error);
 
         return(
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message:error.message || "Get All Banner Failed"
             })
@@ -183,7 +183,7 @@ const DeleteBanner = async (request , response )=> {
         console.log(error);
 
         return(
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message:error.message || "Delete  Banner Failed"
             })
@@ -238,7 +238,7 @@ const DeleteBannerCloudinary = async (request , response )=> {
         console.log(error);
 
         return(
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message:error.message || "Delete  Banner cloudinary Failed"
             })

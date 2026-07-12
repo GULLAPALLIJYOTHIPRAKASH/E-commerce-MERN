@@ -8,7 +8,7 @@ const AddNewAddress = async (request , respone) => {
 
         const {address , city, pincode , phone, notes , userId} = request.body;
 
-        if(!address && !city && !pincode && !phone && !notes && !userId){
+        if(!address || !city || !pincode || !phone || !notes || !userId){
 
 
             return(
@@ -32,7 +32,7 @@ const AddNewAddress = async (request , respone) => {
         
     } catch (error) {
         
-        return(respone.status(400).json({
+        return(respone.status(500).json({
             success:false,
             message: error.message || "Add new address is failed"
         }))
@@ -73,7 +73,7 @@ const GetAllAddress =  async (request , respone) => {
         
     } catch (error) {
         
-        return(respone.status(400).json({
+        return(respone.status(500).json({
             success:false,
             message: error.message || "Get all address is failed"
         }))
@@ -126,7 +126,7 @@ const EditAddress =  async (request , respone) => {
         
     } catch (error) {
         
-        return(respone.status(400).json({
+        return(respone.status(500).json({
             success:false,
             message: error.message || "Edit address is failed"
         }))
@@ -169,7 +169,7 @@ const DeleteAddress =  async (request , respone) => {
         
     } catch (error) {
         
-        return(respone.status(400).json({
+        return(respone.status(500).json({
             success:false,
             message: error.message || "Delete address is failed"
         }))

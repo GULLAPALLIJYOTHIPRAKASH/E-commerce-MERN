@@ -73,7 +73,7 @@ const RegisterUser = async (request , response) => {
     } catch (error) {
         
         return(
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message: error.message || "Register user failed"
             })
@@ -143,7 +143,7 @@ const LoginUser = async (request , response) => {
         // set at cookie
         // dev -> secure false
         return(
-            response.cookie("token" , token, {httpOnly:true , secure:false}).json({
+            response.cookie("token" , token, {httpOnly:true , secure: process.env.DEV_LOCAL === "T" ? false :true}).json({
 
                 success:true,
                 message:"User Login Successfuly",
@@ -159,7 +159,7 @@ const LoginUser = async (request , response) => {
     } catch (error) {
         
         return(
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message: error.message || "login user failed"
             })
@@ -183,7 +183,7 @@ const LogoutUser = async (request , response) => {
     } catch (error) {
         
         return(
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message: error.message || "logout user failed"
             })

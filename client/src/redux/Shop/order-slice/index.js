@@ -10,12 +10,14 @@ const initialObj = {
     orderDetails:null
 }
 
+const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
+
 // Create Order
 export const ShopCreateOrder = createAsyncThunk("/api/shop/order/create" , async(formdata , {rejectWithValue}) => {
 
     try {
         
-        const response = await axios.post('http://localhost:5000/api/shop/order/create' , formdata , {
+        const response = await axios.post(`${BackendAPI_URL}/api/shop/order/create` , formdata , {
             withCredentials:true
         })
         return response.data;
@@ -32,7 +34,7 @@ export const ShopCaptureOrder = createAsyncThunk("/api/shop/order/captureorder" 
 
     try {
         
-        const response = await axios.post('http://localhost:5000/api/shop/order/capture-order' , formdata , {
+        const response = await axios.post(`${BackendAPI_URL}/api/shop/order/capture-order` , formdata , {
             withCredentials:true
         })
         return response.data;
@@ -48,7 +50,7 @@ export const ShopOrdersList =  createAsyncThunk("/api/shop/order/allorders/userI
 
     try {
         
-        const response = await axios.get(`http://localhost:5000/api/shop/order/allorders/${userId}`  , {
+        const response = await axios.get(`${BackendAPI_URL}/api/shop/order/allorders/${userId}`  , {
             withCredentials:true
         })
         return response.data;
@@ -64,7 +66,7 @@ export const ShopOrderDetails = createAsyncThunk("/api/shop/order/orderdetails/u
 
     try {
         
-        const response = await axios.get(`http://localhost:5000/api/shop/order/orderdetails/${userId}/${orderId}`  , {
+        const response = await axios.get(`${BackendAPI_URL}/api/shop/order/orderdetails/${userId}/${orderId}`  , {
             withCredentials:true
         })
         return response.data;

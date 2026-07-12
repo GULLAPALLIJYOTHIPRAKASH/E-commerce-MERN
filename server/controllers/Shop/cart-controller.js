@@ -13,7 +13,7 @@ const AddToCart = async (request , response) => {
         
 
 
-        if(userId == null && productId == null  && quantity <=0){
+        if(!userId ||  !productId   || quantity <=0){
 
             return(
                 response.status(400).json({
@@ -204,7 +204,7 @@ const GetAllCartItems =  async (request , response) => {
         
 
         return(
-            response.status(400).json({
+            response.status(500).json({
 
                 success:false,
                 message: error.message || "Get All CartItems  failed"
@@ -222,7 +222,7 @@ const UpdateCart =   async (request , response) => {
         
         const {userId , productId , quantity} = request.body;
 
-        if(!userId && !productId && quantity <= 0){
+        if(!userId || !productId || quantity <= 0){
 
             return(
                 response.status(400).json({
@@ -318,7 +318,7 @@ const UpdateCart =   async (request , response) => {
         
 
         return(
-            response.status(400).json({
+            response.status(500).json({
 
                 success:false,
                 message: error.message || "Update CartItems  failed"
@@ -342,7 +342,7 @@ const DeleteCart =  async (request , response) => {
 
         
 
-        if(!userId && !productId){
+        if(!userId || !productId){
 
             return(
                 response.status(400).json({
@@ -411,7 +411,7 @@ const DeleteCart =  async (request , response) => {
         
 
         return(
-            response.status(400).json({
+            response.status(500).json({
 
                 success:false ,
                 message: error.message  || "Delete CartItems  failed"

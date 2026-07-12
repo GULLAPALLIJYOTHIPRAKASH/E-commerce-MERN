@@ -83,7 +83,7 @@ const GetSingleOrder = async (request , response) => {
     } catch (error) {
         
         return(
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message:error.message || "Get Single Order failed"
             })

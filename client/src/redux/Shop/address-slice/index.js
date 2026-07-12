@@ -6,12 +6,14 @@ const initialObj = {
     addressList:[]
 }
 
+const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
+
 // Add new Address
 export const ShopAddAddress = createAsyncThunk('/api/shop/account/address/add' , async (FormData , {rejectWithValue}) => {
 
     try {
         
-        const response = await axios.post("http://localhost:5000/api/shop/account/address/add", FormData , {withCredentials:true});
+        const response = await axios.post(`${BackendAPI_URL}/api/shop/account/address/add`, FormData , {withCredentials:true});
 
         return response.data
     } catch (error) {
@@ -26,7 +28,7 @@ export const ShopGetAllAddress = createAsyncThunk('/api/shop/account/address/get
 
     try {
         
-        const response = await axios.get(`http://localhost:5000/api/shop/account/address/getaddress/${userId}` , {withCredentials:true});
+        const response = await axios.get(`${BackendAPI_URL}/api/shop/account/address/getaddress/${userId}` , {withCredentials:true});
 
         return response.data
     } catch (error) {
@@ -41,7 +43,7 @@ export const ShopEditAddress  = createAsyncThunk('/api/shop/account/address/edit
 
     try {
         
-        const response = await axios.put(`http://localhost:5000/api/shop/account/address/edit-address/${userId}/${addressId}`, formData, {withCredentials:true});
+        const response = await axios.put(`${BackendAPI_URL}/api/shop/account/address/edit-address/${userId}/${addressId}`, formData, {withCredentials:true});
 
         return response.data
     } catch (error) {
@@ -56,7 +58,7 @@ export const ShopDeleteAddress = createAsyncThunk('/api/shop/account/address/del
 
     try {
         
-        const response = await axios.delete(`http://localhost:5000/api/shop/account/address/delete-address/${userId}/${addressId}`, {withCredentials:true});
+        const response = await axios.delete(`${BackendAPI_URL}/api/shop/account/address/delete-address/${userId}/${addressId}`, {withCredentials:true});
 
         return response.data
     } catch (error) {

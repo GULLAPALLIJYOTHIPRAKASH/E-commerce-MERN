@@ -116,6 +116,11 @@ function ProductListing(){
 
             // reset all reviews
             dispatch(reset_reviews());
+
+
+            // reset
+            setRating("");
+            setRevMsg("");
         }
 
     }
@@ -295,7 +300,7 @@ function ProductListing(){
     const HanldeReviewMsg = (msg) => {
 
         
-        setRevMsg(msg.trim());
+        setRevMsg(msg);
     }
 
 
@@ -322,7 +327,23 @@ function ProductListing(){
 
                 if(response.success){
 
-                    toast.success("Review added Successfully");
+                    toast.success(`${response.message}`);
+
+                    // refetch new reviews
+                    dispatch(ShopGetAllReviews(productId));
+
+                    // reset
+                    setRating("");
+                    setRevMsg("");
+
+                }else{
+
+                    toast.info(`${response.message}`);
+
+                    // reset
+                    setRating("");
+                    setRevMsg("");
+
                 }
                 
                 
@@ -386,7 +407,7 @@ function ProductListing(){
     </div>
 
     {/* product details */}
-    <ShopProductDetails SubmitReview={SubmitReview} revmsg={revmsg} HanldeReviewMsg={HanldeReviewMsg} rating={rating} HandleRating={HandleRating} HandleAddToCart={HandleAddToCart} HandleSingleProduct={HandleSingleProduct} singleProduct={singleProduct} />
+    <ShopProductDetails reviewsList={reviewsList} SubmitReview={SubmitReview} revmsg={revmsg} HanldeReviewMsg={HanldeReviewMsg} rating={rating} HandleRating={HandleRating} HandleAddToCart={HandleAddToCart} HandleSingleProduct={HandleSingleProduct} singleProduct={singleProduct} />
     </>)
 }
 export default ProductListing;

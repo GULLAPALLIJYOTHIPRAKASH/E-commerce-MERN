@@ -33,16 +33,16 @@ const AddReview = async (request , response) => {
         if(!checkOrder){
 
             return(
-                 response.status(404).json({
+                 response.status(200).json({
                     success:false,
-                    message:"please buy product before  add review."
+                    message:"please buy product before add your review."
                 })
             )
         }
 
 
         // 2nd check review give or not
-        const checkReview = await ReviewModel.find({
+        const checkReview = await ReviewModel.findOne({
             userId,
             productId
         })
@@ -53,7 +53,7 @@ const AddReview = async (request , response) => {
              return(
                  response.status(200).json({
                     success:false,
-                    message:"Already product reviews"
+                    message:"Already  product is reviewed"
                 })
             )
         }
@@ -85,7 +85,7 @@ const AddReview = async (request , response) => {
 
 
         // then save
-        await ReviewModel.findByIdAndUpdate(productId , avgReviews , {new:true} );
+        await ReviewModel.findByIdAndUpdate(productId , {avgReviews} , {new:true} );
         
 
         console.log(reviews);
@@ -159,7 +159,7 @@ const GetAllReviews = async (request , response) => {
 
         return(
 
-            response.status(404).json({
+            response.status(200).json({
 
                 success:false,
                 message:"No product reviews",

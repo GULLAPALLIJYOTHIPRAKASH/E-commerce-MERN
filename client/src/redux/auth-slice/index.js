@@ -8,12 +8,16 @@ const initialObj= {
     user:null
 }
 
+const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
+
+
+
 // register user 
-export const RegisterUser  = createAsyncThunk('/auth/register' ,  async (formData, {rejectWithValue}) => {
+export const RegisterUser  = createAsyncThunk('api/auth/register' ,  async (formData, {rejectWithValue}) => {
 
     try {
 
-        const response = await axios.post("http://localhost:5000/api/auth/register" , formData , {
+        const response = await axios.post(`${BackendAPI_URL}/api/auth/register` , formData , {
             withCredentials:true,
             headers:{
                 "Content-Type":"application/json"
@@ -30,11 +34,11 @@ export const RegisterUser  = createAsyncThunk('/auth/register' ,  async (formDat
 });
 
 // login 
-export const LoginUser = createAsyncThunk('/auth/login' , async(formData , {rejectWithValue}) => {
+export const LoginUser = createAsyncThunk('api/auth/login' , async(formData , {rejectWithValue}) => {
 
     try {
 
-        const response = await axios.post("http://localhost:5000/api/auth/login" , formData , {
+        const response = await axios.post(`${BackendAPI_URL}api/auth/login` , formData , {
             withCredentials:true,
             headers:{
                 "Content-Type":"application/json"
@@ -53,11 +57,11 @@ export const LoginUser = createAsyncThunk('/auth/login' , async(formData , {reje
 
 
 // logout
-export const LogoutUser = createAsyncThunk('/auth/logout' , async(_ , {rejectWithValue}) => {
+export const LogoutUser = createAsyncThunk('api/auth/logout' , async(_ , {rejectWithValue}) => {
 
     try {
 
-        const response = await axios.post("http://localhost:5000/api/auth/logout", {} , {
+        const response = await axios.post(`${BackendAPI_URL}/api/auth/logout`, {} , {
             withCredentials:true,
             headers:{
                 "Content-Type":"application/json"
@@ -75,11 +79,11 @@ export const LogoutUser = createAsyncThunk('/auth/logout' , async(_ , {rejectWit
 
 
 // check auth user
-export const CheckAuthUser = createAsyncThunk('/auth/checkuser' , async(_, {rejectWithValue}) => {
+export const CheckAuthUser = createAsyncThunk('api/auth/checkuser' , async(_, {rejectWithValue}) => {
 
     try {
         
-        const response = await axios.get("http://localhost:5000/api/auth/checkuser",{
+        const response = await axios.get(`${BackendAPI_URL}/api/auth/checkuser`,{
             withCredentials:true,
             "Cache-Control": "no-store no-cache must-revalidate proxy-revalidate"
         })

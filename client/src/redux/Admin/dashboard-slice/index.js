@@ -5,12 +5,14 @@ const initialObj = {
     bannersList:[]
 }
 
+const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
+
 // add banner
 export const AdminAddBanner = createAsyncThunk("/api/admin/dashbaord/addbanner" , async (formData , {rejectWithValue}) => {
 
     try {
 
-        const response = await axios.post('http://localhost:5000/api/admin/dashboard/add-banner' , formData , {
+        const response = await axios.post(`${BackendAPI_URL}/api/admin/dashboard/add-banner` , formData , {
             withCredentials:true
         })
 
@@ -27,7 +29,7 @@ export const AdminGetAllBanners = createAsyncThunk("/api/admin/dashbaord/allbann
 
     try {
 
-        const response = await axios.get('http://localhost:5000/api/admin/dashboard/allbanners'  , {
+        const response = await axios.get(`${BackendAPI_URL}/api/admin/dashboard/allbanners`  , {
             withCredentials:true
         })
 
@@ -45,7 +47,7 @@ export const AdminDeleteBanners = createAsyncThunk("/api/admin/dashbaord/delete/
 
     try {
 
-        const response = await axios.delete(`http://localhost:5000/api/admin/dashboard/delete/${bannerId}` , {
+        const response = await axios.delete(`${BackendAPI_URL}/api/admin/dashboard/delete/${bannerId}` , {
             withCredentials:true
         })
 

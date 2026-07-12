@@ -7,11 +7,13 @@ const initialObj= {
     searchProducts:[]
 }
 
+const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
+
 export const ShopSearch = createAsyncThunk("/api/shop/search/keyword" , async(keyword,{rejectWithValue}) => {
 
     try {
 
-        const response  = await axios.get(`http://localhost:5000/api/shop/search/${keyword}` , {withCredentials:true});
+        const response  = await axios.get(`${BackendAPI_URL}/api/shop/search/${keyword}` , {withCredentials:true});
 
         return response.data;
         

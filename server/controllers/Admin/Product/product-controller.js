@@ -59,7 +59,7 @@ const cloudinary = require("../../../config/cloudinary");
         
         console.log(error);
 
-        return(response.status(400).json({
+        return(response.status(500).json({
             success:false,
             message:  error.message || "Upload to cloudinary failed"
         }))
@@ -141,7 +141,7 @@ const AddProduct  =  async (request , response)  => {
         
         console.log(error);
 
-        return(response.status(400).json({
+        return(response.status(500).json({
             success:false,
             message:  error.message || "AddProduct failed"
         }))
@@ -235,7 +235,7 @@ const UpdateProduct = async (request , response ) => {
 
         return(
 
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message: error.message || "Failed to update product"
             })
@@ -314,7 +314,7 @@ const DeleteProduct = async (request , response ) => {
 
         return(
 
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message: error.message || "Failed to delete product"
             })
@@ -355,7 +355,7 @@ const GetAllProducts = async (request , response ) => {
     } catch (error) {
         
         return(
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message: error.message || "Get All products Failed"
             })

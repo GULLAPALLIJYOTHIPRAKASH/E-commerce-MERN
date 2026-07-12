@@ -7,11 +7,13 @@ const initialObj={
     cartItems:{}
 }
 
+const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
+
 export const ShopAddToCart = createAsyncThunk('/api/shop/cart/add' , async({userId, productId , quantity}, {rejectWithValue}) => {
 
     try {
         
-        const response = await axios.post("http://localhost:5000/api/shop/cart/add" ,{userId, productId , quantity} ,
+        const response = await axios.post(`${BackendAPI_URL}/api/shop/cart/add` ,{userId, productId , quantity} ,
             {
                 withCredentials:true,
                
@@ -31,7 +33,7 @@ export const ShopGetAllCartItems = createAsyncThunk('/api/shop/cart/getcart' , a
 
     try {
         
-        const response = await axios.get(`http://localhost:5000/api/shop/cart/getcart/${userId}`,
+        const response = await axios.get(`${BackendAPI_URL}/api/shop/cart/getcart/${userId}`,
             {
                 withCredentials:true,
                 
@@ -50,7 +52,7 @@ export const ShopUpdateCart = createAsyncThunk('/api/shop/cart/update-cart' , as
 
     try {
         
-        const response = await axios.put("http://localhost:5000/api/shop/cart/update-cart" ,{userId, productId , quantity} ,
+        const response = await axios.put(`${BackendAPI_URL}/api/shop/cart/update-cart` ,{userId, productId , quantity} ,
             {
                 withCredentials:true,
                 headers:{
@@ -72,7 +74,7 @@ export const ShopDeleteCart = createAsyncThunk('/api/shop/cart/delete-cart/userI
 
         console.log({userId, productId});
         
-        const response = await axios.delete(`http://localhost:5000/api/shop/cart/delete-cart/${userId}/${productId}`,{withCredentials:true,});
+        const response = await axios.delete(`${BackendAPI_URL}/api/shop/cart/delete-cart/${userId}/${productId}`,{withCredentials:true,});
 
       return  response.data;
 

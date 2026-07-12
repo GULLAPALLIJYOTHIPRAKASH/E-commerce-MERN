@@ -6,12 +6,13 @@ const initialObj= {
     isLoading: false,
     reviewsList:[]
 }
+const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
 
 export const ShopAddReview = createAsyncThunk("/api/shop/review/add-review" , async(formData,{rejectWithValue}) => {
 
     try {
 
-        const response  = await axios.post(`http://localhost:5000/api/shop/review/add-review` , formData, {withCredentials:true});
+        const response  = await axios.post(`${BackendAPI_URL}/api/shop/review/add-review` , formData, {withCredentials:true});
 
         return response.data;
         
@@ -26,7 +27,7 @@ export const ShopGetAllReviews = createAsyncThunk("/api/shop/review/allreviews" 
 
     try {
 
-        const response  = await axios.get(`http://localhost:5000/api/shop/review/allreviews/${productId}` , {withCredentials:true});
+        const response  = await axios.get(`${BackendAPI_URL}/api/shop/review/allreviews/${productId}` , {withCredentials:true});
 
         return response.data;
         

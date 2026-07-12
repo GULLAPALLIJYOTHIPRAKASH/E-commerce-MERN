@@ -8,13 +8,15 @@ const initialObj = {
     orderDetails:null
 }
 
+const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
+
 // order List
 export const AdminOrdersList =  createAsyncThunk("/api/Admin/order/allorders" , async(_ , {rejectWithValue}) => {
 
     
     try {
         
-        const response = await axios.get(`http://localhost:5000/api/Admin/order/allorders`  , {
+        const response = await axios.get(`${BackendAPI_URL}/api/Admin/order/allorders`  , {
             withCredentials:true
         })
         return response.data;
@@ -30,7 +32,7 @@ export const AdminOrderDetails = createAsyncThunk("/api/Admin/order/orderdetails
 
     try {
         
-        const response = await axios.get(`http://localhost:5000/api/Admin/order/orderdetails/${orderId}`  , {
+        const response = await axios.get(`${BackendAPI_URL}/api/Admin/order/orderdetails/${orderId}`  , {
             withCredentials:true
         })
         return response.data;
@@ -47,7 +49,7 @@ export const AdminUpdateOrderStatus  = createAsyncThunk("/api/Admin/order/update
 
     try {
         
-        const response = await axios.put(`http://localhost:5000/api/Admin/order/update-orderstatus/${orderId}`, {orderStatus}, {
+        const response = await axios.put(`${BackendAPI_URL}/api/Admin/order/update-orderstatus/${orderId}`, {orderStatus}, {
             withCredentials:true
         })
         return response.data;

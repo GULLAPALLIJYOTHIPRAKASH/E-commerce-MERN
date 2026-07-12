@@ -57,7 +57,9 @@ function Dashboard(){
 
             formData.append("image" , file);
 
-             const response = await axios.post("http://localhost:5000/api/admin/product/uploadImg" , formData , {
+            const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
+
+             const response = await axios.post(`${BackendAPI_URL}/api/admin/product/uploadImg` , formData , {
                 withCredentials : true
             });
 
@@ -95,8 +97,10 @@ function Dashboard(){
         setLoading(true);
 
         try {
+
+            const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
             
-           const response = await axios.delete(`http://localhost:5000/api/admin/dashboard/delete-cloudinary/${id}`, {
+           const response = await axios.delete(`${BackendAPI_URL}/api/admin/dashboard/delete-cloudinary/${id}`, {
                 withCredentials : true
             });
 

@@ -5,12 +5,14 @@ const initialObj = {
     productsList :[]
 }
 
+const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
+
 // Add products
 export const AddAdminProduct = createAsyncThunk('/api/admin/product/add' , async(formData , {rejectWithValue}) => {
 
     try {
         
-        const response  = await axios.post('http://localhost:5000/api/admin/product/add' , formData , {
+        const response  = await axios.post(`${BackendAPI_URL}/api/admin/product/add` , formData , {
             withCredentials:true ,
             headers: {
                 "Content-Type": "application/json"
@@ -30,7 +32,7 @@ export const UpdateAdminProduct = createAsyncThunk('/api/admin/product/update/pr
 
     try {
 
-        const response = await axios.put(`http://localhost:5000/api/admin/product/update/${productId}` , formData , {
+        const response = await axios.put(`${BackendAPI_URL}/api/admin/product/update/${productId}` , formData , {
             withCredentials:true,
             headers:{
                 "Content-Type":"application/json"
@@ -50,7 +52,7 @@ export const DeleteAdminProduct = createAsyncThunk('/api/admin/product/delete/pr
 
     try {
 
-        const response = await axios.delete(`http://localhost:5000/api/admin/product/delete/${productId}`  , {
+        const response = await axios.delete(`${BackendAPI_URL}/api/admin/product/delete/${productId}`  , {
             withCredentials:true,
            
         });
@@ -67,7 +69,7 @@ export const GetAllAdminProducts = createAsyncThunk('/api/admin/product/allprodu
 
     try {
 
-        const response = await axios.get(`http://localhost:5000/api/admin/product/allproducts` , {
+        const response = await axios.get(`${BackendAPI_URL}/api/admin/product/allproducts` , {
             withCredentials:true,
         });
 

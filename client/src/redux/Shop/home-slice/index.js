@@ -7,13 +7,14 @@ const initalObj = {
     productsList:[]
 }
 
+const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
 
 // Get all Banners 
 export const ShopGetAllBanners = createAsyncThunk("/api/shop/home/allbanners" , async(_, {rejectWithValue}) => {
 
     try {
 
-        const response  = await axios.get("http://localhost:5000/api/shop/home/allbanners" , {withCredentials:true});
+        const response  = await axios.get(`${BackendAPI_URL}/api/shop/home/allbanners` , {withCredentials:true});
 
         return response.data;
         
@@ -28,7 +29,7 @@ export const ShopGetAllProducts = createAsyncThunk("/api/shop/home/products" , a
 
     try {
 
-        const response  = await axios.get("http://localhost:5000/api/shop/home/products" , {withCredentials:true});
+        const response  = await axios.get(`${BackendAPI_URL}/api/shop/home/products` , {withCredentials:true});
 
         return response.data;
         

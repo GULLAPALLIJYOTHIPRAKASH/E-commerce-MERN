@@ -45,8 +45,8 @@ const CreateOrder = async (request , response) => {
             },
             "redirect_urls":{
 
-                return_url: "http://localhost:5173/shop/paypal-return",
-                cancel_url: "http://localhost:5173/shop/paypal-cancel"
+                return_url: `${process.env.FRONTEND_URL}shop/paypal-return`,
+                cancel_url: `${process.env.FRONTEND_URL}shop/paypal-cancel`
 
             },
 
@@ -137,7 +137,7 @@ const CreateOrder = async (request , response) => {
     } catch (error) {
         
         return(
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message:error.message || "Create Order failed"
             })
@@ -225,7 +225,7 @@ const CaptureOrder = async (request , response) => {
     } catch (error) {
         
         return(
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message:error.message || "Capture Order failed"
             })
@@ -280,7 +280,7 @@ const GetAllOrders = async (request , response) => {
     } catch (error) {
         
         return(
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message:error.message || "Get all Orders failed"
             })
@@ -333,7 +333,7 @@ const GetSingleOrder = async (request , response) => {
     } catch (error) {
         
         return(
-            response.status(400).json({
+            response.status(500).json({
                 success:false,
                 message:error.message || "Get Single Order failed"
             })

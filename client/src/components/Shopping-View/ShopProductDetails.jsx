@@ -1,4 +1,4 @@
-function ShopProductDetails({SubmitReview , HanldeReviewMsg , revmsg ,rating, HandleRating , HandleAddToCart , HandleSingleProduct , singleProduct}){
+function ShopProductDetails({reviewsList , SubmitReview , HanldeReviewMsg , revmsg ,rating, HandleRating , HandleAddToCart , HandleSingleProduct , singleProduct}){
 
     return(<>
     <div className={`product-details-container w-[100%] min-h-[100vh] ${singleProduct?._id?.length ? "block" :"hidden" }  fixed top-0 left-0 bg-black/30 z-100 border-1 transition-all ease-in-out duration-500 flex justify-center items-center`}>
@@ -56,16 +56,22 @@ function ShopProductDetails({SubmitReview , HanldeReviewMsg , revmsg ,rating, Ha
                 }
 
                 {/* review */}
+               
             <div className="review-container mt-2">
-                <h1 className="text-base font-medium ">Reviews</h1>
+                { reviewsList && reviewsList.length > 0 && (<>
+            <h1 className="text-base font-medium ">Reviews</h1>
                 <div className="review-list w-[100%] max-h-[100px]  overflow-y-auto">
                     {/* review-card */}
-                    <div className="review-card w-[100%] flex justify-start items-start p-2">
-                        <div className="logo w-[30px] h-[30px] mr-2 font-bold bg-gray-100 rounded-full text-centet flex justify-center items-center">
-                            T
+                    {
+                        reviewsList && reviewsList.length > 0 &&  reviewsList.map((item) => {
+
+                            return(
+                                <div key={item?._id } className="review-card w-[100%] flex justify-start items-start p-2">
+                        <div className="logo w-[30px] h-[30px] mr-2 font-bold bg-gray-100 rounded-full text-centet capitalize flex justify-center items-center">
+                            {item?.username[0]}
                         </div>
                         <div className="review-info">
-                            <h1 className="text-sm font-bold">Test</h1>
+                            <h1 className="text-sm font-bold">{item?.username}</h1>
                             <div className="star">
                                 {
                                     [...Array(5)].map((_,indx) => {
@@ -74,16 +80,20 @@ function ShopProductDetails({SubmitReview , HanldeReviewMsg , revmsg ,rating, Ha
 
 
                                     return(
-                                    <i  key={"review-star" + indx } className={`fa-solid text-[11px] ${ i <= rating ? "text-yellow-600" : "text-black"} fa-star`}></i>
+                                    <i  key={"review-star" + indx } className={`fa-solid text-[11px]  ${ i <= item?.reviewValue  ? "text-yellow-600" : "text-black"}  fa-star`}></i>
                                     )
                                 })}
                             </div>
-                            <p className="comment line-clamp-1 text-[12px]">Good Work</p>
+                            <p className="comment line-clamp-1 text-[12px]">{item?.reviewMessage}</p>
                         </div>
 
                     </div>
+                            )
+                        })
+                    }
+                    
             </div>
-
+       </> )}
             {/* review form */}
             <div className="review-form mt-2">
                 <p className="text-sm font-medium">write a review</p>
@@ -95,7 +105,7 @@ function ShopProductDetails({SubmitReview , HanldeReviewMsg , revmsg ,rating, Ha
 
 
                         return(
-                        <i onClick={() => HandleRating(i)} key={"review-star" + indx } className={`fa-solid text-[11px] ${ i <= rating ? "text-yellow-600" : "text-black"} fa-star`}></i>
+                        <i onClick={() => HandleRating(i)} key={"review-star" + indx } className={`fa-solid text-[16px] ${ i <= rating ? "text-yellow-600" : "text-black"} fa-star`}></i>
                         )
                     })}
                 </div>

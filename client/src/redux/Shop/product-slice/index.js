@@ -6,6 +6,8 @@ const initialObj = {
     productsList:[],
 }
 
+const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
+
 export const ShopAllProducts = createAsyncThunk('/api/shop/products/allproducts' , async({filterparams , sortBy} , {rejectWithValue}) => {
 
     try {
@@ -14,7 +16,7 @@ export const ShopAllProducts = createAsyncThunk('/api/shop/products/allproducts'
             ...filterparams , sortBy:sortBy
         })
 
-        const response = await axios.get(`http://localhost:5000/api/shop/products/allproducts?${query}` , {withCredentials:true});
+        const response = await axios.get(`${BackendAPI_URL}/api/shop/products/allproducts?${query}` , {withCredentials:true});
 
         return response.data;
         
@@ -28,7 +30,7 @@ export const ShopSingleProduct = createAsyncThunk('/api/shop/products/productId'
 
     try {
 
-        const response = await axios.get(`http://localhost:5000/api/shop/products/${productId}`, {withCredentials:true});
+        const response = await axios.get(`${BackendAPI_URL}/api/shop/products/${productId}`, {withCredentials:true});
 
         return response.data;
         
