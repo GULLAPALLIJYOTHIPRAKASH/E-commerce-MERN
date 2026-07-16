@@ -171,7 +171,7 @@ Add screenshots of:
 
 - Account - Orders & Details
 ![Orders](./E-Com_Page_Images/Shop-ordersList.png)
-![Orders Details](./E-Com_Page_Images/Shop-productsDetails.png)
+![Orders Details](./E-Com_Page_Images/Shop-orderDetails.png)
 
 - Account - Address
 ![Orders Details](./E-Com_Page_Images/Shop-Address.png)
