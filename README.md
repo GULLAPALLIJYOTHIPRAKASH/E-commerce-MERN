@@ -157,43 +157,43 @@ VITE_BACKEND_API_URL=http://localhost:5000
 Add screenshots of:
 
 - Login
-![Login](./E-Com_Page_Images/Auth.png);
+![Login](./E-Com_Page_Images/Auth.png)
 
 
 - Shop Home
-![Home Page](./E-Com_Page_Images/Shop-Home.png);
+![Home Page](./E-Com_Page_Images/Shop-Home.png)
 
 - Product Listing
-![Product Listing](./E-Com_Page_Images/Shop-productsList.png);
+![Product Listing](./E-Com_Page_Images/Shop-productsList.png)
 
 - Product Details
-![Product Details](./E-Com_Page_Images/Shop-productsDetails.png);
+![Product Details](./E-Com_Page_Images/Shop-productsDetails.png)
 
 - Account - Orders & Details
-![Orders](./E-Com_Page_Images/Shop-ordersList.png);
-![Orders Details](./E-Com_Page_Images/Shop-productsDetails.png);
+![Orders](./E-Com_Page_Images/Shop-ordersList.png)
+![Orders Details](./E-Com_Page_Images/Shop-productsDetails.png)
 
--Account - Address
-![Orders Details](./E-Com_Page_Images/Shop-Address.png);
+- Account - Address
+![Orders Details](./E-Com_Page_Images/Shop-Address.png)
 
 - Cart
-![Cart](./E-Com_Page_Images/Shop-Cart.png);
+![Cart](./E-Com_Page_Images/Shop-Cart.png)
 
 - Checkout
-![Checkout](./E-Com_Page_Images/Shop-Checkout.png);
+![Checkout](./E-Com_Page_Images/Shop-Checkout.png)
 
 
 - Admin Dashboard
-![Dashbaord](./E-Com_Page_Images/Admin-dashboard.png);
+![Dashbaord](./E-Com_Page_Images/Admin-dashboard.png)
 
 
 - Admin Products
-![Admin Products](./E-Com_Page_Images/Admin-productsList.png);
+![Admin Products](./E-Com_Page_Images/Admin-productsList.png)
 
 
 
 - Admin Orders
-![Admin Orders](./E-Com_Page_Images/Admin-orderList.png);
+![Admin Orders](./E-Com_Page_Images/Admin-orderList.png)
 
 
 ---
