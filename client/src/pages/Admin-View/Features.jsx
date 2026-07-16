@@ -2,7 +2,7 @@ function Features(){
 
     return(<>
     
-    <h1>Admin Features Page</h1>
+    <h1 className="text-center">This features page is coming soon...</h1>
     </>)
 }
 

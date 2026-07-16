@@ -4,6 +4,7 @@ const app = express();
 const ConnectToDB = require("./database/db");
 const cookieparser = require("cookie-parser");
 const cors = require("cors");
+const helmet = require("helmet");
 const AuthRouter = require("./routes/Auth/auth-route");
 const AdminProductsRouter = require("./routes/Admin/Product/product-route");
 const AdminDashboardRouter = require("./routes/Admin/Dashboard/dashboard-route");
@@ -15,6 +16,7 @@ const ShopOrderRouter = require("./routes/Shop/Orders/order-route");
 const AdminOrderRouter = require("./routes/Admin/Orders/order-route");
 const ShopSearchRouter = require("./routes/Shop/Product/search-route");
 const ShopReviewRouter = require("./routes/Shop/Product/review-route");
+const { ShopRateLimit } = require("./middleware/rateLimit");
 
 // PORT
 const PORT = process.env.PORT || 5000;
@@ -23,6 +25,8 @@ const PORT = process.env.PORT || 5000;
 ConnectToDB();
 
 
+// security headers 13
+app.use(helmet());
 
 // cors 
 // allow to front-end communicate to server
@@ -63,34 +67,34 @@ app.use("/api/admin/product" , AdminProductsRouter);
 app.use('/api/admin/dashboard' , AdminDashboardRouter);
 
 // Shop Product route
-app.use("/api/shop/products" , ShopProductsRouter);
+app.use("/api/shop/products" ,ShopRateLimit , ShopProductsRouter);
 
 
 // Shop Home route
-app.use("/api/shop/home" , ShopHomeRouter);
+app.use("/api/shop/home" ,ShopRateLimit, ShopHomeRouter);
 
 
 // Shop Cart route
-app.use("/api/shop/cart" , ShopCartRouter);
+app.use("/api/shop/cart" ,ShopRateLimit, ShopCartRouter);
 
 
 // Shop Address route
-app.use("/api/shop/account/address" , ShopAddressRouter);
+app.use("/api/shop/account/address" ,ShopRateLimit, ShopAddressRouter);
 
 
 // Shop Order route
-app.use("/api/shop/order" , ShopOrderRouter);
+app.use("/api/shop/order" ,ShopRateLimit, ShopOrderRouter);
 
 
 // Admin Order route
 app.use("/api/admin/order" , AdminOrderRouter);
 
 // Shop Search products
-app.use("/api/shop/search" , ShopSearchRouter);
+app.use("/api/shop/search" ,ShopRateLimit, ShopSearchRouter);
 
 
 // Shop product review
-app.use("/api/shop/review" , ShopReviewRouter);
+app.use("/api/shop/review" ,ShopRateLimit, ShopReviewRouter);
 
 
 

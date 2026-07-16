@@ -38,7 +38,7 @@ export const LoginUser = createAsyncThunk('api/auth/login' , async(formData , {r
 
     try {
 
-        const response = await axios.post(`${BackendAPI_URL}api/auth/login` , formData , {
+        const response = await axios.post(`${BackendAPI_URL}/api/auth/login` , formData , {
             withCredentials:true,
             headers:{
                 "Content-Type":"application/json"
