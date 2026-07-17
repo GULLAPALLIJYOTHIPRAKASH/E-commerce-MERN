@@ -56,4 +56,4 @@ function Paypal_Return(){
     </>)
 }
 
-export default Paypal_Return;
+export default Paypal_ReturT;

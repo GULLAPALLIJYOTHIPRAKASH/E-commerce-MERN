@@ -12,4 +12,4 @@ function Paypal_Cancel(){
     </>)
 }
 
-export default Paypal_Cancel;
+export default Paypal_CanceT;
