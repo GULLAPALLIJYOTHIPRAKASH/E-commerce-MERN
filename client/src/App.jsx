@@ -15,7 +15,6 @@ import Account from "./pages/Shopping-View/Account";
 import Checkout from "./pages/Shopping-View/Checkout";
 import Paypal_Return from "./pages/Shopping-View/Paypal_Return";
 import Paypal_Cancel from "./pages/Shopping-View/Paypal_Cancel";
-import Checkout from "./pages/Shopping-View/Checkout";
 import UnAuthorize from "./pages/UnAuthorize/UnAuthorize";
 import NotFound from "./pages/Not-Found/NotFound";
 import CheckAuth from "./components/common/CheckAuth";
