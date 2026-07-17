@@ -5,7 +5,7 @@ A full-stack MERN E-Commerce application built using the MERN stack with secure 
 ---
 
 ## Live
-[!E-Commerce-MERN](https://shopecommerce-mern.netlify.app)
+[Link -](https://shopecommerce-mern.netlify.app)
 
 
 ## 🚀 Features
