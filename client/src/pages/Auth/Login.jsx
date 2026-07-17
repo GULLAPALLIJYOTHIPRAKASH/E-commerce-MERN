@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 function Login(){
     const [email , setEmail] = useState("");
-    const [password , setPassword] = useState("123456789");
+    const [password , setPassword] = useState("");
     const dispatch = useDispatch();
 
     // handle login submit
