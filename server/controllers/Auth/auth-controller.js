@@ -143,7 +143,7 @@ const LoginUser = async (request , response) => {
         // set at cookie
         // dev -> secure false , samesite lax
         return(
-            response.cookie("token" , token, {httpOnly:true , secure: process.env.DEV_LOCAL === "T" ? false :true ,sameSite: process.env.DEV_LOCAL ? "Lax" : "None", maxAge: 3 * 60 * 60 * 1000 }).json({
+            response.cookie("token" , token, {httpOnly:true , secure: process.env.DEV_LOCAL === "T" ? false :true ,sameSite: process.env.DEV_LOCAL  === "T" ? "Lax" : "None", maxAge: 3 * 60 * 60 * 1000 }).json({
 
                 success:true,
                 message:"User Login Successfuly",
