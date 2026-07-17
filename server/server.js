@@ -5,6 +5,7 @@ const ConnectToDB = require("./database/db");
 const cookieparser = require("cookie-parser");
 const cors = require("cors");
 const helmet = require("helmet");
+const compression = require("compression");
 const AuthRouter = require("./routes/Auth/auth-route");
 const AdminProductsRouter = require("./routes/Admin/Product/product-route");
 const AdminDashboardRouter = require("./routes/Admin/Dashboard/dashboard-route");
@@ -27,6 +28,9 @@ ConnectToDB();
 
 // security headers 13
 app.use(helmet());
+
+// compress api response size
+app.use(compression());
 
 // cors 
 // allow to front-end communicate to server
