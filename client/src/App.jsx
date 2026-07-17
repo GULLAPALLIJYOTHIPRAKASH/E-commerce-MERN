@@ -13,14 +13,15 @@ import Home from "./pages/Shopping-View/Home";
 import ProductListing from "./pages/Shopping-View/ProductListing";
 import Account from "./pages/Shopping-View/Account";
 import Checkout from "./pages/Shopping-View/Checkout";
+import Paypal_Return from "./pages/Shopping-View/Paypal_Return";
+import Paypal_Cancel from "./pages/Shopping-View/Paypal_Cancel";
+import Checkout from "./pages/Shopping-View/Checkout";
 import UnAuthorize from "./pages/UnAuthorize/UnAuthorize";
 import NotFound from "./pages/Not-Found/NotFound";
 import CheckAuth from "./components/common/CheckAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { CheckAuthUser } from "./redux/auth-slice";
-import Paypal_Cancel from "./pages/Shopping-View/Paypal_Cancel";
-import Paypal_Return from "./pages/Shopping-View/Paypal_Return";
 import PaymentSuccess from "./pages/Shopping-View/PaymentSuccess";
 import Search from "./pages/Shopping-View/Search";
 function App(){
