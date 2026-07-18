@@ -21,7 +21,7 @@ function ShopMobileSidebar({cartItems , HandleCartSidebar , HandleNavigateFilter
 
             {/* sidebar links */}
             <div className="nav-links-main  mt-[10px] p-6">
-                <ul className="nav-links flex flex-col items-start gap-[40px]">
+                <ul className="nav-links flex flex-col items-start gap-[25px]">
                     {
                         ShopNavLinks?.map((item) => {
 

@@ -49,7 +49,12 @@ function ProductListing(){
     // search params
     const [searchParams , setSearchParams] = useSearchParams("");
 
-    const getCurrentCategoryNavOption = searchParams.get("category")
+    const getCurrentCategoryNavOption = searchParams.get("category");
+
+
+    // loading
+    const [addingProductId, setAddingProductId] = useState(null);
+
 
 
     // shop product redux
@@ -223,6 +228,11 @@ function ProductListing(){
     // Handle  Add to cart
     const HandleAddToCart = async (productId , stock) => {
 
+        if(addingProductId === productId) return ;
+
+
+        setAddingProductId(productId)
+
         const getCart = cartItems?.items || []; 
 
         
@@ -249,6 +259,7 @@ function ProductListing(){
             
         }
         }
+
         
 
         try {
@@ -269,6 +280,10 @@ function ProductListing(){
             console.log(error);
             
             
+        }
+        finally{
+
+            setAddingProductId(null);
         }
         
         
@@ -400,7 +415,7 @@ function ProductListing(){
 
                 {/* products list */}
                 <div className="list">
-               <ShopProductCard HandleAddToCart={HandleAddToCart} HandleSingleProduct={HandleSingleProduct} productsList={productsList}/>
+               <ShopProductCard addingProductId={addingProductId} HandleAddToCart={HandleAddToCart} HandleSingleProduct={HandleSingleProduct} productsList={productsList}/>
                 </div>
             </div>
         </div>

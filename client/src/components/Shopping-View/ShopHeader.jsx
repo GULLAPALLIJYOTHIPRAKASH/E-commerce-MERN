@@ -125,6 +125,16 @@ function ShopHeader(){
     },[dispatch,showCart])
 
 
+
+    // fetch cart 1st time
+    useEffect(() => {
+
+    dispatch(ShopGetAllCartItems(user?.id))
+
+
+    },[])
+
+
     // Update Product Quantity 
     const HandleUpdateProductQuantity = async (productId , quantity, ActionType) => {
 

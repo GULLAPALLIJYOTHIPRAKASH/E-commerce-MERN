@@ -24,7 +24,7 @@
 
 function AdminOrders({ordersList , HanldeOrderDetails}){
 
-  console.log(ordersList);
+  // console.log(ordersList);
   
    
     return(<>

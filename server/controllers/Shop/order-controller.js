@@ -45,8 +45,8 @@ const CreateOrder = async (request , response) => {
             },
             "redirect_urls":{
 
-                return_url: `${process.env.FRONTEND_URL}shop/paypal-return`,
-                cancel_url: `${process.env.FRONTEND_URL}shop/paypal-cancel`
+                return_url: `${process.env.FRONTEND_URL}/shop/paypal-return`,
+                cancel_url: `${process.env.FRONTEND_URL}/shop/paypal-cancel`
 
             },
 

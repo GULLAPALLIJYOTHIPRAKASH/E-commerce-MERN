@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 
-function ShopProductCard({HandleAddToCart , HandleSingleProduct= () =>{} , productsList , HandleNavigateToProductsPage=() => {}}){
+function ShopProductCard({ addingProductId,HandleAddToCart , HandleSingleProduct= () =>{} , productsList , HandleNavigateToProductsPage=() => {}}){
 
     const location = useLocation();
 
@@ -45,9 +45,9 @@ function ShopProductCard({HandleAddToCart , HandleSingleProduct= () =>{} , produ
                             
                            { !location.pathname.includes("/home") &&  (
                         item?.totalStock > 1 ? 
-                        <button onClick={(e) => {
+                        <button  disabled={addingProductId === item?._id?.toString() } onClick={(e) => {
                               e.stopPropagation();
-                            HandleAddToCart(item?._id?.toString() , item?.totalStock)}}  className="bg-black text-white w-[100%] p-2 cursor-pointer hover:opacity-70 rounded-lg transition-all linear duration-300">Add to cart</button>
+                            HandleAddToCart(item?._id?.toString() , item?.totalStock)}}  className="bg-black text-white w-[100%] p-2 cursor-pointer hover:opacity-70 rounded-lg transition-all linear duration-300">{ addingProductId ===item?._id?.toString() ? "Adding..."  : "Add to cart"}</button>
                         :<button className="bg-black text-white w-[100%] p-2  opacity-80 rounded-lg cursor-not-allowed transition-all linear duration-300">Out of stock</button>
         )}
     

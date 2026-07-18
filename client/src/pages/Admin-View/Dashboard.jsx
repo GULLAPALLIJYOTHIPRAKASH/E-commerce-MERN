@@ -31,7 +31,7 @@ function Dashboard(){
 
         let file = e.target.files[0];
         
-        console.log(file);
+        // console.log(file);
         
         
         // reset every time if same reselected
@@ -63,7 +63,7 @@ function Dashboard(){
                 withCredentials : true
             });
 
-            console.log(response);
+            // console.log(response);
             
             if(response?.data?.success){
 
@@ -146,7 +146,7 @@ function Dashboard(){
             try {
                 const response = await dispatch(AdminAddBanner(image)).unwrap();
 
-                console.log(response);
+                // console.log(response);
 
                 if(response.success){
 
@@ -182,7 +182,7 @@ function Dashboard(){
     // Handle Delete Banner
     const HandleDelete = async(bannerId)=> {
 
-        console.log(bannerId);
+        // console.log(bannerId);
 
         setLoading(true);
         
@@ -190,7 +190,7 @@ function Dashboard(){
             
             const response = await dispatch(AdminDeleteBanners(bannerId)).unwrap();
 
-            console.log(response);
+            // console.log(response);
 
             if(response.success){
 
@@ -225,7 +225,6 @@ function Dashboard(){
         return(<><h1 className="text-lg font-medium">Loading</h1></>)
     }
 
-    console.log(bannersList);
     
     
     return(<>

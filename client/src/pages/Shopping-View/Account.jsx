@@ -43,7 +43,7 @@ function Account(){
     // Handle orders/address
     const HandleTabSwitch = (type) => {
 
-        console.log(type);
+        // console.log(type);
         
 
         setTab(type);
