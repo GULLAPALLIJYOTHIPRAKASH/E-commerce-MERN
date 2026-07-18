@@ -78,6 +78,12 @@ const CreateOrder = async (request , response) => {
           
         }
 
+        console.log("FRONTEND_URL =", process.env.FRONTEND_URL);
+
+        console.log("Return URL =", `${process.env.FRONTEND_URL}/shop/paypal-return`);
+
+        console.log("Cancel URL =", `${process.env.FRONTEND_URL}/shop/paypal-cancel`);
+
 
         await paypalConfig.payment.create(create_paypap_json , async (error , paymentInfo) => {
 
