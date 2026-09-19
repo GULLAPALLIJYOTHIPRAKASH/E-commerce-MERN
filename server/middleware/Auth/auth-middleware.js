@@ -49,7 +49,7 @@ const Check_User = async(request , response , next) => {
 }
 
 
-// check Admin User
+// check Admin/seller User
 const CheckAdmin_User = async(request , response , next) => {
 
     try {
@@ -58,7 +58,7 @@ const CheckAdmin_User = async(request , response , next) => {
 
 
         // user role admin
-        if(user.role === "admin"){
+        if(user.role === "admin" || user.role === "seller"){
 
             return next();
 

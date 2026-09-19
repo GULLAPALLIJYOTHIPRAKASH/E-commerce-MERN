@@ -9,11 +9,11 @@ const initialObj={
 
 const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
 
-export const ShopAddToCart = createAsyncThunk('/api/shop/cart/add' , async({userId, productId , quantity}, {rejectWithValue}) => {
+export const ShopAddToCart = createAsyncThunk('/api/shop/cart/add' , async({userId, productId , quantity,sellerId}, {rejectWithValue}) => {
 
     try {
         
-        const response = await axios.post(`${BackendAPI_URL}/api/shop/cart/add` ,{userId, productId , quantity} ,
+        const response = await axios.post(`${BackendAPI_URL}/api/shop/cart/add` ,{userId, productId , quantity , sellerId} ,
             {
                 withCredentials:true,
                

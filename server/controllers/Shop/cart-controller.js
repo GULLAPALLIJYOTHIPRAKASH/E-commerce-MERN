@@ -7,13 +7,14 @@ const AddToCart = async (request , response) => {
 
     try {
         
-        const {userId , productId , quantity} = request.body;
+        // Admin & Seller
+        const {userId , productId , quantity , sellerId} = request.body;
 
-        console.log({userId , productId , quantity});
+        console.log({userId , productId , quantity , sellerId});
         
 
 
-        if(!userId ||  !productId   || quantity <=0){
+        if(!userId ||  !productId   || quantity <=0 || !sellerId){
 
             return(
                 response.status(400).json({
@@ -58,7 +59,8 @@ const AddToCart = async (request , response) => {
     if(checkCurrentProductId === -1){
 
         // new product add to cart
-        checkCart.items.push({productId , quantity});
+        // seller 
+        checkCart.items.push({productId , quantity , sellerId});
     }else{
 
 
@@ -165,6 +167,8 @@ const GetAllCartItems =  async (request , response) => {
         }
 
 
+        console.log(validCart);
+        
 
 
         const populatedCart = validCart?.map((item) => {
@@ -176,7 +180,9 @@ const GetAllCartItems =  async (request , response) => {
                 title:item?.productId?.title,
                 price:item?.productId?.price,
                 salePrice:item?.productId?.salePrice,
-                quantity:item?.quantity
+                quantity:item?.quantity,
+                // sellerId
+                sellerId:item?.sellerId,
 
             }
         })
@@ -278,7 +284,7 @@ const UpdateCart =   async (request , response) => {
         
         await cart.populate({
             path:"items.productId",
-            select:"title image price salePrice"
+            select:"title image price salePrice sellerId"
         })
         
         
@@ -293,7 +299,9 @@ const UpdateCart =   async (request , response) => {
                 image : item?.productId ? item.productId?.image : null,
                 price : item?.productId ? item.productId?.price : null,
                 salePrice : item?.productId ? item.productId?.SalePrice : null,
-                quantity:item?.quantity
+                quantity:item?.quantity,
+                 // sellerId
+                sellerId:item?.sellerId,
             })
         })
 
@@ -391,7 +399,9 @@ const DeleteCart =  async (request , response) => {
                 image:item?.productId ? item.productId.image  : null,
                 price:item?.productId ? item.productId.price  : null,
                 salePrice:item?.productId ? item.productId.salePrice  : null,
-                quantity: item.quantity
+                quantity: item.quantity,
+                 // sellerId
+                sellerId:item?.seller
             })
         })
 

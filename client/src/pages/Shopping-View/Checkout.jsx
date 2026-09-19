@@ -196,7 +196,9 @@ function Checkout(){
                             title:item?.title,
                             image:item?.image,
                             quantity:item?.quantity, 
-                            price: item?.salePrice !=null  && item?.salePrice > 0 ? (item?.salePrice) : (item?.price)
+                            price: item?.salePrice !=null  && item?.salePrice > 0 ? (item?.salePrice) : (item?.price),
+                            // sellerId
+                            sellerId:item?.sellerId
                         })
                     }),
                     addressInfo:{

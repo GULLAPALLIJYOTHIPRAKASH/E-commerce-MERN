@@ -47,7 +47,8 @@ function ShopProductCard({ addingProductId,HandleAddToCart , HandleSingleProduct
                         item?.totalStock > 1 ? 
                         <button  disabled={addingProductId === item?._id?.toString() } onClick={(e) => {
                               e.stopPropagation();
-                            HandleAddToCart(item?._id?.toString() , item?.totalStock)}}  className="bg-black text-white w-[100%] p-2 cursor-pointer hover:opacity-70 rounded-lg transition-all linear duration-300">{ addingProductId ===item?._id?.toString() ? "Adding..."  : "Add to cart"}</button>
+                            //   seller Id
+                            HandleAddToCart(item?._id?.toString() ,item?.createdBy?.toString() , item?.totalStock , )}}  className="bg-black text-white w-[100%] p-2 cursor-pointer hover:opacity-70 rounded-lg transition-all linear duration-300">{ addingProductId ===item?._id?.toString() ? "Adding..."  : "Add to cart"}</button>
                         :<button className="bg-black text-white w-[100%] p-2  opacity-80 rounded-lg cursor-not-allowed transition-all linear duration-300">Out of stock</button>
         )}
     

@@ -216,7 +216,10 @@ function Dashboard(){
 
     useEffect(() => {
 
-        dispatch(AdminGetAllBanners());
+        if(user?.role === "admin"){
+
+            dispatch(AdminGetAllBanners());
+        }
 
     },[dispatch])
 
@@ -235,7 +238,7 @@ function Dashboard(){
             </div> */}
 
             {/* upload Banner form */}
-            <form onSubmit={SubmitUploadImage} className="upload-form">
+          {user?.role ==="admin" &&  <form onSubmit={SubmitUploadImage} className="upload-form">
                 <div className="field">
                     <label className="text-base font-normal block mb-1" >Upload a Image</label>
                     <input ref={ImageRef} onChange={HandleUpload} type="file" name="img-upload" id="img-upload" accept="/*"  className="hidden" />
@@ -258,9 +261,10 @@ function Dashboard(){
 
         <button className="w-[100%] text-base  p-2 bg-black text-white mt-2 rounded-lg cursor-pointer hover:opacity-80 transition-all linear duration-200 tracking-[1px]">Upload</button>
             </form>
+            }
 
             {/* All Banners section */}
-            <section className="all-banners mt-5 ">
+          { user?.role ==="admin" &&   <section className="all-banners mt-5 ">
 
                 {bannersList && bannersList.length > 0 && bannersList?.map((item) => {
 
@@ -277,6 +281,8 @@ function Dashboard(){
                     )
                 })}
             </section>
+            }
+
         </div>
     </div>
     

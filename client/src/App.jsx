@@ -8,6 +8,7 @@ import Dashboard from "./pages/Admin-View/Dashboard";
 import Products from "./pages/Admin-View/Products";
 import Orders from "./pages/Admin-View/Orders";
 import Features from "./pages/Admin-View/Features";
+
 import ShopLayout from "./components/Shopping-View/ShopLayout";
 import Home from "./pages/Shopping-View/Home";
 import ProductListing from "./pages/Shopping-View/ProductListing";
@@ -67,6 +68,15 @@ function App(){
 
     {/* Admin routes */}
     <Route path="/admin" element={<CheckAuth isAuthenticated={isAuthenticated}  user={user}><AdminLayout/> </CheckAuth>}>
+    <Route path="dashboard" element={<Dashboard/>}/>
+    <Route path="products" element={<Products/>}/>
+    <Route path="orders" element={<Orders/>}/>
+    <Route path="features" element={<Features/>}/>
+    </Route>
+
+
+    {/* Seller routes */}
+    <Route path="/seller" element={<CheckAuth isAuthenticated={isAuthenticated}  user={user}><AdminLayout/> </CheckAuth>}>
     <Route path="dashboard" element={<Dashboard/>}/>
     <Route path="products" element={<Products/>}/>
     <Route path="orders" element={<Orders/>}/>

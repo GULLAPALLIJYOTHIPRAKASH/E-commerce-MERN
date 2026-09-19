@@ -8,7 +8,7 @@ const RegisterUser = async (request , response) => {
 
     try {
 
-        const {username , email , password} = request.body;
+        const {username , email , password , role} = request.body;
 
         
 
@@ -48,7 +48,7 @@ const RegisterUser = async (request , response) => {
             username,
             email,
             password:hashPassword,
-            role:"user"
+            role: role ? "seller" : "user"
         });
 
 

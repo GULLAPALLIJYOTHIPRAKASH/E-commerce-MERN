@@ -376,6 +376,8 @@ function Products(){
         <h1 className="text-2xl">Loading</h1>
         </>)
     }
+
+    
     
     return(<>
     <div className="products-container">
@@ -387,6 +389,10 @@ function Products(){
             {/* products section start */}
             <AdminProductCard HandleEditStatus={HandleEditStatus} HandleDeleteProducts={HandleDeleteProducts} productsList={productsList}/>
             {/* products section end */}
+
+            {/* No products Availble */}
+            { productsList.length === 0 && <h1 className="text-base text-red-500 text-center">No Products Available.</h1>}
+
         </div>
     </div>
 

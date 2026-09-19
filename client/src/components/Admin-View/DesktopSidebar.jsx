@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { AdminMenu } from "../config/config";
+import { useSelector } from "react-redux";
 
 const AdminSideBarIcon= [
 {id:"dashboard" , icon:<i className="text-xl group-hover:text-2xl transition-all linear duration-300  mr-[2px] fa-solid fa-chart-pie"></i> },
@@ -9,12 +10,14 @@ const AdminSideBarIcon= [
 ]
 function DesktopSidebar(){
 
+    const {user} = useSelector((state) => state.auth);
+
     return(<>
     <aside className="sidebar-container  w-[100%] min-h-[100vh]">
         <div className="sidebar-center  w-[100%] h-[100%]">
             <div className="heading p-6 pb-[20px] border-b-1 border-gray-300 ">
                 <div className="logo-section text-center">
-                <h1 className="text-lg font-bold "><i className="fa-solid fa-crown"></i> Admin Panel</h1>
+                <h1 className="text-lg font-bold "><i className="fa-solid fa-crown"></i> {user?.role === "admin" ? "Admin" : "Seller"} Panel</h1>
                 </div>
             </div>
              {/* Nav links start */}

@@ -329,7 +329,18 @@ const GetAllProducts = async (request , response ) => {
 
     try {
 
-        const getproductsList =  await ProductModel.find({});
+        
+        let getproductsList = [];
+
+        // new admin & seller
+        if(request?.user?.role === "admin"){
+
+            getproductsList= await ProductModel.find({});
+        }else{
+
+            getproductsList = await ProductModel.find({_id: request?.user?._id});
+
+        }
 
         if(getproductsList.length > 0){
 
@@ -343,7 +354,7 @@ const GetAllProducts = async (request , response ) => {
         }else{
 
              return(
-                response.status(404).json({
+                response.status(200).json({
                     success:false,
                     message:"No products available",
                 })

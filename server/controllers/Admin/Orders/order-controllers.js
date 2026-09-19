@@ -6,7 +6,17 @@ const GetAllOrders = async (request , response) => {
 
     try {
 
-        const orders = await OrderModel.find({});
+        let orders = await OrderModel.find({});
+
+        // new Admin & Seller
+        if(request?.user?.role === "admin"){
+
+        orders= await ProductModel.find({});
+        }else{
+
+        orders = await ProductModel.find({_id: request?.user?._id});
+
+        }
 
         if(orders.length === 0){
 

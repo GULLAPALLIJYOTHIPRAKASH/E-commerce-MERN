@@ -16,7 +16,9 @@ const OrderSchema = new mongoose.Schema({
             },
             title:String,
             price:Number,
-            quantity:Number
+            quantity:Number,
+            // seller & admin
+            sellerId:String,
 
         }
     ],

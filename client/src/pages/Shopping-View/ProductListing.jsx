@@ -226,7 +226,7 @@ function ProductListing(){
 
 
     // Handle  Add to cart
-    const HandleAddToCart = async (productId , stock) => {
+    const HandleAddToCart = async (productId ,sellerId, stock) => {
 
         if(addingProductId === productId) return ;
 
@@ -264,7 +264,7 @@ function ProductListing(){
 
         try {
 
-            const response = await dispatch(ShopAddToCart({userId:user?.id , productId , quantity:1})).unwrap();
+            const response = await dispatch(ShopAddToCart({userId:user?.id , productId , quantity:1 ,sellerId })).unwrap();
             console.log(response);
 
             if(response?.success){

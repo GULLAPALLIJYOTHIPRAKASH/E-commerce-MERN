@@ -51,7 +51,8 @@ function ShopProductDetails({reviewsList , SubmitReview , HanldeReviewMsg , revm
                 {/* out of stock */}
                 {
             singleProduct?.totalStock > 1 ? 
-            <button onClick={() => HandleAddToCart(singleProduct?._id.toString() , singleProduct?.totalStock)} className="bg-black text-white w-[100%] p-2 cursor-pointer hover:opacity-70 rounded-lg transition-all linear duration-300">Add to cart</button>
+            // seller 
+            <button onClick={() => HandleAddToCart(singleProduct?._id.toString() , singleProduct?.createdBy?.toString() , singleProduct?.totalStock)} className="bg-black text-white w-[100%] p-2 cursor-pointer hover:opacity-70 rounded-lg transition-all linear duration-300">Add to cart</button>
             :<button className="bg-black text-white w-[100%] p-2  opacity-80 rounded-lg cursor-not-allowed transition-all linear duration-300">Out of stock</button>
                 }
 

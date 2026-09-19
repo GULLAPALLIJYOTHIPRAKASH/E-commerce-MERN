@@ -17,7 +17,13 @@ function CheckAuth({isAuthenticated ,user , children }) {
         if(user?.role === "admin"){
 
             return <Navigate to='/admin/dashboard' />
-        }else{
+        }
+        else if(user?.role === "seller"){
+
+            return <Navigate to='/seller/dashboard' />
+        }
+        
+        else{
 
             return  <Navigate to='/shop/home' />
         }
@@ -38,7 +44,13 @@ function CheckAuth({isAuthenticated ,user , children }) {
         if(user?.role === "admin"){
 
             return <Navigate to='/admin/dashboard' />
-        }else{
+        }
+        else if(user?.role === "seller"){
+
+            return <Navigate to='/seller/dashboard' />
+        }
+        
+        else{
 
             return  <Navigate to='/shop/home' />
         }
@@ -55,6 +67,13 @@ function CheckAuth({isAuthenticated ,user , children }) {
     if(isAuthenticated &&  user?.role === "admin"  && location.pathname.includes('/shop')){
 
         return <Navigate to="/admin/dashboard" />
+        
+    }
+
+    // seller
+    if(isAuthenticated &&  user?.role === "seller"  && location.pathname.includes('/shop')){
+
+        return <Navigate to="/seller/dashboard" />
         
     }
 

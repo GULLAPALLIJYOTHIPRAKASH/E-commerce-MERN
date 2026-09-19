@@ -8,6 +8,7 @@ function Register(){
 
     const [username , setUsername] = useState("");
     const [email , setEmail] = useState("");
+    const[role , setRole]=useState(false);
     const [password , setPassword] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ function Register(){
             
 
 
-            const response = await dispatch(RegisterUser({username , email , password})).unwrap();
+            const response = await dispatch(RegisterUser({username , email , password , role})).unwrap();
 
 
             if(response.success){
@@ -31,6 +32,7 @@ function Register(){
                 setEmail("");
                 setPassword("");
                 setUsername("");
+                setRole(false);
 
                 toast("User Registered Successfully" , {
                     toastId:"user register"
@@ -50,6 +52,8 @@ function Register(){
        }
         
     }
+
+   
 
     return(<>
     <div className="register-container w-[100%] ">
@@ -76,6 +80,12 @@ function Register(){
                      <div className="field mb-3">
                         <label htmlFor="password" className="text-base font-medium  tracking-[1px] cursor-pointer ">Password</label>
                         <input minLength={9} value={password} onChange={(e) => setPassword(e.target.value)} required className="w-[100%] mt-1 block p-2 border-2 border-gray-200 rounded-lg outline-none" type="password" name="email" id="password" placeholder="Enter a Password" />
+                    </div>
+
+                    {/* seller */}
+                     <div className="field mb-3 flex justify-start items-center">
+                        <input checked={role} onChange={(e) => setRole(e.target.checked)} type="checkbox" name="seller" id="seller" required className="w-4 h-4 accent-blue-500 hover:accent-blue-600 transition-all ease-linear duration-100" />
+                        <label htmlFor="seller" className="text-base font-medium   cursor-pointer ml-1">I am a seller ?</label>
                     </div>
                     <button className="w-[100%] bg-black text-white text-lg p-2 rounded-lg cursor-pointer transition-all linear duration-300 hover:opacity-70">Sign Up</button>
                 </form>

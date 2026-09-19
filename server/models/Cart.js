@@ -25,7 +25,9 @@ const CartSchema = new mongoose.Schema({
                 type:Number,
                 required: true,
                 min:1
-            }
+            },
+            // seller & admin
+            sellerId:String,
         }
     ]
 },{timestamps:true});
