@@ -6,15 +6,53 @@ const GetAllOrders = async (request , response) => {
 
     try {
 
-        let orders = await OrderModel.find({});
+        let orders =[] ;
+        let  sellerOrders =[];
+
+        console.log(request.user);
+        
 
         // new Admin & Seller
         if(request?.user?.role === "admin"){
 
-        orders= await ProductModel.find({});
-        }else{
+        orders= await OrderModel.find({}).sort({orderDate: -1});
+        }
+        
+        else if(request?.user?.role === "seller"){
 
-        orders = await ProductModel.find({_id: request?.user?._id});
+        orders = await OrderModel.find({
+            "cartItems.sellerId": request?.user.id
+        }).sort({orderDate: -1});
+
+        console.log(orders);
+        
+
+        // only order items
+     sellerOrders = orders.map((order) => {
+      const sellerItems = order.cartItems.filter(
+        (item) => item.sellerId.toString() === request?.user.id
+      );
+
+      return {
+        _id: order._id,
+        userId: order.userId,
+        addressInfo: order.addressInfo,
+        orderDate: order.orderDate,
+        orderStatus: order.orderStatus,
+        paymentStatus: order.paymentStatus,
+        paymentMethod: order.paymentMethod,
+
+        // Only this seller's products
+        cartItems: sellerItems,
+
+        // Calculate seller's total
+        totalAmount: sellerItems.reduce(
+          (total, item) => total + item.price * item.quantity,
+          0
+        ),
+      };
+    });
+
 
         }
 
@@ -32,12 +70,13 @@ const GetAllOrders = async (request , response) => {
             response.status(200).json({
                     success:true,
                     message:"orders found",
-                    data:orders
+                    data: request?.user?.role === "admin"  ? orders : sellerOrders
                 })
             )
         
     } catch (error) {
 
+        
         return(
             response.status(500).json({
                 success:false,
@@ -68,8 +107,57 @@ const GetSingleOrder = async (request , response) => {
         }
 
         // check orders
-        const checkorders = await OrderModel.findOne({_id:orderId});
+        let checkorders = [] ;
+        let  sellerOrders =[];
 
+        // new Admin & Seller
+        if(request?.user?.role === "admin"){
+
+        checkorders= await OrderModel.findById({
+            _id:orderId,
+        });
+        }
+        
+        else if(request?.user?.role === "seller"){
+
+          checkorders= await OrderModel.find({
+             _id:orderId,
+            "cartItems.sellerId": request?.user.id
+        }).sort({orderDate: -1});
+            
+        sellerOrders = checkorders.map((order) => {
+      const sellerItems = order.cartItems.filter(
+        (item) => item.sellerId.toString() === request?.user.id
+      );
+
+      return {
+        _id: order._id,
+        userId: order.userId,
+        addressInfo: order.addressInfo,
+        orderDate: order.orderDate,
+        orderStatus: order.orderStatus,
+        paymentStatus: order.paymentStatus,
+        paymentMethod: order.paymentMethod,
+
+        // Only this seller's products
+        cartItems: sellerItems,
+
+        // Calculate seller's total
+        totalAmount: sellerItems.reduce(
+          (total, item) => total + item.price * item.quantity,
+          0
+        ),
+      };
+    });
+        
+
+    
+
+    }
+
+
+    console.log("--",sellerOrders);
+    
 
      
         if(!checkorders){
@@ -86,11 +174,13 @@ const GetSingleOrder = async (request , response) => {
             response.status(200).json({
                 success:true,
                 message:"Order Details",
-                data:checkorders
+                data:request?.user?.role === "admin"  ? checkorders : sellerOrders[0]
             })
         )
         
     } catch (error) {
+        
+        console.log(error);
         
         return(
             response.status(500).json({
@@ -148,6 +238,8 @@ const UpdateOrderStatus= async (request , response) => {
         )
     } catch (error) {
 
+        console.log(error);
+        
         return(
             response.status(500).json({
                 success:false,

@@ -114,6 +114,9 @@ const AddProduct  =  async (request , response)  => {
 
         await newProducts.save();
 
+        console.log(newProducts);
+        
+
 
         if(newProducts){
 
@@ -188,7 +191,7 @@ const UpdateProduct = async (request , response ) => {
             )
         }
 
-        //  update product only if admin created
+        //  update product only if product owner created
         if(checkproduct.createdBy.toString() !== id){
 
             return(
@@ -338,7 +341,9 @@ const GetAllProducts = async (request , response ) => {
             getproductsList= await ProductModel.find({});
         }else{
 
-            getproductsList = await ProductModel.find({_id: request?.user?._id});
+            console.log(request?.user?._id);
+            
+            getproductsList = await ProductModel.find({createdBy: request?.user?.id});
 
         }
 
