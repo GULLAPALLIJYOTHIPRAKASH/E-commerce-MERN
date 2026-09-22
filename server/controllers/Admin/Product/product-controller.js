@@ -338,12 +338,12 @@ const GetAllProducts = async (request , response ) => {
         // new admin & seller
         if(request?.user?.role === "admin"){
 
-            getproductsList= await ProductModel.find({});
+            getproductsList= await ProductModel.find({}).sort({createdAt : -1});
         }else{
 
             console.log(request?.user?._id);
             
-            getproductsList = await ProductModel.find({createdBy: request?.user?.id});
+            getproductsList = await ProductModel.find({createdBy: request?.user?.id}).sort({createdAt : -1});
 
         }
 

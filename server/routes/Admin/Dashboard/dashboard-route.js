@@ -1,6 +1,6 @@
 const express = require("express");
 const { Check_User, CheckAdmin_User } = require("../../../middleware/Auth/auth-middleware");
-const { GetAllBanners, AddBanner, DeleteBanner, DeleteBannerCloudinary } = require("../../../controllers/Admin/Dashboard/dashboard-controller");
+const { GetAllBanners, AddBanner, DeleteBanner, DeleteBannerCloudinary, OrderSummaryDetails } = require("../../../controllers/Admin/Dashboard/dashboard-controller");
 const multerMiddleware = require("../../../middleware/Auth/Admin/multer-middleware");
 const router = express.Router();
 
@@ -9,6 +9,9 @@ const router = express.Router();
 router.post("/add-banner" ,Check_User ,CheckAdmin_User,AddBanner);
 router.get("/allbanners" ,Check_User ,CheckAdmin_User ,GetAllBanners );
 router.delete("/delete/:bannerId" ,Check_User ,  CheckAdmin_User ,DeleteBanner);
+
+// all order summary count
+router.get("/OrderSummaryDetails" ,Check_User ,  CheckAdmin_User ,OrderSummaryDetails);
 
 // delete cloudinary
 router.delete("/delete-cloudinary/:publicId" ,Check_User ,  CheckAdmin_User ,DeleteBannerCloudinary);

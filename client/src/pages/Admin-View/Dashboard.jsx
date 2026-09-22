@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { AdminAddBanner, AdminDeleteBanners, AdminGetAllBanners } from "../../redux/Admin/dashboard-slice";
+import Seller_dashboard from "../../components/Admin-View/Seller_dashboard";
 
 const initialObj={
         url:"",
@@ -281,6 +282,12 @@ function Dashboard(){
                     )
                 })}
             </section>
+            }
+
+
+            {/* Seller */}
+            {
+                user?.role === "seller" && <Seller_dashboard/>
             }
 
         </div>

@@ -1,5 +1,6 @@
 const cloudinary  = require("../../../config/cloudinary");
 const BannerModel = require("../../../models/Banner");
+const OrderModel = require("../../../models/Order");
 
 // Add Banner Image 
 const AddBanner = async (request , response )=> {
@@ -248,6 +249,44 @@ const DeleteBannerCloudinary = async (request , response )=> {
 }
 
 
+// Get All order summary details
+const OrderSummaryDetails = async(requet , response) => {
+
+    try {
+
+        const {id} = requet?.user;
+
+        
+
+        const summary = await OrderModel.aggregate([
+
+            {
+                $match:{
+
+                    "cartItems.sellerId": id
+                }
+            },
+            {
+                $group:{
+                    _id: "$orderStatus",
+                    count: {$sum:1}
+                }
+            }
+        ])
+
+        return(
+            response.status(200).json({
+                success:true,
+                data: summary || "hem"
+            })
+        )
+        
+    } catch (error) {
+        
+    }
+}
 
 
-module.exports = {AddBanner , GetAllBanners , DeleteBanner , DeleteBannerCloudinary};
+
+
+module.exports = {AddBanner , GetAllBanners , DeleteBanner , DeleteBannerCloudinary , OrderSummaryDetails};
