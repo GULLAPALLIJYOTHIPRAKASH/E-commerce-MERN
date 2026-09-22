@@ -28,6 +28,7 @@ export const Brand = [
 { id: "h&m", label: "H&M" },
 { id: "samsung", label: "Samsung" },
 { id: "titan", label: "Titan" },
+{ id: "apple", label: "Apple" },
 ]
 
 
@@ -65,6 +66,7 @@ brand: [
 { id: "h&m", label: "H&M" },
 { id: "samsung", label: "Samsung" },
 { id: "titan", label: "Titan" },
+{ id: "apple", label: "Apple" },
 ]
 
 

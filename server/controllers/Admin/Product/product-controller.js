@@ -162,7 +162,7 @@ const UpdateProduct = async (request , response ) => {
 
         const productId = request.params.productId;
         const formData = request.body;
-        const {id} = request.user;
+        const {id , role} = request.user;
 
         if(!formData){
 
@@ -191,8 +191,8 @@ const UpdateProduct = async (request , response ) => {
             )
         }
 
-        //  update product only if product owner created
-        if(checkproduct.createdBy.toString() !== id){
+        //  update their own product but admin
+        if(checkproduct.createdBy.toString() !== id  && role !== "admin"  ){
 
             return(
                 response.status(401).json({
@@ -254,7 +254,7 @@ const DeleteProduct = async (request , response ) => {
     try {
 
         const productId = request.params.productId;
-        const {id} = request?.user;
+        const {id , role} = request?.user;
                 
 
         // check product it is available to delete
@@ -271,8 +271,8 @@ const DeleteProduct = async (request , response ) => {
             )
         }
 
-        //  delete product only if admin created
-        if(checkproduct.createdBy.toString() !== id){
+        //  seller can delete their own product but excep admin
+        if(checkproduct.createdBy.toString() !== id && role !== "admin" ){
 
         return(
             response.status(401).json({

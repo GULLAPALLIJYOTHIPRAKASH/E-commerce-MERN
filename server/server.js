@@ -1,6 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+
+// get the client Ip 
+app.set("trust proxy", 1);
 const ConnectToDB = require("./database/db");
 const cookieparser = require("cookie-parser");
 const cors = require("cors");
@@ -24,6 +27,7 @@ const PORT = process.env.PORT || 5000;
 
 //  DB Connection
 ConnectToDB();
+
 
 
 // security headers 13

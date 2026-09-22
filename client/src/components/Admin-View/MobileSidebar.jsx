@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { AdminMenu } from "../config/config";
+import { useSelector } from "react-redux";
 
 const AdminSideBarIcon= [
 {id:"dashboard" , icon:<i className="text-xl  mr-[2px] fa-solid fa-chart-pie"></i> },
@@ -11,13 +12,14 @@ const AdminSideBarIcon= [
 
 function MobileSidebar({showSidebar , HandleSidebar}){
 
-    
+        const {user} = useSelector((state) => state.auth);
+
     return(<>
     <aside className={`sidebar-container w-[100%] h-[100vh] fixed top-0 ${showSidebar ? "left-0" : "left-[-100%]"} z-100 bg-black/30 transition-all duration-500 linear`}>
     <div className="sidebar-center w-[60vw] h-[100%] p-4 bg-white">
         <div className="heading p-4 w-[100%] flex justify-between items-center">
             <div className="logo-container" >
-                <h1 className="text-lg font-medium "><i className="fa-solid fa-crown"></i> Admin Panel</h1>
+                <h1 className="text-lg font-medium "><i className="fa-solid fa-crown"></i>  {user?.role === "admin" ? "Admin" : "Seller"} Panel</h1>
                 
             </div>
             <div className="close-icon" onClick={HandleSidebar}>

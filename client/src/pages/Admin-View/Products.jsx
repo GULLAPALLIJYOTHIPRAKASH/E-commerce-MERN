@@ -289,10 +289,9 @@ function Products(){
             
         }
         finally{
-            setLoading(true);        
+            setLoading(false);
 
         }
-
     }
 
 
