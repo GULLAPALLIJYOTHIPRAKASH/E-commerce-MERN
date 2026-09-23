@@ -1,9 +1,10 @@
 export const AdminMenu= [
     
-        {id:"dashboard" , label:"Dashboard" },
-        {id:"products" , label:"Products" },
-        {id:"orders" , label:"Orders" },
-        {id:"features" , label:"Features" },
+        {id:"dashboard" , label:"Dashboard" ,roles:["seller" , "admin"] },
+        {id:"products" , label:"Products" ,roles:["seller" , "admin"] },
+        {id:"orders" , label:"Orders"  ,roles:["seller" , "admin"]},
+        {id:"account" , label:"Manage Account" ,roles:["admin"] },
+        {id:"features" , label:"Features" ,roles:["seller" ,"admin"] },
     
 ]
 

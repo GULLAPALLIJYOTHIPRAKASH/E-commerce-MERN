@@ -272,12 +272,38 @@ const OrderSummaryDetails = async(requet , response) => {
                     count: {$sum:1}
                 }
             }
-        ])
+        ]).sort({_id: -1});
+
+                const revenue = await OrderModel.aggregate([
+                {
+                $unwind: "$cartItems"
+                },
+                {
+                $match: {
+                "cartItems.sellerId": id,
+                paymentStatus: "paid"
+                }
+                },
+                {
+                $group: {
+                _id: null,
+                totalRevenue: {
+                $sum: {
+                    $multiply: [
+                        "$cartItems.price",
+                        "$cartItems.quantity"
+                    ]
+                }
+                }
+                }
+                }
+                ]);
 
         return(
             response.status(200).json({
                 success:true,
-                data: summary || "hem"
+                revenue:revenue[0]?.totalRevenue ?? 0,
+                data: summary
             })
         )
         

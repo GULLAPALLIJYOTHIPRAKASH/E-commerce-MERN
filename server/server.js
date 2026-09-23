@@ -12,6 +12,7 @@ const compression = require("compression");
 const AuthRouter = require("./routes/Auth/auth-route");
 const AdminProductsRouter = require("./routes/Admin/Product/product-route");
 const AdminDashboardRouter = require("./routes/Admin/Dashboard/dashboard-route");
+const AdminAccountRouter = require("./routes/Admin/Account/account-route");
 const ShopProductsRouter = require("./routes/Shop/Product/product-route");
 const ShopHomeRouter = require("./routes/Shop/Home/home-route");
 const ShopCartRouter = require("./routes/Shop/Product/cart-route");
@@ -73,6 +74,9 @@ app.use("/api/admin/product" , AdminProductsRouter);
 
 // Admin Dashboard route
 app.use('/api/admin/dashboard' , AdminDashboardRouter);
+
+// Admin Account route
+app.use("/api/admin/accounts" , AdminAccountRouter);
 
 // Shop Product route
 app.use("/api/shop/products" ,ShopRateLimit , ShopProductsRouter);

@@ -6,7 +6,9 @@ const AdminSideBarIcon= [
 {id:"dashboard" , icon:<i className="text-xl  mr-[2px] fa-solid fa-chart-pie"></i> },
 {id:"products" , icon:<i className="text-xl  mr-[2px] fa-solid fa-basket-shopping"></i> },
 {id:"orders" , icon:<i className="text-xl  mr-[2px] fa-solid fa-shapes"></i> },
+{id:"account" , icon:<i className="text-xl group-hover:text-2xl transition-all linear duration-300  mr-[2px] fa-regular fa-address-card"></i>},
 {id:"features" , icon:<i className="text-xl  mr-[2px] fa-solid fa-clone"></i>},
+
 ]
 
 
@@ -33,12 +35,13 @@ function MobileSidebar({showSidebar , HandleSidebar}){
               {
                 AdminMenu?.map((item , idx) => {
 
-                    return(
+                if(item?.roles?.includes(user?.role))
+                return(
 
-                        <li  className="nav-link text-gray-600 mb-8" key={item?.id + "_mobile"}>
-                            <Link  onClick={HandleSidebar} to={`/admin/${item.id}`} className="text-lg font-normal">{AdminSideBarIcon[idx].icon} { item?.label}</Link>
-                        </li>
-                    )
+                    <li  className="nav-link text-gray-600 mb-8 group transition-all linear duration-500" key={item?.id + "_mobile"}>
+                        <Link to={`/admin/${item.id}`} className="block w-[100%] text-lg font-normal p-2 group-hover:bg-gray-50 group-hover:rounded-lg outline-none">{AdminSideBarIcon[idx].icon} { item?.label}</Link>
+                    </li>
+                )
                 })
               }
             </ul>

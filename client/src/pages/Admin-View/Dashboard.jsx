@@ -217,10 +217,9 @@ function Dashboard(){
 
     useEffect(() => {
 
-        if(user?.role === "admin"){
 
             dispatch(AdminGetAllBanners());
-        }
+        
 
     },[dispatch])
 
@@ -264,8 +263,16 @@ function Dashboard(){
             </form>
             }
 
-            {/* All Banners section */}
-          { user?.role ==="admin" &&   <section className="all-banners mt-5 ">
+           
+
+            {/* Seller */}
+            {
+                user?.role === "seller" && <Seller_dashboard/>
+            }
+
+
+ {/* All Banners section */}
+          { <section className="all-banners mt-5 ">
 
                 {bannersList && bannersList.length > 0 && bannersList?.map((item) => {
 
@@ -274,20 +281,14 @@ function Dashboard(){
                             <div className="img-container relative w-full h-[250px] md:h-[450px] object-cover rounded-lg overflow-hidden">
                                 <img  className="w-[100%] h-[100%]  object-cover object-center overflow-hidden" src={item?.banner_url} alt="banner Image" />
                                {/* delete icon */}
-                              <div onClick={()=>HandleDelete(item?._id)} className="delete-icon  absolute top-5 right-5 bg-white rounded-full flex justify-center items-center w-[40px] h-[40px] group cursor-pointer ">
+                              {user?.role ==="admin" &&  <div onClick={()=> {HandleDelete(item?._id) }} className="delete-icon  absolute top-5 right-5 bg-white rounded-full flex justify-center items-center w-[40px] h-[40px] group cursor-pointer ">
                                   <i className=" text-lg text-red-600  group-hover:translate-y-[-4px] transition-all linear duration-300 fa-regular fa-trash-can "></i>
-                              </div>
+                              </div>}
                             </div>
                         </article>
                     )
                 })}
             </section>
-            }
-
-
-            {/* Seller */}
-            {
-                user?.role === "seller" && <Seller_dashboard/>
             }
 
         </div>

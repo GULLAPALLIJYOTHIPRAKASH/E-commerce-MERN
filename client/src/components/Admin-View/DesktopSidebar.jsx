@@ -6,6 +6,7 @@ const AdminSideBarIcon= [
 {id:"dashboard" , icon:<i className="text-xl group-hover:text-2xl transition-all linear duration-300  mr-[2px] fa-solid fa-chart-pie"></i> },
 {id:"products" , icon:<i className="text-xl  group-hover:text-2xl transition-all linear duration-300 mr-[2px] fa-solid fa-basket-shopping"></i> },
 {id:"orders" , icon:<i className="text-xl  group-hover:text-2xl transition-all linear duration-300  mr-[2px] fa-solid fa-shapes"></i> },
+{id:"account" , icon:<i className="text-xl group-hover:text-2xl transition-all linear duration-300  mr-[2px] fa-regular fa-address-card"></i>},
 {id:"features" , icon:<i className="text-xl group-hover:text-2xl transition-all linear duration-300  mr-[2px] fa-solid fa-clone"></i>},
 ]
 function DesktopSidebar(){
@@ -26,6 +27,7 @@ function DesktopSidebar(){
               {
                 AdminMenu?.map((item , idx) => {
 
+                    if(item?.roles?.includes(user?.role))
                     return(
 
                         <li  className="nav-link text-gray-600 mb-8 group transition-all linear duration-500" key={item?.id + "_mobile"}>

@@ -7,6 +7,7 @@ import AdminLayout from "./components/Admin-View/AdminLayout";
 import Dashboard from "./pages/Admin-View/Dashboard";
 import Products from "./pages/Admin-View/Products";
 import Orders from "./pages/Admin-View/Orders";
+import Accounts from "./pages/Admin-View/Account";
 import Features from "./pages/Admin-View/Features";
 
 import ShopLayout from "./components/Shopping-View/ShopLayout";
@@ -71,15 +72,7 @@ function App(){
     <Route path="dashboard" element={<Dashboard/>}/>
     <Route path="products" element={<Products/>}/>
     <Route path="orders" element={<Orders/>}/>
-    <Route path="features" element={<Features/>}/>
-    </Route>
-
-
-    {/* Seller routes */}
-    <Route path="/seller" element={<CheckAuth isAuthenticated={isAuthenticated}  user={user}><AdminLayout/> </CheckAuth>}>
-    <Route path="dashboard" element={<Dashboard/>}/>
-    <Route path="products" element={<Products/>}/>
-    <Route path="orders" element={<Orders/>}/>
+    <Route path="account" element={<Accounts/>}/>
     <Route path="features" element={<Features/>}/>
     </Route>
 
