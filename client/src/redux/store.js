@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import AuthReducer from "./auth-slice/index";
 import AdminProductsReducer from "./Admin/product-slice/index";
 import AdminDashboardReducer from "./Admin/dashboard-slice/index";
-import AdminAccountReducer from "./admin/account-slice/index";
+import AdminAccountReducer from "./Admin/account-slice/index";
 import ShopProductReducer from "./Shop/product-slice/index";
 import ShopHomeReducer from "./Shop/home-slice/index";
 import ShopCartReducer from "./Shop/cart-slice/index";
