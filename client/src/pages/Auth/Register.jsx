@@ -84,7 +84,7 @@ function Register(){
 
                     {/* seller */}
                      <div className="field mb-3 flex justify-start items-center">
-                        <input checked={role} onChange={(e) => setRole(e.target.checked)} type="checkbox" name="seller" id="seller" required className="w-4 h-4 accent-blue-500 hover:accent-blue-600 transition-all ease-linear duration-100" />
+                        <input checked={role} onChange={(e) => setRole(e.target.checked)} type="checkbox" name="seller" id="seller" className="w-4 h-4 accent-blue-500 hover:accent-blue-600 transition-all ease-linear duration-100" />
                         <label htmlFor="seller" className="text-base font-medium   cursor-pointer ml-1">I am a seller ?</label>
                     </div>
                     <button className="w-[100%] bg-black text-white text-lg p-2 rounded-lg cursor-pointer transition-all linear duration-300 hover:opacity-70">Sign Up</button>

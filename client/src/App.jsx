@@ -76,6 +76,15 @@ function App(){
     <Route path="features" element={<Features/>}/>
     </Route>
 
+    {/* seller routes */}
+    <Route path="/seller" element={<CheckAuth isAuthenticated={isAuthenticated}  user={user}><AdminLayout/> </CheckAuth>}>
+    <Route path="dashboard" element={<Dashboard/>}/>
+    <Route path="products" element={<Products/>}/>
+    <Route path="orders" element={<Orders/>}/>
+    <Route path="features" element={<Features/>}/>
+    </Route>
+
+
 
     {/* Shopping routes */}
     <Route path="/shop" element={<CheckAuth isAuthenticated={isAuthenticated}  user={user}><ShopLayout/> </CheckAuth>}>

@@ -76,7 +76,7 @@ app.use("/api/admin/product" , AdminProductsRouter);
 app.use('/api/admin/dashboard' , AdminDashboardRouter);
 
 // Admin Account route
-app.use("/api/admin/accounts" , AdminAccountRouter);
+app.use("/api/admin/account" , AdminAccountRouter);
 
 // Shop Product route
 app.use("/api/shop/products" ,ShopRateLimit , ShopProductsRouter);

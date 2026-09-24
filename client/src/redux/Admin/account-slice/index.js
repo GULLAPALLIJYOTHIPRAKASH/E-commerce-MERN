@@ -12,7 +12,7 @@ const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
 
 
 // fetch all addresss
-export const AdminGetAllUsers = createAsyncThunk('/api/admin/account/allusers/' , async ( _, {rejectWithValue}) => {
+export const AdminGetAllUsers = createAsyncThunk('/api/admin/account/allusers' , async ( _, {rejectWithValue}) => {
 
     try {
         
