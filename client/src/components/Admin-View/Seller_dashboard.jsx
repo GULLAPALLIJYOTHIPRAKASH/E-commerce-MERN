@@ -9,6 +9,8 @@ function Seller_dashboard(){
     const {user} = useSelector((state) => state.auth);
     const [OrderData , setOrderData] = useState([]);
 
+    const BackendAPI_URL = import.meta.env.VITE_BACKEND_API_URL
+
 
     useEffect(() => {
 
@@ -16,7 +18,7 @@ function Seller_dashboard(){
 
            try {
             
-             const result = await axios.get("http://localhost:5000/api/admin/dashboard/OrderSummaryDetails" , {
+             const result = await axios.get(BackendAPI_URL + "/api/admin/dashboard/OrderSummaryDetails" , {
                 withCredentials:true
             })
 
