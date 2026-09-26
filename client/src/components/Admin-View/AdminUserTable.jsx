@@ -28,7 +28,7 @@ function AdminUserTable({HandleShowPopUp , HandleDeleteUser , user_accounts}){
                         <span onClick={() => HandleDeleteUser(item?._id)} title="Delete user">
                             <i className="text-base text-red-500 hover:text-red-400 transition-all ease-linear duration-100 cursor-pointer fa-solid fa-trash-can"></i>
                         </span>
-                    <span onClick={() =>{ HandleShowPopUp(item?._id ,item?.username ,item?.email , item?.role  )}} title="Edit user role">
+                    <span onClick={(e) =>{ HandleShowPopUp(e, true , item?._id ,item?.username ,item?.email , item?.role  )}} title="Edit user role">
                     <i className="text-base text-violet-400 hover:text-violet-500 transition-all ease-linear duration-100 cursor-pointer fa-solid fa-pen-to-square"></i>
                     </span>
                     </td>

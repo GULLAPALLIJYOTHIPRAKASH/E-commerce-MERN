@@ -27,11 +27,11 @@ export const AdminGetAllUsers = createAsyncThunk('/api/admin/account/allusers' ,
 
 
 // edit address
-export const AdminUpdateAccount  = createAsyncThunk('/api/admin/account/update-account/userId' , async ({userId,  newRole}, {rejectWithValue}) => {
+export const AdminUpdateAccount  = createAsyncThunk('/api/admin/account/update-account/userId' , async ({userId,username , email , role }, {rejectWithValue}) => {
 
     try {
         
-        const response = await axios.put(`${BackendAPI_URL}/api/admin/account/update-account/${userId}`, newRole, {withCredentials:true});
+        const response = await axios.put(`${BackendAPI_URL}/api/admin/account/update-account/${userId}`, {username , email , role :  role ? "seller" : "user"}, {withCredentials:true});
 
         return response.data
     } catch (error) {

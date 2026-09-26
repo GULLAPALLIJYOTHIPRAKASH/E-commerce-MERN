@@ -123,16 +123,16 @@ const UpdateUserAccount = async (request , response) => {
    try {
 
 
-     const {role } = request.user;
+     const {role:checkrole } = request.user;
     const {userId} = request.params;
-    const {Newrole} = request.body;
+    const {role , username , email } = request.body;
 
 
    
-     if(role === "admin"){
+     if(checkrole === "admin"){
 
         const user = await UserModel.findByIdAndUpdate(userId , 
-        {role: Newrole},
+        {role , username , email},
         {new : true}
 
         )

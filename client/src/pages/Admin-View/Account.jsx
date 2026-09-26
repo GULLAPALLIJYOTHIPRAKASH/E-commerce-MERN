@@ -11,6 +11,16 @@ function Account(){
     const {user_accounts} = useSelector((state) => state.AdminAccount);
     const [showpopup , setShowPopup] = useState(false);
 
+    const[formdata , setFormData]=useState({
+        id:"",
+        username:"",
+        email:"",
+        password:"",
+        role:false,
+        edit:false
+
+    })
+
     // fetch all user 
     useEffect(() => {
 
@@ -22,6 +32,13 @@ function Account(){
     const HandleDeleteUser= async (userId) => {
 
         try {
+
+            const confirmDelete = confirm("Are you sure to delete the account ?");
+
+            
+            
+        if (confirmDelete) {
+                
             
             const response = await dispatch(AdminDeleteAccount(userId)).unwrap();
 
@@ -36,6 +53,7 @@ function Account(){
 
             }
             
+        }
         } catch (error) {
 
             console.log(error.message);
@@ -46,9 +64,38 @@ function Account(){
 
 
     // show/hide popup
-    const HandleShowPopUp = (id="" ,username="" , email="" , role="" ) => {
+    const HandleShowPopUp = (e, edit=false ,id="" ,username="" , email="" , role="" ) => {
 
         setShowPopup(!showpopup);
+
+        console.log(edit);
+        
+       if(edit){
+
+        console.log(edit);
+        
+        setFormData({
+            id,
+            username,
+            email,
+            role : role?.toLowerCase() === "seller" ? true : false,
+            edit:edit,
+            password:""
+        })
+       }
+       else{
+
+        setFormData({
+        id:"",
+        username:"",
+        email:"",
+        password:"",
+        role:false,
+        edit:false
+
+       })
+
+       }
     }
     return(<>
     <div className="account-container">
@@ -61,7 +108,7 @@ function Account(){
             {/* user Table */}
             <AdminUserTable HandleShowPopUp={HandleShowPopUp} HandleDeleteUser={HandleDeleteUser} user_accounts={user_accounts}/>
 
-            <AdminCreateUser HandleShowPopUp={HandleShowPopUp} showpopup={showpopup}/>
+            <AdminCreateUser formdata={formdata} setFormData={setFormData}  HandleShowPopUp={HandleShowPopUp} showpopup={showpopup}/>
         </div>
     </div>
     </>)
