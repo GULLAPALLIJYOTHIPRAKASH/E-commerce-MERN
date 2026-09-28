@@ -1,6 +1,7 @@
 const UserModel = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { sendVerificationEmail} = require("../../helper/Emails/mailServices");
 
 
 // register user 
@@ -42,15 +43,27 @@ const RegisterUser = async (request , response) => {
         const hashPassword = await bcrypt.hash(password , gen_salt);
 
 
+        // 6 digit otp
+        const otp =  Math.floor(100000 + Math.random() * 900000);
+        // 1 hour
+        const verification_code_expiry = new Date(Date.now() + 60 * 60 * 1000);
+
+
         // store  in DB (new user account)
         const newUser  = await UserModel.create({
 
             username,
             email,
             password:hashPassword,
-            role: role ? "seller" : "user"
+            role: role ? "seller" : "user",
+            verify_email:false,
+            otp,
+            verification_code_expiry
+            
         });
 
+
+        sendVerificationEmail(email , otp)
 
         if(newUser){
 

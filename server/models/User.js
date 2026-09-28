@@ -27,7 +27,26 @@ const userSchema = new mongoose.Schema({
         type:String,
         enum:["user" , "seller", "admin"],
         default:"user"
-    }
+    },
+
+    verify_email:{
+
+        type:Boolean,
+        required:[true , "please verify your email"],
+        default:false
+    },
+
+    otp:{
+        type:String,
+        trim:true,
+        minLength:[6 , 'min 6 digits only'],
+        maxLength:[6, 'max 6 digits only']
+
+    },
+
+    verification_code_expiry:  Date
+
+    
 },{timestamps:true});
 
 module.exports = new mongoose.model("users" , userSchema);
