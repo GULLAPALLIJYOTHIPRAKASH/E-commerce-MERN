@@ -219,7 +219,6 @@ const CaptureOrder = async (request , response) => {
         // save order
         await checkOrder.save();
 
-        console.log(checkOrder);
         
 
         return(response.status(201).json({

@@ -5,9 +5,11 @@ const sendVerificationEmail  = async(email , otp) => {
 
     const email_verify_url = process.env.FRONTEND_URL+"/auth/emailverify";
 
-    await transpoter.sendMail({
+    
 
-        from: `Shop E-Commerces <${process.env.BREVO_EMAIL}>`,
+    let d = await transpoter.sendMail({
+
+        from: `Shop E-Commerces <${process.env.SEND_EMAIL}>`,
         to:email,
         subject:`Verify your email`,
         html: `<h2>Welcome to Shop E-Commerces</h2>
@@ -22,6 +24,9 @@ const sendVerificationEmail  = async(email , otp) => {
       <p>This link expires in 1 hour.</p>
     `,
   });
+
+  console.log(d);
+  
 }
 
 module.exports = { sendVerificationEmail}

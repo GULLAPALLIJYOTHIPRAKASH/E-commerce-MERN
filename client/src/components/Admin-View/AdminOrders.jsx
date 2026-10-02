@@ -8,9 +8,10 @@
       return "bg-green-500";
 
     case "inProcess":
+    return "bg-blue-500";
     case "inShipped":
-      return "bg-teal-500";
-
+        return "bg-teal-500";
+        
     case "delivered":
       return "bg-green-500";
 

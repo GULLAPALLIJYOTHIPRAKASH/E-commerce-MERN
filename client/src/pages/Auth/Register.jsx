@@ -6,10 +6,10 @@ import {toast} from "react-toastify"
 
 function Register(){
 
-    const [username , setUsername] = useState("");
-    const [email , setEmail] = useState("");
+    const [username , setUsername] = useState("jyothiprakash");
+    const [email , setEmail] = useState("gullapallijyothiprakash@gmail.com");
     const[role , setRole]=useState(false);
-    const [password , setPassword] = useState("");
+    const [password , setPassword] = useState("123456789");
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
