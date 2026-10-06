@@ -3,7 +3,8 @@ import axios from "axios";
 
 const initialObj= {
 
-    isLoading:true,
+    isLoading:false,
+    isCheckingAuth:true,
     isAuthenticated:false,
     user:null
 }
@@ -101,6 +102,46 @@ export const CheckAuthUser = createAsyncThunk('api/auth/checkuser' , async(_, {r
     }
 })
 
+// verify Email account
+export const VerifyEmailAccount = createAsyncThunk('api/auth/verify_email' , async(formData, {rejectWithValue}) => {
+
+    try {
+
+        const response = await axios.post(`${BackendAPI_URL}/api/auth/verify_email`, formData , {
+            withCredentials:true,
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })
+
+        return response.data
+        
+    } catch (error) {
+        
+        return(rejectWithValue(error.response.data))
+    }
+})
+
+// resend otp 
+export const ReSendOTP =createAsyncThunk('api/auth/resend_otp' , async(email, {rejectWithValue}) => {
+
+    try {
+
+        const response = await axios.post(`${BackendAPI_URL}/api/auth/resend_otp`,{ email} , {
+            withCredentials:true,
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })
+
+        return response.data
+        
+    } catch (error) {
+        
+        return(rejectWithValue(error.response.data))
+    }
+})
+
 const AuthSlice = createSlice({
     name:"auth",
     initialState:initialObj,
@@ -125,8 +166,8 @@ const AuthSlice = createSlice({
             state.isLoading=true
         }).addCase(LoginUser.fulfilled , (state, action)=> {
 
-            state.isLoading=false
-            state.isAuthenticated= action.payload.success ? true : false
+            state.isLoading=false  // email verify added
+            state.isAuthenticated= action.payload.data.verify_email ? true : false 
             state.user = action.payload.success ? action.payload.data  : null
         }).addCase(LoginUser.rejected , (state)=> {
 
@@ -135,15 +176,15 @@ const AuthSlice = createSlice({
             state.user=null
         }).addCase(CheckAuthUser.pending , (state)=> {
 
-            state.isLoading=true
+            state.isCheckingAuth=true
         }).addCase(CheckAuthUser.fulfilled , (state , action) => {
 
-            state.isLoading=false
-            state.isAuthenticated= action.payload.success ? true : false
+            state.isCheckingAuth=false // email verify added
+            state.isAuthenticated= action.payload.data.verify_email ? true : false 
             state.user = action.payload.success ? action.payload.data  : null
         }).addCase(CheckAuthUser.rejected , (state , action) => {
 
-            state.isLoading=false
+            state.isCheckingAuth=false
             state.isAuthenticated=  false
             state.user = null
         }).addCase(LogoutUser.fulfilled , (state , action) => {
@@ -152,6 +193,33 @@ const AuthSlice = createSlice({
             state.isAuthenticated=  false
             state.user = null
 
+        }).addCase(VerifyEmailAccount.pending , (state)=> {
+
+            state.isLoading=true
+        }).addCase(VerifyEmailAccount.fulfilled , (state)=> {
+
+            state.isLoading=false
+            state.isAuthenticated=false
+            state.user=null
+        }).addCase(VerifyEmailAccount.rejected , (state)=> {
+
+            state.isLoading=false
+            state.isAuthenticated=false
+            state.user=null
+        }).addCase(ReSendOTP.pending , (state)=> {
+
+            state.isLoading=true
+        })
+        .addCase(ReSendOTP.fulfilled , (state)=> {
+
+            state.isLoading=false
+            state.isAuthenticated=false
+            state.user=null
+        }).addCase(ReSendOTP.rejected , (state)=> {
+
+            state.isLoading=false
+            state.isAuthenticated=false
+            state.user=null
         })
 
     }

@@ -129,6 +129,18 @@ const LoginUser = async (request , response) => {
             )
         }
 
+        // email verify
+        if(check_user?.verify_email === false){
+
+            response.status(403).json({
+                success:false,
+                message:"Please verify your email account"
+            })
+
+
+        }
+
+
 
         // password check 
         const passwordCompare = await bcrypt.compare(password , check_user.password);
@@ -148,7 +160,8 @@ const LoginUser = async (request , response) => {
             id:check_user._id,
             username:check_user.username,
             email:check_user.email,
-            role:check_user.role
+            role:check_user.role,
+            verify_email:true
 
         } , process.env.JWT_SECRET_KEY , { expiresIn: "3h"});
 
@@ -164,7 +177,8 @@ const LoginUser = async (request , response) => {
                         id:check_user._id,
                         username:check_user.username,
                         email:check_user.email,
-                        role:check_user.role
+                        role:check_user.role,
+                        verify_email:true
                 }
             })
         )
@@ -205,4 +219,103 @@ const LogoutUser = async (request , response) => {
 }
 
 
-module.exports = { RegisterUser , LoginUser , LogoutUser}
+// verify email
+const VerifyEmail = async (req, res) => {
+  try {
+    const { email, verify_otp:otp } = req.body;
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+
+    if (user?.verification_code_expiry < new Date()) {
+      return res.status(400).json({
+        success: false,
+        message: "OTP expired",
+      });
+    }
+
+    if (user?.otp !== otp) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid OTP",
+      });
+    }
+
+    
+
+    user.verify_email = true;
+    user.otp = "";
+    user.verification_code_expiry = null;
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Email verified successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// Generate new otp
+const ResendOTP = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    if(user?.verification_code_expiry < new Date()){
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    user.otp = otp;
+    user.verification_code_expiry = new Date(Date.now() + 60 * 60 * 1000);
+
+    await user.save();
+
+    await sendVerificationEmail(email, otp);
+
+    res.status(200).json({
+      success: true,
+      message: "New OTP sent to your email",
+    });
+
+}
+
+else{
+
+    res.status(301).json({
+      success: true,
+      message: "Already OTP sent to your email",
+    });
+
+}
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
+
+module.exports = { RegisterUser , LoginUser , LogoutUser , VerifyEmail , ResendOTP}

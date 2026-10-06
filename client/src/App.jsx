@@ -25,10 +25,11 @@ import { useEffect } from "react";
 import { CheckAuthUser } from "./redux/auth-slice";
 import PaymentSuccess from "./pages/Shopping-View/PaymentSuccess";
 import Search from "./pages/Shopping-View/Search";
+import VerifyEmail from "./pages/Auth/VerifyEmail";
 function App(){
 
  const dispatch = useDispatch();
- const {isAuthenticated , isLoading , user} = useSelector((state) => state.auth);
+ const {isAuthenticated ,isCheckingAuth, user} = useSelector((state) => state.auth);
 
  useEffect(() => {
 
@@ -49,10 +50,9 @@ function App(){
  },[dispatch]);
 
 
- if(isLoading){
-
-  return(<h1 className="text-3xl font-medium">Loading...</h1>)
- }
+ if (isCheckingAuth) {
+    return <h1 className="text-3xl font-medium">Loading...</h1>;
+}
 
  
   return(<>
@@ -65,6 +65,7 @@ function App(){
     <Route path="/auth" element={<CheckAuth isAuthenticated={isAuthenticated}  user={user}><AuthLayout/></CheckAuth>}>
     <Route path="login" element={<Login/>}/>
     <Route path="register" element={<Register/>}/>
+    <Route path="verify_email" element={<VerifyEmail/>}/>
     </Route>
 
     {/* Admin routes */}

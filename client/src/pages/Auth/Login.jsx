@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LoginUser } from "../../redux/auth-slice";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { toast } from "react-toastify";
 
 
 function Login(){
     const [email , setEmail] = useState("");
     const [password , setPassword] = useState("");
+    const[showVerify , setShowVerify] = useState(false);
     const dispatch = useDispatch();
+    const {isLoading} = useSelector((state) => state.auth);
 
     // handle login submit
     const HandleLoginSubmit = async (e) => {
@@ -21,37 +23,48 @@ function Login(){
                    
        
        
-                   const response = await dispatch(LoginUser({email , password})).unwrap();
+                const response = await dispatch(LoginUser({email , password})).unwrap();
        
        
-                   if(response?.success){
+                if(response?.success){
        
-                       // rest all inputs
-                       setEmail("");
-                       setPassword("");
-       
-                       toast.success("User Login Successfully" , {
-                           toastId:"user login"
-                       });  
+                    // rest all inputs
+                    setEmail("");
+                    setPassword("");
+    
+                    toast.success("User Login Successfully" , {
+                        toastId:"user login"
+                    });  
        
                }
                
             
             } catch (error) {
        
-                   console.log(error.message);
 
        
-                       toast(`${error.message}` , {
-                           toastId:"user_login_failed"
-                       }); 
+                toast.error(`${error?.message}` , {
+                    toastId:"user_login_failed"
+                });
+
+                
+                
+                if(error?.message === "Please verify your email account"){
+
+                    setShowVerify(true);  
+                    console.log("Please verify your email account");
+                    
+                }
                    
                    
                }
        
-              }
+        }
                
-           }
+    }
+
+
+
         
     
 
@@ -61,6 +74,7 @@ function Login(){
             <div className="heading text-center font-heading">
                 <h1 className="text-2xl lg:text-3xl font-bold pb-2">Sign in to your account</h1>
                 <h3 className="text-lg tracking-[1px] text-gray-500">Don't have an account <Link to="/auth/register" className="text-gray-600 font-medium outline-none">Register</Link></h3>
+               {showVerify && <h3 className="text-lg tracking-[1px] text-gray-500">Verify your account <Link to="/auth/verify_email" className="text-gray-600 font-medium outline-none">Email</Link></h3>}
             </div>
             <section className="form-section flex flex-col items-center  mt-6">
                 <form onSubmit={HandleLoginSubmit} className="login-form w-[100%] max-w-[600px] ">
@@ -76,9 +90,10 @@ function Login(){
                         <label htmlFor="password" className="text-base font-medium  tracking-[1px] cursor-pointer ">Password</label>
                         <input minLength={9} value={password} onChange={(e) => setPassword(e.target.value)} required className="w-[100%] mt-1 block p-2 border-2 border-gray-200 rounded-lg outline-none" type="password" name="email" id="password" placeholder="Enter a Password" />
                     </div>
-                    <button className="w-[100%] bg-black text-white text-lg p-2 rounded-lg cursor-pointer transition-all linear duration-300 hover:opacity-70">Login</button>
+                    <button disabled={isLoading} className="w-[100%] bg-black text-white text-lg p-2 rounded-lg cursor-pointer transition-all linear duration-300 hover:opacity-70">{isLoading ?  "Logging in..." : "Login"}</button>
                 </form>
             </section>
+           
         </div>
     </div>
     </>)

@@ -39,12 +39,13 @@ const userSchema = new mongoose.Schema({
     otp:{
         type:String,
         trim:true,
-        minLength:[6 , 'min 6 digits only'],
-        maxLength:[6, 'max 6 digits only']
 
     },
 
-    verification_code_expiry:  Date
+    verification_code_expiry:  {
+        type:Date,
+        default:null
+    }
 
     
 },{timestamps:true});

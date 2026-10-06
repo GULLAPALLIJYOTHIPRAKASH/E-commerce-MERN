@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import { RegisterUser } from "../../redux/auth-slice";
 import {toast} from "react-toastify"
 
@@ -12,6 +12,8 @@ function Register(){
     const [password , setPassword] = useState("123456789");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {isLoading} = useSelector((state) => state.auth);
+
 
     // handle register submit
     const HandleRegisterSubmit =  async (e) => {
@@ -34,12 +36,19 @@ function Register(){
                 setUsername("");
                 setRole(false);
 
-                toast("User Registered Successfully" , {
+                toast.success("User Registered Successfully" , {
                     toastId:"user register"
                 });
 
                 // move to 
                 navigate("/auth/login");
+            }
+            else{
+
+                toast.info("User Already Registered" , {
+                    toastId:"user register Already"
+                });
+
             }
 
         } catch (error) {
@@ -87,7 +96,7 @@ function Register(){
                         <input checked={role} onChange={(e) => setRole(e.target.checked)} type="checkbox" name="seller" id="seller" className="w-4 h-4 accent-blue-500 hover:accent-blue-600 transition-all ease-linear duration-100" />
                         <label htmlFor="seller" className="text-base font-medium   cursor-pointer ml-1">I am a seller ?</label>
                     </div>
-                    <button className="w-[100%] bg-black text-white text-lg p-2 rounded-lg cursor-pointer transition-all linear duration-300 hover:opacity-70">Sign Up</button>
+                    <button disabled={isLoading} className="w-[100%] bg-black text-white text-lg p-2 rounded-lg cursor-pointer transition-all linear duration-300 hover:opacity-70">{isLoading ? "Signing up..." :"Sign Up"}</button>
                 </form>
             </section>
         </div>

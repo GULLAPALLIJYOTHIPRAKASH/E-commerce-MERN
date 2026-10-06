@@ -5,7 +5,7 @@ const sendVerificationEmail  = async(email , otp) => {
 
     const email_verify_url = process.env.FRONTEND_URL+"/auth/emailverify";
 
-    
+    try{
 
     let d = await transpoter.sendMail({
 
@@ -14,6 +14,8 @@ const sendVerificationEmail  = async(email , otp) => {
         subject:`Verify your email`,
         html: `<h2>Welcome to Shop E-Commerces</h2>
       <p>Click the button below to verify your email.</p>
+      <br/>
+      <b>OTP : ${otp}</b> <br/>
 
       <a href="${email_verify_url}"
          style="background:#2563eb;color:white;padding:12px 20px;
@@ -26,6 +28,13 @@ const sendVerificationEmail  = async(email , otp) => {
   });
 
   console.log(d);
+}
+catch(e){
+
+  console.error("Verification email failed:", error.message);
+  throw error;
+  
+}
   
 }
 
