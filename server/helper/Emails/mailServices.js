@@ -3,7 +3,7 @@ const transpoter = require("../../config/brevomail");
 
 const sendVerificationEmail  = async(email , otp) => {
 
-    const email_verify_url = process.env.FRONTEND_URL+"/auth/emailverify";
+    const email_verify_url = process.env.FRONTEND_URL+"/auth/verify_email";
 
     try{
 
