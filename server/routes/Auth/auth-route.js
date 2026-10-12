@@ -15,7 +15,7 @@ router.get('/checkuser' , Check_User , (req , res) => {
     const user = req.user;
 
 
-    if(user?.verfy_email === true){
+    if(user?.verify_email === true){
 
         
         return(
