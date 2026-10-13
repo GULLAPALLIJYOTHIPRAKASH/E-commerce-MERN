@@ -234,6 +234,17 @@ const VerifyEmail = async (req, res) => {
     }
 
 
+    if(user?.verify_email === true){
+
+        return res.status(200).json({
+            success:true,
+            message:"Email already verified with us, Please login to your account"
+        })
+
+
+    }
+
+
     if (user?.verification_code_expiry < new Date()) {
       return res.status(400).json({
         success: false,

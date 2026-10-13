@@ -35,7 +35,7 @@ function VerifyEmail(){
                 setVerifyOtp("");
                
 
-                toast.success("User Email Verifed Successfully" , {
+                toast.success(`${response?.message}` , {
                     toastId:"user verify"
                 });
 

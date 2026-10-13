@@ -44,7 +44,7 @@ function ShopProductCard({ addingProductId,HandleAddToCart , HandleSingleProduct
                             {/* out of stock */}
                             
                            { !location.pathname.includes("/home") &&  (
-                        item?.totalStock > 1 ? 
+                        item?.totalStock >= 1 ? 
                         <button  disabled={addingProductId === item?._id?.toString() } onClick={(e) => {
                               e.stopPropagation();
                             //   seller Id

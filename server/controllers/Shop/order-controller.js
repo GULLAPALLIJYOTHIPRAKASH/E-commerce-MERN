@@ -3,6 +3,8 @@ const paypalConfig = require("../../config/paypal");
 const OrderModel = require("../../models/Order");
 const ProductModel = require("../../models/Product");
 const CartModel = require("../../models/Cart");
+const UserModel = require("../../models/User");
+const { sendOrderConfirmationEmail, sendSellerOrderEmail } = require("../../helper/Emails/mailServices");
 
 // create order
 const CreateOrder = async (request , response) => {
@@ -219,7 +221,66 @@ const CaptureOrder = async (request , response) => {
         // save order
         await checkOrder.save();
 
+        // send to when order place success
+      await  sendOrderConfirmationEmail(checkOrder , request?.user);
+
+    //   for each seller email logic
+
+    // Send seller order notification emails
+    const sellerGroups = new Map();
+
+    // Group ordered products by sellerId
+    for (const item of checkOrder.cartItems || []) {
+        const sellerId = item?.sellerId?.toString();
+
+        console.log(item);
         
+
+        if (!sellerId) {
+            console.warn(
+                "Skipping item because sellerId is missing:",
+                item?.title
+            );
+            continue;
+        }
+
+        if (!sellerGroups.has(sellerId)) {
+            sellerGroups.set(sellerId, []);
+        }
+
+        sellerGroups.get(sellerId).push(item);
+    }
+
+    console.log(sellerGroups);
+    
+     // Send an email to each seller
+    for (const [sellerId, items] of sellerGroups) {
+        try {
+            const seller = await UserModel.findById(sellerId);
+
+            if (!seller?.email) {
+                console.warn(
+                    `Seller not found or email missing: ${sellerId}`
+                );
+                continue;
+            }
+
+            await sendSellerOrderEmail(
+                checkOrder,
+                seller,
+                items
+            );
+
+            console.log(
+                `Seller order notification sent to ${seller.email}`
+            );
+        } catch (emailError) {
+            console.error(
+                `Seller email failed for ${sellerId}:`,
+                emailError.message
+            );
+        }
+    }
 
         return(response.status(201).json({
             success:true,

@@ -49,7 +49,7 @@ const ProductsSchema = new mongoose.Schema({
     totalStock :{
         type:Number,
         required:[true , "totalStock is required"],
-        min:[1 ,"totalStock should be min 1" ]
+        // min:[0 ,"totalStock should be min 1" ]
     }, 
     createdBy: {
         type:"String"
